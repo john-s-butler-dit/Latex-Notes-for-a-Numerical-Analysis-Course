@@ -9,15 +9,15 @@ this can be transformed without loss of generality by a non-dimensional transfor
 with the domain
 \[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}. \]
 
-\section{An explicit method for the heat eqn}
-The equation difference equation of the differential equation (\ref{heat}) is
+\section{An explicit method for the Heat Equation}
+The difference equation of the differential Heat Equation (\ref{heat}) is of the form:
 \begin{equation}
 \frac{w_{ij+1}-w_{ij}}{t_{j+1}-t_{j}}=\frac{w_{i+1j}-2w_{ij}+w_{i-1j}}{h^2}
 \end{equation}
 when approaching this we have divided up the area into
-two uniform meshes one in the x direction and the other in the t-direction.
-We define $t_j=jk$ where k is the step size in the time direction.\\
-We define $x_i=ih$ where h is the step size in the space direction.\\
+two uniform meshes one in the $x$ direction and the other in the t-direction.
+We define $t_j=jk$ where $k$ is the step size in the time direction.\\
+We define $x_i=ih$ where $h$ is the step size in the space direction.\\
 $w_{ij}$ denotes the numerical approximation of $U$ at $(x_i,t_j)$.\\
 Rearranging the equation we get
 \begin{equation}\label{disc heat}
@@ -25,7 +25,7 @@ w_{ij+1}=rw_{i-1j}+(1-2r)w_{ij}+rw_{i+1j}
 \end{equation}
 where $r=\frac{k}{h^2}$.\\
 This gives the formula for the unknown term $w_{ij+1}$ at the $(ij+1)$ mesh points
-in terms of terms along the jth time row.\\
+in terms of terms along the $j$ th time row.\\
 Hence we can calculate the unknown pivotal values of w along the first row $t=k$ or $j=1$ in terms of the known boundary conditions.
 \begin{example}
 In this case we look at a rod of unit length with each end in ice.\\
@@ -85,7 +85,6 @@ solution of the difference equation with respect to the initial conditions and t
 This will be discussed later.
 
 \end{enumerate}
-$\diamond$
 \end{example}
 \section{Crank Nicholson Implicit method}
 Since the implicit method requires that $k\leq \frac{1}{2}h^2$ a new method was

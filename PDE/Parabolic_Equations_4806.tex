@@ -6,6 +6,39 @@ and
 this can be transformed without loss of generality by a non-dimensional transformation to
 
 \begin{equation}\label{heat} \frac{\partial U}{\partial t}=\frac{\partial^2U }{\partial x^2}\end{equation}
+with the domain
+\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}. \]
+
+\section{Example Heat Equation} 
+In this case we look at a rod of unit length with each end in ice.\\
+The rod is heat insulated along its length so that temp changes occur through
+heat conduction along its length and heat transfer at its ends, where $w$ denotes
+temp.\\
+Given that the ends of the rod are kept in contact with ice and the initial temp
+distribution is non dimensional form is
+\begin{enumerate}
+\item $U=2x$ for $0\leq x \leq \frac{1}{2}$ 
+\item $U=2(1-x)$ for $\frac{1}{2}\leq x \leq 1$ 
+\end{enumerate}
+In other words we are seeking a numerical solution of
+\[\frac{\partial U}{\partial t}=\frac{\partial^2U }{\partial x^2}\]
+which satisfies
+\begin{enumerate}
+\item $U=0$ at $x=0$ and $x=1$ for all $t>0$ (the boundary condition)
+\item $U=2x$ for $0\leq x \leq \frac{1}{2}$ for $t=0$\\
+$U=2(1-x)$ for $\frac{1}{2}\leq x \leq 1$ for $t=0$ (the initial condition).
+\end{enumerate}
+Due to the initial conditions the problem is symmetric with respect to $x=0.5.$ 
+To illustrate the implementation and limitations of the explicit, implicit and Crank-Nicholson methods we will numerically solve the Heat Equation of the rod for three different values of $r$:
+\begin{enumerate}
+\item[\textbf{Case 1}]
+Let $h=\frac{1}{10}$ and $k=\frac{1}{1000}$ so that $r=\frac{k}{h^2}=\frac{1}{10}$;
+\item[\textbf{Case 2}]
+Let $h=\frac{1}{10}$ and $k=\frac{1}{200}$ so that $r=\frac{k}{h^2}=\frac{1}{2}$;
+\item[\textbf{Case 3}]
+Let $h=\frac{1}{10}$ and $k=\frac{1}{100}$ so that $r=\frac{k}{h^2}=1$.
+\end{enumerate}
+
 
 \section{An explicit method for the heat eqn}
 The explicit Forwards Time Centered Space (FTCS) equation difference equation of the differential equation (\ref{heat}) is
@@ -65,28 +98,7 @@ rw_{Nj}\\
 \]
 It is assumed that the boundary values $w_{0j}$ and $w_{Nj}$ are known for $j=1,2,...$, and $w_{i0}$ is the initial condition.
 
-\subsection{Example explicit method for the Heat Equation} 
-In this case we look at a rod of unit length with each end in ice.\\
-The rod is heat insulated along its length so that temperature changes occur through
-heat conduction along its length and heat transfer at its ends, where w denotes
-temperature.\\
 
-\textbf{Simple case}\\
-Given that the ends of the rod are kept in contact with ice and the initial temperature
-distribution is non dimensional form is
-\begin{enumerate}
-\item $U=2x$ for $0\leq x \leq \frac{1}{2}$, 
-\item $U=2(1-x)$ for $\frac{1}{2}\leq x \leq 1$. 
-\end{enumerate}
-In other words we are seeking a numerical solution of
-\[\frac{\partial U}{\partial t}=\frac{\partial^2U }{\partial x^2}\]
-which satisfies
-\begin{enumerate}
-\item $U=0$ at $x=0$ for all $t>0$ (the boundary condition)
-\item $U=2x$ for $0\leq x \leq \frac{1}{2}$ for t=0
-$U=2(1-x)$ for $\frac{1}{2}\leq x \leq 1$ for t=0 (the initial condition)
-\end{enumerate}
-The problem is symmetric with respect to $x=0.5$ so we need the solution only for $0\leq x \leq \frac{1}{2}$
 \begin{example}
 \subsubsection{Explicit FTCS method for the Heat Equation with $r=\frac{1}{10}$}
 Let $h=\frac{1}{5}$ and $k=\frac{1}{250}$ so that $r=\frac{k}{h^2}=\frac{1}{10}$
