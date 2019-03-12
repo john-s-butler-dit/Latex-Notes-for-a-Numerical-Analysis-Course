@@ -1,0 +1,166 @@
+\chapter{Hyperbolic equations}
+First-order scalar equation
+\begin{equation}
+\label{hyper 1}
+\begin{array}{cc}
+\frac{\partial U}{\partial t} =-a\frac{\partial U}{\partial x}
+& x \in R \ \ t >0\\
+U(x,0)= U_0(x) & x \in R\end{array} \end{equation}
+where $a$ is a positive real number. Its solution is given by
+\[U(x,t) = U_0(x-at) \ \ \ \ t \geq 0 \] 
+and represents a traveling wave with velocity $a$. The curves $(x(t),t)$ in 
+the plane $(x,t)$ are the characteristic curves. They are the straight lines 
+$x(t)=x_0+at$, $t >0$.
+The solution of (\ref{hyper 1}) remains constant along them.\\
+For the more general problem 
+ 
+\begin{equation}
+\label{hyper}
+\begin{array}{cc}
+\frac{\partial U}{\partial t}+ a\frac{\partial U}{\partial x}+a_0 = f 
+& x \in R \ \ t >0\\
+U(x,0)= U_0(x) & x \in R\end{array} \end{equation}
+where 
+$a$, $a_0$ and $f$ are given functions of the variables $(x,t)$, the characteristic
+curves are still defined as before. In this case the solutions of (\ref{hyper})
+satisfy along the characteristics the following differential equation
+\[\frac{du}{dt}=f-a_0u \mbox{ on } (x(t),t) \]
+\begin{example}
+Burgers equation
+\[\frac{\partial u}{\partial t}+ u\frac{\partial u}{\partial x} =0 \]
+This is a non-trivial non-linear hyperbolic equation. Taking initial condition
+\[ u(x,0) = u_0(x) = \left\{ \begin{array}{cc} 
+1 & x_0\leq 0 \\
+1-x & 0\leq x_0\leq 1 \\
+0 & x_0\geq 1 
+ \end{array} \right.\]
+the characteristic line issuing from the point $(x_0,0)$ is given by
+\[ x(t) = x_0+tu_0(x_0) = \left\{ \begin{array}{cc} 
+x_0+t& x_0\leq 0 \\
+x_0+t(1-x_0) & 0\leq x_0\leq 1 \\
+x_0 & x_0\geq 1 
+ \end{array} \right.\]
+\end{example}
+\section{The Wave Equation}
+Consider the second-order hyperbolic equation
+\begin{equation}
+\label{wave}
+\frac{\partial^2 U}{\partial t^2} - \gamma \frac{\partial^2 U}{\partial x^2}=f \ \ \ x \in (\alpha,\beta), \ \ t>0\end{equation}
+with initial data
+\[U(x,0) = u_0(x) \mbox{   and   } \frac{\partial U}{\partial t}(x,0)=v_0(x), \ \ x\in (\alpha,\beta) \]
+and boundary data
+\[U(\alpha,t) = 0 \mbox{   and   } U(\beta,t)=0, \ \ t>0 \]
+In this case, $U$ may represent the transverse displacement of an elastic vibrating 
+string of length $\beta-\alpha$, fixed at the endpoints and $\gamma$ is a coefficient
+depending on the specific mass of the string and its tension. The spring is subject to a vertical force of density $f$.\\
+
+The functions $u_0(x)$ and $v_0(x)$ denote respectively the initial displacement and initial velocity of the string.\\
+The change of variables
+\[\omega_1=\frac{\partial U}{\partial x}, \ \ \ \omega_2 =\frac{\partial U}{\partial t} \]
+transforms (\ref{wave}) into 
+\[
+\frac{\partial \hat{\omega}}{\partial t} +A\frac{\partial \hat{\omega}}{\partial x}= \mathbf{0}
+\]
+where
+\[\hat{\omega}=\left[\begin{array}{c}\omega_1\\ \omega_2\end{array} \right] \]
+Since the initial conditions are $\omega_1(x,0)=u'_0(x)$ and $\omega_2(x,0)=v_0(x)$.\\
+\subsection*{Aside}
+Notice that replacing $\frac{\partial^2 u}{\partial t^2}$ by $t^2$, $\frac{\partial^2u}{\partial x^2}$ by $x^2$ and $f$ by 1, the wave equation becomes
+\[t^2-\gamma^2 x^2=1 \]
+which represents an hyperbola in $(x,t)$ plane. Proceeding analogously in the case
+of the heat equation we end up with 
+\[t-x^2=1 \]
+which represents a parabola in the $(x,t)$ plane. Finally, for the Poisson
+equation we get
+\[x^2+y^2=1 \]
+which represents an ellipse in the $(x,y)$ plane.\\
+Due to the geometric interpretation above, the corresponding differential
+operators are classified as hyperbolic, parabolic and elliptic.
+\section{Finite Difference Method for Hyperbolic equations}
+As always we discretise the domain by space-time finite difference.  To this aim,
+the half-plane $\{(x,t): -\infty <x<\infty, t>0 \}$ is discretised by choosing
+a spatial grid size $\Delta x$, a temporal step $\Delta t$ and the grid
+points $(x_j,t^n)$ as follows
+\[x_j=j\Delta x  \ \ \ \ j \in Z, \ \ t^n=n\Delta t \ \ \ \ n \in N \]
+and let 
+\[\lambda =\frac{\Delta t}{\Delta x}. \]
+\subsection{Discretisation of the scalar equation }
+Here are some explicit methods 
+\begin{itemize}
+\item
+Forward Euler/centered
+\[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1})\]
+\item
+Lax-Friedrichs
+\[ u^{n+1}_j=\frac{u^{n}_{j+1}+u_{j-1}^n}{2}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1})\]
+\item
+Lax-Wendroff
+\[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1})+\frac{\lambda}{2}a^2(u^{n}_{j+1}-2u_{j}^n+u^{n}_{j-1})\]
+\item
+Upwind
+\[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}(u^{n}_{j+1}-u^{n}_{j-1})+\frac{\lambda}{2}|a|(u^{n}_{j+1}-2u_{j}^n+u^{n}_{j-1})
+\]
+\end{itemize}
+
+The last three methods can be obtained from the forward Euler/centered method by
+adding a term proportional to a numerical approximation of a second derivative term so that they can be written in the equivalent form
+\[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1})+\frac{1}{2}k\frac{(u^{n}_{j+1}-2u_{j}^n+u^{n}_{j-1})}{(\Delta x)^2}\]
+where $k$ is an artificial viscosity term.\\
+An example of an implicit method is the backward Euler/ centered scheme
+\[u^{n+1}_j+\frac{\lambda}{2}a(u_{j+1}^{n+1} - u_{j-1}^{j+1})=u_{j}^n \]
+
+\section{Analysis of the Finite Difference Methods}
+\section{Consistency}
+A numerical method is convergent if 
+\[\lim_{\Delta t,\Delta x \rightarrow 0} \max_{j,n}|U(x_j,t^n)-w_j^n| \] 
+The local truncation error at $x_j,t^n$ is defined as
+\[\tau_j^n = L(U^n_j) \]
+the truncation error is 
+\[\tau(\Delta t, \Delta x) = \max_{j,n}|\tau^n_j| \]
+When $\tau(\Delta t, \Delta x)$ goes to zero as $\Delta t$ and $\Delta x$ tend to
+zero independently is said to be consistent.
+\section{Stability}
+\section{Courant Freidrich Lewy Condition}
+A method is said to be stable if, for any $T$ here exist a constant $C_T>0$
+and $\delta_0$ such that
+\[|| \mathbf{u}^n ||_{\Delta}\leq C_T ||\mathbf{u}^0||_{\Delta} \]
+for any $n$ such that $n\Delta t \leq T$ and for any $\Delta t, \Delta x$ such that $0 < \Delta t \leq \delta_0,0 < \Delta x \leq \delta_0$. We have denoted by
+$ 
+|| . ||_{\Delta}$ a suitable discrete norm.
+
+Forward Euler/centered
+\[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1})\]
+Truncation error
+\[O(\Delta t , (\Delta x)^2) \]
+For an explicit method to be stable we need
+\[|a\lambda| = \left|a\frac{\delta t}{\delta x}\right| \leq 1 \]
+this is known as the Courant Freidrich Lewy condition.\\
+Using  Von Neumann stability analysis we can show that the method is stable
+under the Courant Freidrich Lewy condition.\\
+
+\subsection{von Neumann stability for the Forward Euler}
+\[u_j^n = e^{i\beta j \Delta x} \xi^n \]
+where 
+\[\xi = e^{\alpha \Delta t}  \]
+It is sufficient to show 
+\[|\xi| \leq 1 \]
+\[ \xi^{n+1}e^{i\beta(j)\Delta x}=\xi^{n}e^{i\beta(j)\Delta x}+\frac{\lambda}{2}a(\xi^{n}e^{i\beta(j+1)\Delta x}-\xi^{n}e^{i\beta(j-1)\Delta x})\]
+\[ \xi = 1-\frac{\lambda}{2}a(e^{i\beta\Delta x}-e^{-i\beta\Delta x})\]
+\[ \xi = 1-i\frac{\lambda}{2}a(2sin(\beta \Delta x)) \]
+\[ \xi = 1-i\lambda a(sin(\beta \Delta x)) \]
+\[ |\xi| = \sqrt{1+(\lambda a(sin(\beta \Delta x)))^2} \]
+Hence
+\[ \xi>1\]
+therefore the method is unstable for the Courant Freidrich Lewy.
+
+\subsection{von Neumann stability for the Lax-Friedrich}
+
+
+\[ \xi^{n+1}e^{i\beta(j)\Delta x}=\frac{\xi^{n}e^{i\beta(j+1)\Delta x}+\xi^{n}e^{i\beta(j-1)\Delta x}}{2}+\frac{\lambda}{2}a(\xi^{n}e^{i\beta(j+1)\Delta x}-\xi^{n}e^{i\beta(j-1)\Delta x})\]
+\[ \xi = \frac{e^{i\beta\Delta x}-e^{-i\beta\Delta x}}{2}+\frac{\lambda}{2}a(e^{i\beta\Delta x}-e^{-i\beta\Delta x})\]
+\[ \xi = \frac{1+\lambda a}{2}e^{i\beta\Delta x}+\frac{1-\lambda a}{2}e^{-i\beta\Delta x} \]
+\[ \xi = \cos(\beta \Delta x)+i\lambda a\sin(\beta \Delta x) \]
+\[ |\xi|^2 \leq (\cos(\beta \Delta x))^2+(a \lambda)^2(\sin(\beta \Delta x))^2 \]
+Hence
+\[ \xi<1\]
+for $a \lambda \leq 1$.

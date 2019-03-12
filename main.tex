@@ -1,0 +1,170 @@
+% book example for classicthesis.sty
+\documentclass[
+  % Replace twoside with oneside if you are printing your thesis on a single side
+  % of the paper, or for viewing on screen.
+  oneside,
+  %twoside,
+  11pt, a4paper,
+  footinclude=true,
+  headinclude=true,
+  cleardoublepage=empty
+]{scrbook}
+
+\usepackage{lipsum}
+\usepackage[linedheaders,parts,pdfspacing]{classicthesis}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{acronym}
+\usepackage{makeidx} 
+\usepackage[final]{graphics}
+\usepackage{graphicx}
+\graphicspath{ {FIGURES/} }
+\usepackage[dvips]{epsfig}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{rotating}
+\usepackage{afterpage}
+\usepackage{etoolbox}
+\usepackage{xcolor}
+\usepackage{framed}
+\usepackage{float}
+
+\restylefloat{figure}
+\restylefloat{table}
+\def\ve{\varepsilon}
+\def\va{\varepsilon}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{Example}[theorem]{Example}
+
+\usepackage{mdframed}
+\newcounter{examplecounter}
+\newenvironment{example}{\begin{mdframed}[backgroundcolor=lightgray]\begin{quote}%
+    \refstepcounter{examplecounter}%
+  \textbf{Example \arabic{examplecounter}}%
+  \quad
+  
+}{%
+\end{quote}\end{mdframed}%
+}
+
+
+\colorlet{shadecolor}{lightgray!25}
+\makeatletter
+% A command to create the new List of Definitions
+\newcommand\listoftheorems{%
+  \chapter*{List Of Theorems}\@starttoc{loth}}
+  
+\newenvironment{definition}[1][Definition]  {\begin{trivlist}\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+
+
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+
+\makeatletter
+% A command to create the new List of Definitions
+\newcommand\listofdefinitions{%
+  \chapter*{List Of Definitions}\@starttoc{lod}}
+\newcommand\listofexamples{%
+  \chapter*{List Of Examples}\@starttoc{loe}}
+
+\makeatother
+% initial definitions to save the chapter info (name and number)
+\def\thischaptertitle{}
+\def\thischapternumber{}
+
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+
+\title{Numerical Methods for Differential Equations}
+%\title{Introduction to Numerical Methods}
+\author{John S Butler}
+\date{}
+\makeindex 
+
+\newcommand{\addtoindex}[1]{#1\index{#1}}
+
+\usepackage[utf8]{inputenc}
+ 
+\usepackage{listings}
+\usepackage{color}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
+
+
+
+\begin{document}
+
+%\maketitle
+
+%\include{FrontBackMatter/abstract}
+%\include{FrontBackMatter/dedication}
+%\include{FrontBackMatter/acknowledgements}
+%\include{FrontBackMatter/declaration}
+\include{FrontBackMatter/contents}
+
+%\part{Approximation Methods}
+
+
+%\include{APPROXIMATION_METHODS/ChapterApprox}
+%\part{LinearSystems}
+
+%\include{LINEAR_SYSTEMS/ChapterLinearSystems}
+
+\part{Numerical Solutions to Ordinary Differential Equations}
+\part{Initial Value Problems}
+\include{IVP/ChapterIVP}
+\include{IVP/HigherOrderTaylor}
+\include{IVP/RungeKutta}
+\include{IVP/Multi-step}
+\include{IVP/IVPstability}
+\include{IVP/ReviewProblemSheet}
+
+\part{Numerical Solutions to Boundary Value Problems}
+\include{BVP/ChapterBVP}
+\part{Numerical Solutions to Partial Differential Equations}
+
+\include{PDE/ChapterPDE}
+\include{PDE/Difference_operators}
+\include{PDE/Parabolic_Equations_4806}
+\include{PDE/PDE_Questions}
+\include{PDE/Elliptic_Equations_4806}
+\include{PDE/Elliptic_questions}
+\include{PDE/Hyperbolic_Equations}
+\include{PDE/Variational_Methods}
+\include{PDE/PDE_EXAM_QUESTIONS}
+\include{biblio}
+\chapter{Index}
+\printindex
+
+\end{document}

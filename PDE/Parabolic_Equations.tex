@@ -1,0 +1,736 @@
+\chapter{Parabolic equations}
+We will look at the \addtoindex{Heat equation} as our sample parabolic equation.
+\[ \frac{\partial U}{\partial T}=K\frac{\partial^2U }{\partial X^2} \mbox{ on } \Omega \]
+and 
+\[ U=g(x,y) \mbox{ on the boundary } \delta\Omega \]
+this can be transformed without loss of generality by a non-dimensional transformation to
+
+\begin{equation}\label{heat} \frac{\partial U}{\partial t}=\frac{\partial^2U }{\partial x^2}\end{equation}
+with the domain
+\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}. \]
+
+\section{An explicit method for the heat eqn}
+The equation difference equation of the differential equation (\ref{heat}) is
+\begin{equation}
+\frac{w_{ij+1}-w_{ij}}{t_{j+1}-t_{j}}=\frac{w_{i+1j}-2w_{ij}+w_{i-1j}}{h^2}
+\end{equation}
+when approaching this we have divided up the area into
+two uniform meshes one in the x direction and the other in the t-direction.
+We define $t_j=jk$ where k is the step size in the time direction.\\
+We define $x_i=ih$ where h is the step size in the space direction.\\
+$w_{ij}$ denotes the numerical approximation of $U$ at $(x_i,t_j)$.\\
+Rearranging the equation we get
+\begin{equation}\label{disc heat}
+w_{ij+1}=rw_{i-1j}+(1-2r)w_{ij}+rw_{i+1j}
+\end{equation}
+where $r=\frac{k}{h^2}$.\\
+This gives the formula for the unknown term $w_{ij+1}$ at the $(ij+1)$ mesh points
+in terms of terms along the jth time row.\\
+Hence we can calculate the unknown pivotal values of w along the first row $t=k$ or $j=1$ in terms of the known boundary conditions.
+\begin{example}
+In this case we look at a rod of unit length with each end in ice.\\
+The rod is heat insulated along its length so that temp changes occur through
+heat conduction along its length and heat transfer at its ends, where w denotes
+temp.\\
+\textbf{Simple case}\\
+Given that the ends of the rod are kept in contact with ice and the initial temp
+distribution is non dimensional form is
+\begin{enumerate}
+\item $U=2x$ for $0\leq x \leq \frac{1}{2}$ 
+\item $U=2(1-x)$ for $\frac{1}{2}\leq x \leq 1$ 
+\end{enumerate}
+In other words we are seeking a numerical solution of
+\[\frac{\partial U}{\partial t}=\frac{\partial^2U }{\partial x^2}\]
+which satisfies
+\begin{enumerate}
+\item U=0 at x=0 for all $t>0$ (the boundary condition)
+\item $U=2x$ for $0\leq x \leq \frac{1}{2}$ for t=0
+$U=2(1-x)$ for $\frac{1}{2}\leq x \leq 1$ for t=0 (the initial condition)
+\end{enumerate}
+The problem is symmetric with respect to $x=0.5$ so we need the solution only for $0\leq x \leq \frac{1}{2}$
+\begin{enumerate}
+\item[\textbf{Case 1}]
+Let $h=\frac{1}{10}$ and $k=\frac{1}{1000}$ so that $r=\frac{k}{h^2}=\frac{1}{10}$
+difference equation (\ref{disc heat}) becomes
+\[
+w_{ij+1}=\frac{1}{10}(w_{i-1j}+8w_{ij}+w_{i+1j})
+\]
+to solve for $w_{51}$ we have
+\[w_{51}=\frac{1}{10}(w_{40}+8w_{50}+w_{60})=\frac{1}{10}(0.8+8*1+0.8)=0.96 \]
+\begin{center}
+\begin{tabular}{l|ccccccc}
+j/x&0&0.1&0.2&0.3&0.4&0.5&0.6\\ \hline
+0&0&0.2&0.4&0.6&0.8&1.0&0.8\\
+1&0&0.2&0.4&0.6&0.8&0.96&0.8
+\end{tabular}
+\end{center}
+The analytical solution of the \addtoindex{PDE} satisfying these conditions is
+\[ U=\frac{8}{\pi^2}\sum_{n=1}^{\infty}\frac{1}{n^2}sin(\frac{1}{2}n\pi)sin(\pi x) e^{-n^2\pi^2t} \]
+Comparison to the solution with the difference solution it is reasonably accurate.\\
+\item[\textbf{Case 2}]
+Let $h=\frac{1}{10}$ and $k=\frac{1}{200}$ so that $r=\frac{k}{h^2}=\frac{1}{2}$
+difference equation (\ref{disc heat}) becomes
+\[
+w_{ij+1}=\frac{1}{2}(w_{i-1j}+w_{i+1j})
+\]
+This method also gives an acceptable approximation to the solution of the \addtoindex{PDE}.
+\item[\textbf{Case 3}]
+Let $h=\frac{1}{10}$ and $k=\frac{1}{100}$ so that $r=\frac{k}{h^2}=1$
+difference equation (\ref{disc heat}) becomes
+\[
+w_{ij+1}=w_{i-1j}-w_{ij}+w_{i+1j}
+\]
+Considered as a solution to the \addtoindex{PDE} this is meaningless although it is the correct
+solution of the difference equation with respect to the initial conditions and the boundary conditions.\\
+This will be discussed later.
+
+\end{enumerate}
+$\diamond$
+\end{example}
+\section{Crank Nicholson Implicit method}
+Since the implicit method requires that $k\leq \frac{1}{2}h^2$ a new method was
+needed which would work for all finite values of r.\\
+They considered the partial differential equation as being satisfied at the
+midpoint $\{ih,(j+\frac{1}{2})k \}$ and replace $\frac{\delta^2 U}{\delta x^2}$ by the
+mean of its finite difference approximations at the jth and (j+1)th time levels.
+In other words they approximated the equation
+\[ \left(\frac{\delta U}{\delta t}\right)_{i,j+\frac{1}{2}}
+= 
+ \left(\frac{\delta^2 U}{\delta x^2}\right)_{i,j+\frac{1}{2}}\]
+by
+\[\frac{w_{i,j+1}-w_{ij}}{k}=\frac{1}{2}\left\{\frac{w_{i+1j+1}-2w_{ij+1}+w_{i-1j+1}}{h^2}+
+\frac{w_{i+1j}-2w_{ij}+w_{i-1j}}{h^2}
+\right\}
+\]
+giving
+\begin{equation}
+\label{2 crank}
+-rw_{i-1j+1}+(2+2r)w_{ij+1}-rw_{i+1j+1}
+=
+rw_{i-1j}+(2-2r)w_{ij}+rw_{i+1j}
+\end{equation}
+
+with $r=\frac{k}{h^2}$.\\
+In general the LHS contains 3 unknowns and the RHS 3 known pivotal values.
+Figure. See notes.\\
+If there are N intervals mesh points along each row then for j=0 and i=1,..,N it 
+gives N simultaneous equations for N unknown pivotal values along the first row.\\
+\begin{example}
+\[\frac{\delta U}{\delta t}=\frac{\delta^2 U}{\delta x^2} \ \ 0<x<1 \ \ t>0 \]
+where
+\begin{itemize}
+\item
+$U=0$,  $x=0$  and $x=1$ $t\geq0$;
+\item
+$U=2x$  $0\leq x \leq \frac{1}{2}$ and $t=0$;
+\item
+$U=2(1-x)$  $ \frac{1}{2}\leq x \leq 1$ and $t=0$;
+\end{itemize}
+Choosing $h=\frac{1}{10}$ and $k=\frac{1}{100}$ and $r=1$, while all finite values
+of r are valid a large value of h will lead to inaccurate solution.\\
+(\ref{2 crank}) becomes
+\[
+-w_{i-1j+1}+4w_{ij+1}-w_{i+1j+1}
+=
+w_{i-1j}-w_{i+1j}
+\]
+Due to symmetry $U_{4j}=U_{6j}$ so we only need consider $w_{0j},...,w_{5j}$
+and for notation simplicity we drop the j when dealing with a specific case.\\
+Considering when j=0.
+\[-0+4w_1-w_2 = 0+0.4 \]
+\[-w_1+4w_2-w_3 = 0.2+0.6 \]
+\[-w_2+4w_3-w_4 = 0.4+0.8 \]
+\[-w_3+4w_4-w_5 = 0.6+1.0 \]
+\[-2w_4+4w_5 = 0.8+0.8 \]
+using the Thomas algorithm we get $w_1=0.1989$, $w_2=0.3956$, $w_3=0.5834$, $w_4=0.7381$
+and $w_5 = 0.7691$, and so forth.\\
+This yields a good numerical solution.
+$\diamond$
+\end{example}
+\section{The Theta Method}
+The Theta Method is a generalization of the Crank-Nicholson method and expresses
+our partial differential equation as
+\begin{equation}
+\label{2 theta}
+\frac{w_{i,j+1}-w_{ij}}{k}=\left\{\theta\left(\frac{w_{i+1j+1}-2w_{ij+1}+w_{i-1j+1}}{h^2}\right)+
+(1-\theta)\left(
+\frac{w_{i+1j}-2w_{ij}+w_{i-1j}}{h^2}
+\right)
+\right\}
+\end{equation}
+\begin{itemize}
+\item
+when $\theta=0$ we get the explicit scheme,
+\item
+when $\theta=\frac{1}{2}$ we get the Crank-Nicholson scheme,
+\item
+and $\theta=1$ we get fully implicit backward finite difference method.
+\end{itemize}
+The equations are unconditionally valid for $\frac{1}{2}\leq \theta \leq 1$.
+For  $0\leq \theta < \frac{1}{2}$ we must have
+\[r\leq \frac{1}{2(1-2\theta)} \].
+
+\section{Derivative Boundary Conditions}
+Boundary conditions expressed in terms of derivatives occur frequently.
+\textbf{Example}
+\[
+\frac{\partial U}{\partial x} = H(U-v_0) \ \ \ at \ x=0\]
+where H is a positive constant and $v_0$ is the surrounding temp.\\
+
+How do we deal with this type of boundary condition?\\
+
+\begin{enumerate}
+\item
+By using forward difference for $\frac{\partial U}{\partial x}$, we have
+\[
+\frac{w_{1j}-w_{0j}}{h_x} = H(w_{0j}-v_0)\]
+where $h_x=x_1-x_0$.  This gives us one extra equation for the temp $w_{ij}$.\\
+\item
+If we wish to represent $\frac{\partial U}{\partial x}$ more accurately at x=0, we use a central difference formula.  It is necessary to introduce a fictitious
+temp $w_{-1j}$ at the external mesh points $(-h_x,jk)$.  The temp $w_{-1j}$ is unknown and needs another equation.  This is obtained by assuming that the heat 
+conduction equation is satisfied at the end points.  The unknown $w_{-1j}$ can be 
+eliminated between these equations.\\
+\end{enumerate}
+\begin{example}
+%{Example}\\
+Solve for the equation
+\[\frac{\partial U}{\partial t} =\frac{\partial^2 U}{\partial x^2} \]
+satisfying the initial condition
+\[U=1 \mbox{ for } 0\leq x \leq 1 \mbox{ when } t=0 \]
+and the boundary conditions
+\[\frac{\partial U}{\partial x} = U \mbox{ at } x=0 \mbox{ for all t} \]
+\[\frac{\partial U}{\partial x} = -U \mbox{ at } x=1 \mbox{ for all t}. \]
+\begin{itemize}
+\item[\textbf{Case 1}] 
+Using forward difference approximation for the derivative boundary condition
+and the explicit method to approximate the \addtoindex{PDE}.\\
+Our difference equation is,
+\[
+\frac{w_{i,j+1}-w_{ij}}{k}=
+\frac{w_{i+1j}-2w_{ij}+w_{i-1j}}{h^2}
+\]
+\begin{equation}
+\label{explicit forward}
+w_{ij+1}=w_{ij} +r(w_{i-1j}-2w_{ij}+w_{i+1j})
+\end{equation}
+where $r=\frac{k}{h^{2}_x}$.\\
+At i=1, (\ref{explicit forward}) is,
+\begin{equation}
+\label{explicit forward i=1}
+w_{1j+1}=w_{1j} +r(w_{0j}-2w_{1j}+w_{2j})
+\end{equation}
+The boundary condition at x=0 is $\frac{\partial U}{\partial x} = U$ in terms of
+forward difference this is 
+\[ \frac{w_{1j}-w_{j0}}{h_x} = w_{0j}\]
+rearranging 
+\begin{equation}
+\label{forward bc}
+w_{0j}=\frac{w_{1j}}{1+h_x}
+\end{equation}
+Using (\ref{forward bc}) and (\ref{explicit forward i=1}) to eliminate we get,
+\[w_{1j+1} = \left(1-2r+\frac{r}{1+h_x}\right)w_{1j}+rw_{2j}.\]
+It will be proven, that the scheme is valid for $0\leq r \leq \frac{1}{2}$.
+Choose $h_s=\frac{1}{10}$ and $k=\frac{1}{400}$ such that $r=\frac{1}{4}$.\\
+The equations become
+\[w_{1j+1}=\frac{8}{11}w_{1j}+\frac{1}{4}w_{2j} \]
+\[w_{0j+1}=\frac{10}{11}w_{1j+1}\]
+\[w_{ij+1}=\frac{1}{4}(w_{i-1j}+2w_{ij}+w_{i+1j}) \ \ i=2,3,4 \]
+and
+\[w_{5j+1}=\frac{1}{4}(2w_{4j}+2w_{5j}) \ \ \mbox{by symmetry} \]
+Solving with an initial guess of U=1, at j=0 we have
+\[w_{11}=\frac{8}{11}1+\frac{1}{4}1=0.9773 \]
+\[w_{01}=\frac{10}{11}0.9773=0.8884\]
+\[w_{i1}=\frac{1}{4}(1+2+1)=1 \ \ i=2,3,4 \]
+and
+\[w_{5j+1}=\frac{1}{4}(2+2)=1 \ \ \mbox{by symmetry} \]
+
+\item[\textbf{Case 2}]
+Using central difference approximation for the derivative boundary condition
+and the explicit method to approximate the \addtoindex{PDE}.\\
+Our difference equation is as in (\ref{explicit forward}).\\
+At i=0 we have
+\begin{equation}
+\label{explicit central}
+w_{0j+1}=w_{0j} +r(w_{-1j}-2w_{0j}+w_{1j})
+\end{equation}
+The boundary condition at x=0, in terms of central differences can be written as
+\begin{equation}
+\label{boundary central}
+\frac{w_{1j}-w_{-1j}}{2h_x}=w_{0j} 
+\end{equation}
+Using (\ref{boundary central}) and (\ref{explicit central}) to eliminate the fictitious term $w_{-1j}$ we get,
+\[
+w_{0j+1}=w_{0j} +2r((-1-h_x)w_{0j}+w_{1j})
+\]
+As before let $h_x=0.1$. Then at x=1 out difference equation becomes
+\[w_{10j+1}=w_{10j} +r(w_{9j}-2w_{10j}+w_{11j})\]
+and the boundary condition is 
+\[
+\frac{w_{11j}-w_{9j}}{2h_x}=w_{10j} \]
+Eliminating the fictitious term $w_{11j}$ we have 
+\[
+w_{10j+1}=w_{10j}+2r(w_{9j}-(1+h_x)w_{10j}) \]
+Choosing $r=\frac{1}{4}$ we have 
+\[w_{1j+1}=\frac{1}{2}(0.9w_{0j}+w_{1j}) \]
+\[w_{ij+1}=\frac{1}{4}(w_{i-1j}+2w_{ij}+w_{i+1j}) \ \ i=1,2,3,4 \]
+and
+\[w_{5j+1}=\frac{1}{4}(2w_{4j}+2w_{5j}) \ \ \mbox{by symmetry} \]
+With the initial condition U=1 and k=0.025, at j=0 we have
+\[w_{01}=\frac{1}{2}(0.9+1)=0.95 \]
+\[w_{i1}=\frac{1}{4}(1+2+1)=1 \ \ i=1,2,3,4 \]
+and
+\[w_{5j+1}=\frac{1}{4}(2+2)=1 \ \ \mbox{by symmetry} \]
+While this method yields more accurate results, both are acceptable.
+\item[\textbf{Case 3}]
+Using central difference approximation for the derivative boundary condition
+and the Crank-Nicholson method to approximate the \addtoindex{PDE}.\\
+The difference equation is,
+\[\frac{w_{i,j+1}-w_{ij}}{k}=\frac{1}{2}\left\{\frac{w_{i+1j+1}-2w_{ij+1}+w_{i-1j+1}}{h^2}+
+\frac{w_{i+1j}-2w_{ij}+w_{i-1j}}{h^2}
+\right\}
+\]
+giving
+\begin{equation}
+\label{2 crank central}
+-rw_{i-1j+1}+(2+2r)w_{ij+1}-rw_{i+1j+1}
+=
+rw_{i-1j}+(2-2r)w_{ij}+rw_{i+1j}
+\end{equation}
+with $r=\frac{k}{h^2}$.\\
+The boundary condition at x=0, in terms of central differences can be written as
+\[
+\frac{w_{1j}-w_{-1j}}{2h_x}=w_{0j} 
+\]
+Rearranging we have
+\begin{equation}
+\label{bc central j}
+w_{-1j}=w_{1j}-2h_xw_{0j}
+\end{equation}
+and
+\begin{equation}
+\label{bc central j+1}
+w_{-1j+1}=w_{1j+1}-2h_xw_{0j+1}
+\end{equation}
+Let j=0 and i=0 the difference equation becomes
+\begin{equation}
+\label{2 crank central i=0 j=0}
+-rw_{-11}+(2+2r)w_{01}-rw_{11}
+=
+rw_{-10}+(2-2r)w_{00}+rw_{10}
+\end{equation}
+Using, (\ref{bc central j}), (\ref{bc central j+1}) and (\ref{2 crank central i=0 j=0}) we can eliminate the fictious terms $w_{-1j}$ and $w_{-1j+1}$.  Also due to symmetry
+around $\frac{1}{2}$ we have $w_{4j}=w_{6j}$.  Choosing $h_x=0.1$, $k=0.01$ and $r=1$, our equations become
+\[2.1w_{0,j+1}-w_{1j+1}=-0.1w_{0j}+w_{1j} \]
+\[-w_{i-1j+1}+4w_{ij+1}-w_{i+1j+1} = w_{i-1j}+w_{i+1j} \ \ \ i=1,2,3,4\]
+\[-w_{4j+1}+2w_{5j+1} = w_{4j}\]
+For the time step j=0 we have 
+\[2.1w_{0}-w_{1}=0.9 \]
+\[-w_{i-1}+4w_{i}-w_{i+1} = 2 \ \ \ i=1,2,3,4\]
+\[-w_{4}+2w_{5} = 1\]
+This method yields very good results.
+\end{itemize}
+\end{example}
+\section{Local Truncation Error and Consistency}
+\section{Local Truncation}
+Let $F_{ij}(w)$ represent the difference equation approximating the \addtoindex{PDE} at the 
+i jth point with exact solution $w$.\\
+If $w$ is replaced by $U$ at the mesh points of the difference equation where $U$ is the exact solution of the \addtoindex{PDE} the value of $F_{ij}(U)$ is the local truncation
+error $T_{ij}$ in at the $i j$ mesh pont.\\
+Using Taylor expansions it is easy to express $T_{ij}$ in terms of $h_{x}$ and $k$ and partial derivatives of U at $(ih_x,jk)$.\\
+Although $U$ and its derivatives are generally unknown it is worthwhile because
+it provides a method for comparing the local accuracies of different difference schemes approximating the \addtoindex{PDE}.
+\begin{example}
+The local truncation error of the classical explicit difference approach to 
+\[ \frac{\partial U}{\partial t} - \frac{\partial^2 U}{\partial x^2}=0\]
+with
+\[F_{ij}(w)=\frac{w_{ij+1}-w_{ij}}{k}-\frac{w_{i+1j}-2w_{ij}+w_{i-1j}}{h_x^2}=0
+\]
+is 
+\[T_{ij}=F_{ij}(U)=\frac{U_{ij+1}-U_{ij}}{k}-\frac{U_{i+1j}-2U_{ij}+U_{i-1j}}{h_x^2}=0\]
+By Taylors expansions we have
+\begin{eqnarray*}
+U_{i+1j}&=&U((i+1)h_x,jk)=U(x_i+h,t_j)\\
+&=&U_{ij}+h_x\left(\frac{\partial U}{\partial x} \right)_{ij}+\frac{h_x^2}{2}\left(\frac{\partial^2 U}{\partial x^2} \right)_{ij}+\frac{h_x^3}{6}\left(\frac{\partial^3 U}{\partial x^3} \right)_{ij} +...\\
+U_{i-1j}&=&U((i-1)h_x,jk)=U(x_i-h,t_j)\\
+&=&U_{ij}-h_x\left(\frac{\partial U}{\partial x} \right)_{ij}+\frac{h_x^2}{2}\left(\frac{\partial^2 U}{\partial x^2} \right)_{ij}-\frac{h_x^3}{6}\left(\frac{\partial^3 U}{\partial x^3} \right)_{ij} +...\\
+U_{ij+1}&=&U(ih_x,(j+1)k)=U(x_i,t_j+k)\\
+&=&U_{ij}+k\left(\frac{\partial U}{\partial t} \right)_{ij}+\frac{k^2}{2}\left(\frac{\partial^2 U}{\partial t^2} \right)_{ij}+\frac{k^3}{6}\left(\frac{\partial^3 U}{\partial t^3} \right)_{ij} +...
+\end{eqnarray*}
+substitution into the expression for $T_{ij}$ then gives
+\begin{eqnarray*}
+T_{ij}&=&\left(\frac{\partial U}{\partial t} - \frac{\partial^2 U}{\partial x^2} \right)_{ij}+\frac{k}{2}\left(\frac{\partial^2 U}{\partial t^2} \right)_{ij}
+-\frac{h_x^2}{12}\left(\frac{\partial^4 U}{\partial x^4} \right)_{ij}\\
+& &	+\frac{k^2}{6}\left(\frac{\partial^3 U}{\partial t^3} \right)_{ij}
+-\frac{h_x^4}{360}\left(\frac{\partial^6 U}{\partial x^6} \right)_{ij}+ ...
+\end{eqnarray*}
+But U is the solution to the differential equation so
+\[\left(\frac{\partial U}{\partial t} - \frac{\partial^2 U}{\partial x^2} \right)_{ij}=0 \]
+the principal part of the local truncation error is 
+\[ \frac{k}{2}\left(\frac{\partial^2 U}{\partial t^2} \right)_{ij}
+-\frac{h_x^2}{12}\left(\frac{\partial^4 U}{\partial x^4} \right)_{ij}.\]
+Hence
+\[T_{ij}=O(k)+O(h_x^2)\]
+$\diamond$
+\end{example}
+\section{Consistency and Compatibility}
+It is sometimes possible to approximate a parabolic or hyperbolic equation with a
+finite difference scheme that is stable but which does not converge to the solution
+of differential equation as the mesh lengths tend to zero.  Such a scheme is called inconsistent or incompatible.\\
+This is useful when considering the theorem which states that is a linear finite
+difference equation is consistent with a properly posed linear IVP then stability guarantees convergence of $w$ to $U$ as the mesh lengths tend to zero.
+
+\begin{definition}
+Let $L(U)=0$ represent the \addtoindex{PDE} in the independent variables $x$ and $t$ with
+the exact solution U.\\
+Let $F(w)=0$ represent the approximate finite difference equation with exact 
+solution $w$.\\
+Let $v$ be a continuous function of x and t with sufficient derivatives to enable
+$L(v)$ to be evaluated at the point $(ih_x,jk)$.  Then the truncation error $T_{ij}(v)$ at $ (ih_x,jk)$ is defined by
+\[T_{ij}(v)=F_{ij}(v)-L(v_{ij})\]
+If $T_{ij}(v) \rightarrow 0$ as $h \rightarrow 0$,  $k \rightarrow 0$
+the difference equation is said to be consistent or compatible with the with the \addtoindex{PDE}.
+$\circ$
+\end{definition}
+Looking back at the previous example it follows that the classical explicit approximation to 
+\[\frac{\partial U}{\partial t} = \frac{\partial^2 U}{\partial x^2} \]
+is consistent with the difference equation.
+\begin{example}
+The equation
+\[\frac{\partial U}{\partial t} - \frac{\partial^2 U}{\partial x^2}=0 \]
+is approximated by the difference equation
+\[ \frac{w_{ij+1}-w_{ij-1}}{2k}-\frac{w_{i+1j}-2(\theta w_{ij+1}+(1-\theta)w_{ij-1})+w_{i-1j}}{h_x^2}\]
+has a truncation error of 
+\begin{eqnarray*}
+T_{ij}&=&\left(\frac{\partial U}{\partial t} - \frac{\partial^2 U}{\partial x^2} \right)_{ij}+\\
+& &
+\left\{\frac{k^2}{6}\frac{\partial^3 U}{\partial t^3} 
+-\frac{h_x^2}{12}\frac{\partial^4 U}{\partial x^4} 
+	+(2\theta-1)\frac{r}{h_x^2}\frac{\partial U}{\partial t} 
+-\frac{k^2}{h_x^2}\frac{\partial^2 U}{\partial t^2} \right\}_{ij}+\\
+& & O(\frac{k^3}{h_x^2},h_x^4,k^4)
+\end{eqnarray*}
+\begin{enumerate}
+\item{Case (i)}
+$k=rh$  As $h\rightarrow 0$
+\[
+T_{ij}=F_{ij}(U) \rightarrow 
+\left\{\frac{k^2}{6}\frac{\partial^3 U}{\partial t^3} 
+-\frac{h_x^2}{12}\frac{\partial^4 U}{\partial x^4} 
+	+(2\theta-1)\frac{r}{h_x^2}\frac{\partial U}{\partial t} 
+-\frac{k^2}{h_x^2}\frac{\partial^2 U}{\partial t^2} \right\}_{ij}
+\]
+When $\theta\not=\frac{1}{2}$ the third term tends to infinity.\\
+When $\theta=\frac{1}{2}$ the limiting values of $T_{ij}$ is 
+\[
+\frac{\partial U}{\partial t} - \frac{\partial^2 U}{\partial x^2} -r^2\frac{\partial^2 U}{\partial t^2 }=0
+\]
+Hence the difference equation is always inconsistent with $\frac{\partial U}{\partial t} - \frac{\partial^2 U}{\partial x^2}=0 $ when $k=rh$.
+\item{case (ii)}
+$k=rh^2$  As $h\rightarrow 0$
+\end{enumerate}
+$\diamond$
+\end{example}
+\section{Convergence and Stability}
+\begin{definition}
+By convergence we mean that the results of the method approach the analytical solution as $k$ and $h_x$ tends to zero.
+$\circ$
+\end{definition}
+\begin{definition}
+By stability we mean that errors at one stage of the calculations do not cause
+increasingly large errors as  the computations are continued.
+$\circ$
+\end{definition}
+\section{Analytical treatment of convergence}
+Assuming no round off error the only difference between the exact and the numerical result is error.
+Consider the equation
+\[ \frac{\partial U}{\partial t} = \frac{\partial^2 U}{\partial x^2} \ \ 0 < x <1 \ \ t>0 \]
+Let $U_{ij}$ represent the exact solution and $w_{ij}$ be the numerical solution of the difference equation.  Assuming no roundoff error the only difference between the two will be the error $e_{ij}$.
+\begin{example}
+Explicit finite difference approximation is 
+\[ \frac{w_{ij+1}-w_{ij}}{k} = \frac{w_{i-1j}-2w_{ij}+w_{i+1j}}{h^2_x}
+\]
+at the mesh points 
+\[w_{ij}=U_{ij}-e_{ij} \ \ \ w_{ij+1}=U_{ij+1}-e_{i+1j} \]
+Sub into the difference equation
+\[e_{ij+1}=re_{i-1j}+(1-2r)e_{ij}+re_{i+1j}+U_{ij+1}-U_{ij}+r(2U_{ij}-U_{i-1j}-U_{i+1j})\]
+By Taylors Thm we have
+\begin{eqnarray*}
+U_{i+1j}&=U(x_i+h,t_j)&=U_{ij}+h_x^2\left( \frac{\partial U}{\partial x}\right)_{ij}+\frac{h_x^2}{2} \frac{\partial^2 U}{\partial x^2}(x_i+\theta_1h,t_j) \\
+U_{i-1j}&=U(x_i+h,t_j)&=U_{ij}-h_x^2\left( \frac{\partial U}{\partial x}\right)_{ij}+\frac{h_x^2}{2} \frac{\partial^2 U}{\partial x^2}(x_i-\theta_2h,t_j) \\
+U_{i+1j}&=U(x_i,t_j+k)&=U_{ij}+k\frac{\partial U}{\partial t}(x_i,t_j+\theta_3k) 
+\end{eqnarray*}
+Where $0<\theta_1,    \theta_2,    \theta_3    <1$. Subbing into the original equation gives
+\[e_{ij+1}=re_{i-1j}+(1-2r)e_{ij}+re_{i+1j}
++k\left\{\frac{\partial U}{\partial x}(x_i,t_j+\theta_3k) 
+ -\frac{\partial^2 U}{\partial x^2}(x_i-\theta_4h,t_j) \right\}
+\]
+Where $-1<\theta_4,\theta_3<1$.\\
+This is a difference equation for $e_{ij}$ which we need not solve. Let $E_{j}$ denote the max value along the jth time row and M the maximum modulus of the expression in $\{\}$.\\
+When $r \leq \frac{1}{2}$ all coefficients of $e$ in the eqn are positive or
+zero so
+\begin{eqnarray*}
+|e_{ij+1}| &\leq & r|e_{i-1j}|+(1-2r)|e_{ij}|+r|e_{i+1j}|+kM\\
+ &\leq & rE_{j}+(1-2r)E_{j}+rE_{j}+kM\\
+&=&E_j+kM
+\end{eqnarray*}
+Also
+\[E_{j+1}\leq E_{j}+kM\leq(E_{j-1}+kM)+kM \leq ... \leq E_0 +(j+1)kM=t_{j+1}M\]
+Since we are dealing with non derivative boundary conditions $E_0=0$.
+When $h\rightarrow 0$ $k=rh^2$ also tends to 0 and M tends to
+\[\left(
+\frac{\partial U}{\partial t} - \frac{\partial^2 U}{\partial x^2}\right)_{ij}
+ \]
+Since the numerical method is consistent the value of M and therefore $E_{j+1}\rightarrow 0$.\\
+As $|U_{ij}-w_{ij}|\leq E_j$ we can say $w\rightarrow U$ as h tends to 0 when
+$r\leq \frac{1}{2}$.\\
+When $r>\frac{1}{2}$ it can be shown that the complimentary function tends to
+$\infty$ as h tend to 0.\\
+$\diamond$\\
+\end{example}
+This can also be applied to other methods.  Another approach is to look at the matrix form.
+\subsection{A more Analytical Argument}
+Let the solution domain of the \addtoindex{PDE} be the finite rectangle $0\leq x \leq 1$ and
+$0\leq t \leq T$ and subdivide it into a uniform rectangular mesh by the lines
+$x_i=ih$ for $i=0$ to $N$ and $t_{j}=jk$ for $j=0$ to $J$ it will be assumed that $h$ is related to $k$ by some relationship such as $k=rh$ or $k=rh^2$ with $r>0$ and finite so that as $h\rightarrow 0$ as $k \rightarrow 0$.\\
+Assume that the finite difference equation relating the mesh point values along the $(j+1)$th and jth row is 
+\[b_{i-1}w_{i-1j+1}+
+b_{i}w_{ij+1}+
+b_{i+1}w_{i+1j+1}
+=
+c_{i-1}w_{i-1j}+
+c_{i}w_{ij}+
+c_{i+1}w_{i+1j}\]
+where the coefficients are constant. If the boundary values at $i=0$ and $N$ for $j>0$ are known these $(N-1)$ equations for $i=1$ to $N-1$ can be written in 
+matrix form.
+\begin{eqnarray*}
+\left(\begin{array}{ccccccc}
+b_1&b_2&0&.&.&.&.\\
+b_1&b_2&b_3&0&.&.&.\\
+0&b_2&b_3&b_4&0&.&.\\
+.&.&.&.&.&.&.\\
+.&.&.&.&b_{N-3}&b_{N-2}&b_{N-1}\\
+.&.&.&.&.&b_{N-2}&b_{N-1}\\
+\end{array}\right)
+\left(\begin{array}{c}
+w_{1j+1}\\
+w_{2j+1}\\
+.\\
+.\\
+w_{N-2j+1}\\
+w_{N-1j+1}\\
+\end{array}\right)
+\\
+=
+\left(\begin{array}{ccccccc}
+c_1&c_2&0&.&.&.&.\\
+c_1&c_2&c_3&0&.&.&.\\
+0&c_2&c_3&c_4&0&.&.\\
+.&.&.&.&.&.&.\\
+.&.&.&.&c_{N-3}&c_{N-2}&c_{N-1}\\
+.&.&.&.&.&c_{N-2}&c_{N-1}\\
+\end{array}\right)
+\left(\begin{array}{c}
+w_{1j}\\
+w_{2j}\\
+.\\
+.\\
+w_{N-2j}\\
+w_{N-1j}\\
+\end{array}\right)
++
+\left(\begin{array}{c}
+c_0w_{0j}-b_0w_{0j+1}\\
+0\\
+.\\
+.\\
+0\\
+c_Nw_{Nj}-b_{N}w_{Nj+1}\\
+\end{array}\right)
+\end{eqnarray*}
+Which can be written as
+\[ B\mathbf{w}_{j+1}=C\mathbf{u}_j+\mathbf{d}_j \]
+Where B and C are of order $(N-1)$ $\mathbf{w}_j$ denotes a column vector and
+$\mathbf{d}_j$ denotes a column vector of boundary values.\\
+Hence
+\[ \mathbf{w}_{j+1}=B^{-1}C\mathbf{w}_j+B^{-1}\mathbf{d}_j. \]
+Expressed in a more conventional manner as
+\[ \mathbf{w}_{j+1}=A\mathbf{w}_j+\mathbf{f}_j \]
+Where $A=B^{-1}C$ and $\mathbf{f}_j =B^{-1}\mathbf{d}_j$.  Applied recursively this leads to
+\begin{eqnarray*}
+ \mathbf{w}_{j+1}&=&A\mathbf{w}_j+\mathbf{f}_j =A(A\mathbf{w}_{j-1}+\mathbf{f}_{j-1}) +\mathbf{f}_j \\
+&=&A(A\mathbf{w}_{j-1}+\mathbf{f}_{j-1}) +\mathbf{f}_j \\
+&=&A^2\mathbf{w}_{j-1}+A\mathbf{f}_{j-1} +\mathbf{f}_j \\
+&.&\\
+&.&\\
+&.&\\
+&=&A^{j+1}\mathbf{w}_0+A^j\mathbf{f}_0+A^{j-1}\mathbf{f}_1+...+\mathbf{f}_{j}
+\end{eqnarray*}
+where $\mathbf{w}_0$ is the vector with initial values and $\mathbf{f}_0,\mathbf{f}_1,...,\mathbf{f}_{j}$ are vectors of known boundary values.  When we are concerned with a numerical solution, the constant vectors can be eliminated by investigating the error.  Perturb the initial solution $\mathbf{w}_0$ to $\mathbf{\hat{w}}_0$.  The solution at the jth time row will be given by
+\[\mathbf{\hat{w}}_j=A^{j}\mathbf{\hat{w}}_0+A^{j-1}\mathbf{f}_0+A^{j-1}\mathbf{f}_1+...+\mathbf{f}_{j}
+\]
+If the error $\mathbf{e}$ is defined by 
+\[ \mathbf{e}=\mathbf{\hat{w}}-\mathbf{w}\]
+It follows that 
+\[ \mathbf{e}_j=\mathbf{\hat{w}}_j-\mathbf{w}_j=A^{j}(\mathbf{\hat{w}}_0-\mathbf{w}_0)=A^{j}e_0\]
+In other words a perturbation $e_0$ of the initial values will propagate according to the equation 
+\[e_j=Ae_{j-1}=A^2e_{j-2}=...=A^je_0 \]
+Hence, for compatible matrix and vector norms
+\[||e_{j}||\leq ||A^{j}||||e_0||\]
+Lax and Ritchmyer define the difference scheme to be stable when there exists a positive number $M$ independent of $j,k$ such that 
+\[ ||A^{j}||\leq M \]
+The clearly limits the amplification of any initial perturbation and of any arbitrary initial rounding errors.
+\[ ||\mathbf{e}_j||\leq M||\mathbf{e}_0|| \]
+Since
+\[ ||A^j||= ||AA^{j-1}||\leq ||A||||A^{j-1}|| \leq ... \leq ||A||^j \]
+It follows that the Lax-Ritchmyer definition of stability is satisfied by
+\[||A|| \leq 1\]
+This is the necessary and sufficient condition for the difference equation to be
+stable then the solution of the \addtoindex{PDE} does not increase as $t \rightarrow T$.\\
+When the condition is satisfied it follows automatically that the spectral radius
+\[\rho(A)\leq 1\] since $\rho(A)\leq ||A||$. If, however $\rho(A)\leq 1$ it does not imply that $||A|| \leq 1$.
+\begin{example} 
+Consider the classical explicit equation
+\[ w_{ij+1}=rw_{i-1j}+(1-2r)w_{ij}+rw_{i+1j} \ \ i=1,..,N-1 \]
+for which A is
+\[
+\left(\begin{array}{ccccccc}
+1-2r&r&0&.&.&.&.\\
+r&1-2r&r&0&.&.&.\\
+0&r&1-2r&r&0&.&.\\
+.&.&.&.&.&.&.\\
+.&.&.&.&r&1-2r&r\\
+.&.&.&.&.&r&1-2r\\
+\end{array}\right)
+\]
+where $r=\frac{k}{h_x^2}>0$ and it is assumed that the boundary values $w_{0j}$ and $w_{Nj}$ are known for $j=1,2,...$.  When $1-2r \geq 0$ then $0\leq r \leq \frac{1}{2}$ and
+\[ ||A||_{\infty}=r+1-2r+r=1. \]
+When $1-2r <0$ then $r >\frac{1}{2}$ then $|1-2r|=2r-1$
+and
+\[||A||_{\infty}=r+2r-1+r=4r-1>1\]
+there fore the scheme is unstable for $r>\frac{1}{2}$ and stable for 
+$0<r \leq \frac{1}{2}$.\\
+Alternatively since A is real and symmetric 
+\[||A||_2=\rho(A)=\max_j|\mu_j| \]
+where $|\mu_j|$ is the jth eigenvalue of A. Now A can be written as
+\[ \left(\begin{array}{ccccccc}
+1&0&0&.&.&.&.\\
+0&1&0&0&.&.&.\\
+0&0&1&0&0&.&.\\
+.&.&.&.&.&.&.\\
+.&.&.&.&0&1&0\\
+.&.&.&.&.&0&1\\
+\end{array}\right)
++r\left(\begin{array}{ccccccc}
+-2&1&0&.&.&.&.\\
+1&-2&1&0&.&.&.\\
+0&1&-2&1&0&.&.\\
+.&.&.&.&.&.&.\\
+.&.&.&.&1&-2&1\\
+.&.&.&.&.&1&-2\\
+\end{array}\right)=I_{N-1}+rT_{N-1}\]
+where $I_{N-1}$ is the unit matrix of order N-1 and $T_{N-1}$ is an $(N-1)\times(N-1)$
+matrix whose eigen values $\lambda_j$ are given by
+\[ \lambda_j = -4 sin^2(\frac{j\pi}{2N}) \]
+Hence the eigenvalues of A are
+\[\mu_j=1-4rsin^2(\frac{j\pi}{2N}) \]
+therefore the equation will be stable when
+\[||A||_2=\max_s|1-4rsin^2(\frac{s\pi}{2N})|\leq 1\]
+ie
+\[ -1 \leq 1-4rsin^2(\frac{s\pi}{2N})\leq 1 \ \ s=1,..N-1\]
+the left hand side of the inequality gives
+\[ r \leq \frac{1}{2}sin^2(\frac{(N-1)\pi}{2N})\]
+as $h \rightarrow 0 N\rightarrow \infty$ and $sin^2(\frac{(N-1)\pi}{2N})\rightarrow 1$. Hence $r\leq \frac{1}{2}$.\\
+Therefore it is only stable when $0<r\leq \frac{1}{2}$.
+$\diamond$
+\end{example} 
+\begin{example} 
+The Crank Nicholson equation
+\[
+ -rw_{i-1j+1}+(2+2r)w_{ij+1}-rw_{i+1j+1} 
+ =rw_{i-1j}+(2-2r)w_{ij}+rw_{i+1j} 
+\ \ i=1,..,N-1 \]
+In matrix form
+\begin{eqnarray*}
+\left(\begin{array}{ccccccc}
+2+2r&-r&0&.&.&.&.\\
+-r&2+2r&-r&0&.&.&.\\
+0&-r&2+2r&-r&0&.&.\\
+.&.&.&.&.&.&.\\
+.&.&.&.&-r&2+2r&-r\\
+.&.&.&.&.&-r&2+2r\\
+\end{array}\right)
+\left(\begin{array}{c}
+w_{1j+1}\\
+w_{2j+1}\\
+.\\
+.\\
+w_{N-2j+1}\\
+w_{N-1j+1}\\
+\end{array}\right)\\
+=
+\left(\begin{array}{ccccccc}
+2-2r&r&0&.&.&.&.\\
+r&2-2r&r&0&.&.&.\\
+0&r&2-2r&r&0&.&.\\
+.&.&.&.&.&.&.\\
+.&.&.&.&r&2-2r&r\\
+.&.&.&.&.&r&2-2r\\
+\end{array}\right)
+\left(\begin{array}{c}
+w_{1j}\\
+w_{2j}\\
+.\\
+.\\
+w_{N-2j}\\
+w_{N-1j}\\
+\end{array}\right)
++\mathbf{b}_j
+\end{eqnarray*}
+where $\mathbf{b}_j$ is a vector of known boundary conditions. This can be written as
+\[(2I_{N-1}-rT_{N-1})\mathbf{w}_{j+1}=(2I_{N-1}+rT_{N-1})\mathbf{w}_{j}+\mathbf{b}_j
+\]
+from which it follows that A is of the form
+\[ A=(2I_{N-1}-rT_{N-1})^{-1}(2I_{N-1}+rT_{N-1}) \]
+$T_{N-1}$ has the eigenvalues $\lambda_s=-4sin^2(\frac{s\pi}{2N})$ for $s=1,...,N-1$.
+It follows that the eigenvalues of A are 
+\[\mu_s=\frac{2-4rsin^2(\frac{s\pi}{2N})}{2+4rsin^2(\frac{s\pi}{2N})}.\]
+Thus
+\[ ||A||_{\infty}=\rho(A)=\max_s\left|\frac{2-4rsin^2(\frac{s\pi}{2N})}{2+4rsin^2(\frac{s\pi}{2N})}  \right| <1\]
+therefore Crank-Nicholson is unconditionally stable.
+$\diamond$
+\end{example} 
+\section{Stability by the Fourier Series method (von Newmann's method)}
+This method uses a Fourier series to express $w_{pq}=w(ph_x,qk)$
+which is
+\[ w_{pq}=e^{i\beta x}\xi^{q} \]
+where $\xi=e^{\alpha k}$ in this case $i$ denotes the complex number
+$i=\sqrt{-1}$ and for values of $\beta$ needed to satisfy the initial conditions.
+$\xi$ is known as the amplification factor.
+The finite difference equation will be stable if $|w_{pq}|$ remains bounded for all q as $h \rightarrow 0, k\rightarrow 0$ and all $\beta$.\\
+If the exact solution does not increase exponentially with time then a necessary
+and sufficient condition is that 
+\[ |\xi|\leq 1 \]
+\begin{example}
+Investigating the stability of the fully implicit difference equation
+\[\frac{1}{k}(w_{pq+1}-w_{pq})=\frac{1}{h_x^2}(w_{p-1q+1}-2w_{pq+1}+w_{p+1q+1})\]
+approximating $\frac{\partial U}{\partial t}=\frac{\partial^2 U}{\partial x^2}$ at $(ph_x,qk)$. Substituting $w_{pq}=e^{i\beta x}\xi^{q}$ into the difference equation
+\[e^{i\beta ph}\xi^{q+1}-e^{i\beta ph}\xi^{q}=
+r\{
+e^{i\beta (p-1)h}\xi^{q+1}
+-2e^{i\beta ph}\xi^{q+1}
++
+e^{i\beta (p+1)h}\xi^{q+1}
+ \}
+\]
+where $r=\frac{k}{h_x^2}$. Divide across by $e^{i\beta (p)h}\xi^{q}$ leads to
+\begin{eqnarray*} \xi-1&=&r\xi(e^{i\beta (-1)h}
+-2
++
+e^{i\beta h})\\
+&=& r \xi(2cos(\beta h)-2)\\
+&=&-4r\xi(sin^2(\beta\frac{h}{2})
+\end{eqnarray*}
+Hence \[\xi = \frac{1}{1+4rsin^2(\frac{\beta h}{2})}\]
+$0 < \xi \leq 1$ for all $r>0$ and all $\beta$ therefore the equation is unconditionally stable.
+$\diamond$
+\end{example}

@@ -1,0 +1,589 @@
+\chapter{Numerical Methods to solve Large Linear Systems}
+In this chapter we deal with the solution of linear systems which we put into Matrix form and solve, 
+\begin{equation} Ax=b.
+\end{equation} 
+The reason for the iterative methods is because computing the inverse of a large Sparse Matrix is computationally intensive.
+
+\section{LU Decomposition}
+\addtoindex{LU} triangular decomposition is a method to break down the Original matrix A into two more
+manageable triangular matrices, L and U.  Where L is a lower triangular matrix of the form
+\[
+\left( \begin{array}{ccccccc}
+    1 & 0 &. &. & &0 &\\
+    l_{2,1} & 1 &0 & & &. &\\
+     &  & 1 & & &. &\\
+     &  & . & & &. &\\
+     &  &  &. & &. &\\
+     &  &  & &. &0 &\\
+    l_{n,1} &  &  &  &l_{n,n-1} &1 &\end{array} \right)
+\]
+and U is an upper triangular matrix of the form
+\[
+\left( \begin{array}{ccccccc}
+    u_{1,1} &  &. &. & &u_{1,n}\\
+    0 & u_{2,2} & & & &. &\\
+     0&  & u_{3,3} & & &. &\\
+     0&  & . & & &. &\\
+     0&  &  &. & &. &\\
+     0&  &  & &. & &\\
+    0 &  &  &  &0 &u_{n,n} &\end{array} \right).
+\]
+From this we can adapt out original system of equations into two simpler systems
+of equations.
+\[Ax=b\]
+\[LUx=b\]
+which is now divided into two.
+\[Lc=b \]
+\[Ux=c \]
+From the decomposition we can also find the determinant of A very easily.
+\[det(A)=det(L)det(U)=1.det(u)=\prod_{i=1}^{n-1}u_{ii} \]
+\subsubsection*{Solving for an nxn Matrix.}
+\begin{enumerate}
+\item First Step.\[u_{1j}=a_{1j}\]
+\[l_{i1}=\frac{a_{i1}}{u_{11}}\]
+\item[\textbf{Aside:}]
+In subsequent steps note the the values of $u_{ij}$ and $l_{ij}$ are obtained by equating
+the $(i,j)$ entries
+\item
+If $i \leq j$ this gives 
+\[a_{ij}= l_{i1}u_{1j}+ l_{i2}u_{2j}+ ...+l_{ii-1}u_{i-1j}+u_{ij}\]
+and so $u_{ij}$ is calculated from
+\[u_{ij}=a_{ij}-\sum_{k=1}^{i-1}l_{ik}u_{kj}.\]
+\item
+If $i > j$ this gives
+\[a_{ij}= l_{i1}u_{1j}+ l_{i2}u_{2j}+ ...+l_{ij}u_{jj}\]
+and so $l_{ij}$ is calculated from
+\[ l_{ij} = \frac{a_{ij}-\sum_{k=1}^{j-1}l_{ik}u_{kj}}{u_{jj}} \ \ i>j\geq 2 \]
+\item Repeat step 2 and 3 until solved.
+\end{enumerate}
+\textbf{Example:} see notes
+\section{Iterative Solution of Large Linear Systems}
+When dealing with large systems of equations it can inefficient to use a direct solver, and expensive computationally,
+this introduces the concept of iterative methods to solve systems of equations.
+\subsection{Jacobi Method}
+As always we start with a system of equations
+\[Ax=b\]
+To derive the \addtoindex{Jacobi} method we use a 3x3 system to justify our approach.
+\[
+\left( \begin{array}{ccc}
+    a_{1,1} & a_{1,2} &a_{1,3} \\
+    a_{2,1} & a_{2,2} &a_{2,3} \\
+    a_{3,1} & a_{3,2} &a_{3,3}  \end{array} \right)
+\left( \begin{array}{c}
+    x_{1}  \\
+    x_{2}  \\
+    x_{3}  \end{array} \right)
+=
+\left( \begin{array}{c}
+    b_{1}  \\
+    b_{2}  \\
+    b_{3}  \end{array} \right)
+\]
+Let
+\[ Ax=(L+U+D)x=b \]
+where L is a lower triangular matrix of the form
+\[
+L=\left( \begin{array}{ccc}
+    0 & 0 & 0 \\
+    a_{2,1} & 0 & 0 \\
+    a_{3,1} & a_{3,2} & 0  \end{array} \right) \]
+where U is a upper triangular matrix of the form
+\[U=
+\left( \begin{array}{ccc}
+    0 & a_{1,2} &a_{1,3} \\
+    0 & 0 &a_{2,3} \\
+    0 & 0 & 0  \end{array} \right)\]
+where D is a diagonal triangular matrix of the form
+\[D=
+\left( \begin{array}{ccc}
+    a_{1,1} & 0 &0 \\
+    0 & a_{2,2} &0 \\
+    0 & 0 &a_{3,3}  \end{array} \right)\]
+Re-arranging the system we can write.
+\begin{eqnarray}
+a_{1,1} x_1 = b_1 - a_{1,2}x_2 -a_{1,3}x_3 \\
+a_{2,2} x_2 = b_2 - a_{2,1}x_1 -a_{2,3}x_3 \\
+a_{3,3} x_3 = b_3 - a_{3,1}x_1 -a_{3,2}x_2 
+\end{eqnarray}
+In matrix form this is written as 
+\[Dx = b-(L+U)x \]
+\[x_1 = \frac{1}{a_{1,1}}(b_1 - a_{1,2}x_2 -a_{1,3}x_3) \]
+\[x_2 = \frac{1}{a_{2,2}}(b_2 - a_{2,1}x_1 -a_{2,3}x_3) \]
+\[x_3 = \frac{1}{a_{3,3}}(b_3 - a_{3,1}x_1 -a_{3,2}x_2) \]
+this is equivalent to
+\[ x=D^{-1}(b-(L+U)x) \]
+Since x is on both sides of the equation we can convert this into an iterative method.
+\[x_1^{[m+1]} = \frac{1}{a_{1,1}}(b_1 - a_{1,2}x_2^{[m]} -a_{1,3}x_3^{[m]}) \]
+\[x_2^{[m+1]} = \frac{1}{a_{2,2}}(b_2 - a_{2,1}x_1^{[m]} -a_{2,3}x_3^{[m]}) \]
+\[x_3^{[m+1]} = \frac{1}{a_{3,3}}(b_3 - a_{3,1}x_1^{[m]} -a_{3,2}x_2^{[m]}) \]
+or
+\[ x^{[m+1]}=D^{-1}(b-(L+U)x^{[m]}) \]
+To complete the iterative method we introduce a stopping criteria and an initial guess.\\
+The initial guess is $x^{[0]}$ this can be anything but for convenience we take it to be the 
+zero matrix.\\
+The stopping criteria is defined such that when current iteration and the previous iteration
+are within a defined tolerance ($\epsilon$) of each other the method stops
+\[ max_{i}|x_{i}^{[m+1]}-x_{i}^{[m]}|\leq \epsilon \]
+This is called the \addtoindex{Jacobi} method.  For a general system of n equations we have.
+\[ x_i^{[m+1]}=\frac{1}{a_{i,i}}(b_i-\sum_{j=1}^{n}a_{i,j}x_{j}^{[m]}) \ \ j\not=i \ \ i = 1,2,..n\]
+\textbf{Example: see notes}
+\subsection{Gauss Seidel Method}
+\addtoindex{Gauss-Seidel} Method is an iterative method which uses the knowledge we gained to get the best result quicker.
+We write the iterative system in the form
+\[x_1^{[m+1]} = \frac{1}{a_{1,1}}(b_1 - a_{1,2}x_2^{[m]} -a_{1,3}x_3^{[m]}) \]
+\[x_2^{[m+1]} = \frac{1}{a_{2,2}}(b_2 - a_{2,1}x_1^{[m+1]} -a_{2,3}x_3^{[m]}) \]
+\[x_3^{[m+1]} = \frac{1}{a_{3,3}}(b_3 - a_{3,1}x_1^{[m+1]} -a_{3,2}x_2^{[m+1]}) \]
+Rearranging 
+\begin{eqnarray}
+a_{1,1} x_1^{[m+1]} &=& b_1 - a_{1,2}x_2^{[m]} -a_{1,3}x_3^{[m]} \\
+a_{2,2} x_2^{[m+1]} + a_{2,1}x_1^{[m+1]} &=& b_2 -a_{2,3}x_3^{[m]} \\
+a_{3,3} x_3^{[m+1]} +a_{3_2}x_2^{[m+1]}+a_{3,1}x_{1}^{[m+1]}&=& b_3 
+\end{eqnarray}
+In matrix form this is 
+\[ (D+L)x^{[m+1]} = b - Ux^{[m]} \]
+where D, U, and L are defined as in the previous case.
+\[ x^{[m+1]} = (D+L)^{-1}(b - Ux^{[m]}) \]
+For a general system
+\[ x_i^{[m+1]}=\frac{1}{a_{i,i}}(b_i-\sum_{j=1}^{i-1}a_{i,j}x_{j}^{[m+1]}-\sum_{j=i+1}^{n}a_{i,j}x_{j}^{[m]}
+) \ \ j\not=i \ \ i = 1,2,..n\]
+\textbf{Example: see notes}
+We have encountered a system that both \addtoindex{Jacobi} and \addtoindex{Gauss-Seidel} diverge, due to this it is 
+important to define criteria which the iterative processed will work for.\\
+Consider a general cause, let A=M+N for any 2 nxn matrices M and N.\\
+The equation $Ax=b$ becomes
+\begin{equation}
+(M+N)x=b
+\label{M+N}
+\end{equation}
+Rearranging 
+\begin{equation}
+x=M^{-1}(b-Nx)
+\label{x=M(b-Nx)}
+\end{equation}
+Suggests the iteration
+\begin{equation}
+x^{m+1}=M^{-1}(b-Nx^m)
+\label{iteration x=M(b-Nx)}
+\end{equation}
+for \addtoindex{Jacobi} M=D and N=L+U. For \addtoindex{Gauss-Seidel} M=D+L and N=U.\\
+Subtracting \ref{x=M(b-Nx)} from  \ref{iteration x=M(b-Nx)} gives
+\begin{equation}
+e^{[m+1]}=-M^{-1}Ne^{[m]}
+\label{error x=M(b-Nx)}
+\end{equation}
+where $e^{[m]}$ is the error vector $x-x^{m}$. The matrix $-M^{-1}N$ is called the iteration matrix and it governs the change in the error from one step to the next.\\
+For convergence we require the error vector $e^{[m]} \rightarrow 0$ as $m \rightarrow \infty$.
+\begin{theorem}
+\label{spectral}
+Suppose that the matrix $-M^{-1}N$ has eigenvalues $\lambda_i (i=1,...,n)$.  The iteration
+$x^{[m+1]}=M{-1}(b-Nx^{[m]})$ converges if and only if the spectral radius 
+$\rho(-M^{-1}N) < 1$ where 
+$\rho(-M^{-1}N) =\max_{i}(\lambda_i)$.
+\end{theorem}
+
+\begin{proof}
+We shall assume that the matrix $-M^{-1}N$ admits a set of n linearly independent
+eigenvectors which will certainly be so when the eigenvalues of $-M^{-1}N$ are 
+distinct or when the matrix is symmetric.\\
+Let these eigenvectors be denoted by $v_i$ with associated eigenvalues $\lambda_i (i=1,..,n)$ the initial error vector $e^{[0]}$ can be written in the form
+\[ e^{[0]} = \alpha_1 v_1+\alpha_2v_2+...+\alpha_nv_n\]
+for the appropriate scalars $\alpha_i$.\\
+Multiply both sides by $-M^{-1}N$
+\[ e^{[1]} = \alpha_1 (-M^{-1}N)v_1+\alpha_2(-M^{-1}N)v_2+...+\alpha_n(-M^{-1}N)v_n\]
+Since from
+\ref{error x=M(b-Nx)} $e^{[1]} = -M^{-1}Ne^{[0]}$.\\
+Now $v_i$ is an eigenvector of $-M^{-1}N$ with eigenvalue $\lambda_i$ so
+\[
+(-M^{-1}N)v_{i}=\lambda_iv_i
+\]
+Hence
+\[ e^{[1]} = \alpha_1 \lambda_1 v_1+\alpha_2\lambda_2v_2+...+\alpha_n\lambda_nv_n\]
+Multiply both sides by $-M^{-1}N$ gives
+\[e^{[2]} = -M^{-1}Ne^{[1]}\]
+\[ e^{[2]} = \alpha_1 \lambda_1(-M^{-1}N) v_1+\alpha_2\lambda_2(-M^{-1}N)v_2+...+\alpha_n\lambda_n(-M^{-1}N)v_n\]
+\[ e^{[2]} = \alpha_1 \lambda_1^{2} v_1+\alpha_2\lambda_2^{2}v_2+...+\alpha_n\lambda_n^{2}v_n\]
+Continuing in this way
+\[ e^{[m]} = \alpha_1 \lambda_1^{m} v_1+\alpha_2\lambda_2^{m}v_2+...+\alpha_n\lambda_n^{m}v_n\]
+Now $\lambda_{i}^{m} \rightarrow 0$ iff $|\lambda_i| < 1$ and so we deduce that
+a necessary and sufficient condition for $e^{[m]}\rightarrow 0$ is $\rho(-M^{-1}N) < 1$. 
+\end{proof}
+While this is a rigorous method it is not easy to apply in practice, what is required is a method which works at a glance.
+\begin{definition}
+An nxn matrix is said to be (strictly) diagonally dominant if for each row of 
+the matrix, the modulus of the diagonal strictly exceeds the sum of the moduli of the off--diagonals. ie if
+\[
+|a_{ii}| >\sum_{j\not=i}|a_{ij}| \ \ i=1,2,...,n 
+\]
+\end{definition} 
+\begin{theorem}
+The \addtoindex{Jacobi} and Gauss-Seidal methods converge for a system of linear equations 
+with a diagonally dominant coefficient matrix.
+\end{theorem}
+\begin{proof}
+If v is an eigenvector of $-M^{-1}N$ corresponding to an eigenvector $\lambda$. Then
+\[-M^{-1}Nv=\lambda v\]
+which can be arranged as
+\begin{equation}
+\label{11a}
+(\lambda M-N)v=0
+\end{equation}
+From theorem \ref{spectral} we need only prove that $|\lambda|<1$ whenever the coefficient
+matrix is diagonally dominant.  Let us suppose that the largest component of v
+occurs at the ith position
+\[|v_{j}| \leq |v_{i}| \ \ j\not= i 
+\]
+The proofs of the \addtoindex{Jacobi} and Gauss-Seidal methods are considered separately.\\
+a) \addtoindex{Jacobi} Method\\
+For the \addtoindex{Jacobi} M=D and N=L+U so equation \ref{11a} becomes
+\[(\lambda D +L+U)v=0\]
+The ith component of this equation is
+\[ \lambda a_{ii}v_i + \sum_{j=1,j\not=i}^{n}a_{ij}v_j=0 \]
+and so
+\[ \lambda = - \frac{1}{a_{ii}v_i } \sum_{j=1,j\not=i}^{n}a_{ij}v_j\]
+which implies 
+\[ \lambda \leq \frac{1}{|a_{ii}||v_i| } |\sum_{j=1,j\not=i}^{n}a_{ij}v_j|\]
+Using the triangle inequality $|A+B| \leq |A|+|B|$ we have
+\[|\sum_{j=1,j\not=i}^{n}a_{ij}v_j|\leq \sum_{j=1,j\not=i}^{n}|a_{ij}v_{j}|
+\leq |v_i| \sum_{j=1,j\not=i}^{n} |a_{ij}| \]
+since $|v_i| \geq v_j $
+Hence
+\[ \lambda \leq \frac{|v_i|}{|a_{ii}||v_i| } \sum_{j=1,j\not=i}^{n}|a_{ij}|=
+\frac{1}{|a_{ii}| } \sum_{j=1,j\not=i}^{n}|a_{ij}|\]
+However from the definition of diagonal dominance
+\[ |a_{ii}| > \sum_{j=1,j\not=i}^{n}|a_{ij}| \]
+and so we deduce that $|\lambda|< 1 $\\
+\\
+b)\addtoindex{Gauss-Seidel} Method\\
+For the\addtoindex{Gauss-Seidel} M=L+D and N=U so \ref{11a} becomes
+\[(\lambda D +\lambda L+U)v=0\]
+The ith component of this equation is
+\[ \lambda \sum_{j=1}^{i}a_{ij}v_j + \sum_{j=i+1}^{n}a_{ij}v_j=0 \]
+and so
+\begin{equation}
+\label{A}
+ \lambda =-\frac{\sum_{j=i+1}^{n}a_{ij}v_j}{ \sum_{j=1}^{i}a_{ij}v_j}
+\end{equation}
+From $|A+B| \geq |A| - |B| $\\
+Applying this inequality to the denominator gives
+\[ \left|\sum_{j=1}^{i}a_{ij}v_j \right| \geq |a_{ii}v_{i}| -\left|\sum_{j=1}^{i-1}a_{ij}v_j \right| \]
+By the triangle inequality
+
+\[ \left|\sum_{j=1}^{i-1}a_{ij}v_j \right| \leq \sum_{j=1}^{i-1}|a_{ij}v_j| \leq |v_i|\sum_{j=1}^{i-1}|a_{ij}|  \]
+Since $|v_j| \leq |v_i|$ and so
+\begin{eqnarray*} 
+\left|\sum_{j=1}^{i}a_{ij}v_j \right| & \geq & |a_{ii}||v_{i}| -|v_i|\sum_{j=1}^{i-1}|a_{ij}|  \\
+ & = & |v_i|(|a_{ii}| -\sum_{j=1}^{i-1}|a_{ij}|)  
+\end{eqnarray*} 
+which is positive from the diagonal dominance condition.\\
+We can also apply the triangle inequality to the numerator
+\[\left|\sum_{i=j+1}^{n}a_{ij}v_j\right| \leq |v_i| \sum_{i=j+1}^{n}|a_{ij}| \]
+substituting the inequalities into \ref{A}
+\[ |\lambda| \leq \frac{\sum_{j=i+1}^{n}|a_{ij}|}{(|a_{ii}| -\sum_{j=1}^{i-1}|a_{ij}|} \]
+However from the definition of diagonal dominance
+\[|a_{ii} \geq \sum_{j=1,i\not=j}|a_{ij}|=\sum_{j=1}^{i-1}|a_{ij}|+\sum_{j=i+1}^{n}|a_{ij}| \]
+and so we can deduce that $|\lambda| < 1$.
+\end{proof}$\bigodot$
+
+It is important  to emphasis that diagonal dominance is only a sufficient
+condition for convergence; it is not necessary.  However it does provide a quick check on the convergence of these methods.
+\subsection{Successive over-relaxation (SOR)}
+
+We now consider an extension of the \addtoindex{Gauss-Seidel} method. For a system of 
+three equations the \addtoindex{Gauss-Seidel} method is defined by
+\begin{equation*}
+x_{1}^{[m+1]} = \frac{1}{a_{11}}(b_1-a_{12}x_2^{[m]} - a_{13}x^{[m]}_{3}) 
+\end{equation*}
+\begin{equation*}
+x_{2}^{[m+1]} = \frac{1}{a_{22}}(b_1-a_{21}x_1^{[m+1]} - a_{23}x^{[m]}_{3}) 
+\end{equation*}
+\begin{equation*}
+x_{3}^{[m+1]} = \frac{1}{a_{33}}(b_1-a_{31}x_1^{[m+1]} - a_{32}x^{[m+1]}_{2})
+\end{equation*}
+
+Rearranging the \emph{i}th equation in the form
+\[ x_{i}^{[m+1]} = x_{i}^{[m]} + . .. \]
+gives 
+
+\begin{equation*}
+x_{1}^{[m+1]} =x_1^{[m]}+ \frac{1}{a_{11}}(b_1-a_{11}x_{1}^{[m]}-a_{12}x_2^{[m]} - a_{13}x^{[m]}_{3}) 
+\end{equation*}
+\begin{equation*}
+x_{2}^{[m+1]} =x_2^{[m]}+ \frac{1}{a_{22}}(b_1-a_{21}x_1^{[m+1]}-a_{22}x_{2}^{[m]} - a_{23}x^{[m]}_{3}) 
+\end{equation*}
+\begin{equation*}
+x_{3}^{[m+1]} =x_3^{[m]}+ \frac{1}{a_{33}}(b_1-a_{31}x_1^{[m+1]} - a_{32}x^{[m+1]}_{2}-a_{33}x_{3}^{[m]})
+\end{equation*}
+
+The second term on the RHS of each of these equations represent the change, or correction, that is maw to $x^{[m]}_i$ in order to calculate $x^{[m+1]}_i.$
+We now introduce a relaxation parameter denoted by $\omega$
+
+\begin{equation*}
+x_{1}^{[m+1]} =x_1^{[m]}+ \frac{\omega}{a_{11}}(b_1-a_{11}x_{1}^{[m]}-a_{12}x_2^{[m]} - a_{13}x^{[m]}_{3}) 
+\end{equation*}
+\begin{equation*}
+x_{2}^{[m+1]} =x_2^{[m]}+ \frac{\omega}{a_{22}}(b_1-a_{21}x_1^{[m+1]}-a_{22}x_{2}^{[m]} - a_{23}x^{[m]}_{3}) 
+\end{equation*}
+\begin{equation*}
+x_{3}^{[m+1]} =x_3^{[m]}+ \frac{\omega}{a_{33}}(b_1-a_{31}x_1^{[m+1]} - a_{32}x^{[m+1]}_{2}-a_{33}x_{3}^{[m]})
+\end{equation*}
+The rate of convergence depends on $\omega$, which is chosen so as to minimize the
+number of iterations. There are 3 cases to consider:
+\begin{enumerate}
+\item
+$\omega =1$, then this method is the same as\addtoindex{Gauss-Seidel}.
+\item
+$\omega > 1$, then a larger than normal correction is taken.  This is useful if the G-S iterates monotonically.
+\item
+$\omega < 1$, then a smaller than normal correction is taken.  This is useful if the G-S iterates are oscillating.
+\end{enumerate}
+In practice the case $\omega > 1$ is most commonly used.
+\subsubsection*{Example}
+\begin{equation*}
+5x_1 + 2x_2 - x_3 = 6\\
+\end{equation*}
+\begin{equation*}
+x_1 + 6x_2 - 3x_3 = 4\\
+\end{equation*}
+\begin{equation*}
+2x_1 + x_2 + 4x_3 = 7\\
+\end{equation*}
+
+The\addtoindex{Gauss-Seidel} iteration is given by:
+\[ x^{[m+1]}_1 = \frac{1}{5}(6-2x_2^{[m]} + x^{[m]}_3)\]
+\[ x^{[m+1]}_2 = \frac{1}{6}(4-x_1^{[m+1]} + 3x^{[m]}_3) \]
+\[ x^{[m+1]}_3 = \frac{1}{4}(7-2x_1^{[m+1]} - x^{[m+1]}_2) \]
+The SOR for $\omega =0.9$ is given by:
+\[ x^{[m+1]}_1 = x^{[m]}_1+\frac{0.9}{5}(6-5x_1^{[m]}-2x_2^{[m]} + x^{[m]}_3)\]
+\[ x^{[m+1]}_2 = x^{[m]}_2+\frac{0.9}{6}(4-x_1^{[m+1]} -6x_2^{[m]}+ 3x^{[m]}_3) \]
+\[ x^{[m+1]}_3 = x^{[m]}_3+\frac{0.9}{4}(7-2x_1^{[m+1]} - x^{[m+1]}_2-4x_3^{[m]}) \]
+%\chapter{Root Finding Methods}
+\section{Steepest Descent}
+\begin{definition}
+The inner dot product 
+\[(\mathbf{x}.  \mathbf{y})=\mathbf{x}^T  \mathbf{y}=\sum_{i=1}^n=x_iy_i \]
+$\mathbf{x}^T  \mathbf{y} =\mathbf{y}^T  \mathbf{x}$.
+\end{definition}
+\begin{definition}
+If x and y are orthogonal then $\mathbf{x}^T  \mathbf{y} =0$.
+\end{definition}
+\begin{definition}
+A matrix A is positive definite if for any nonzero vector x
+\[x^{T}Ax > 0 \]
+\end{definition}
+\subsection{Quadratic Form}
+A quadratic form is simply a scalar quadratic function of a vector with the form
+\[f(x)=x^TAx-b^Tx+c \]
+c- constant.
+
+Because A is positive definite, the surface defined by $f(x)$ is shaped like a paraboloid bowl.
+\[f^{'}(x) = \frac{1}{2}A^Tx+\frac{1}{2}Ax - b \]
+If A symmetric, this equation reduces to
+\[
+f^{'}(x)=Ax-b \]
+therefore x is the minimum of f.
+
+\subsubsection*{Notation}
+Error $e_i=x_i-x$ this indicates the distance from the solution. \\
+Residual: $r_i=b-Ax_i$\\
+$r_i=Ae_i$ implies $r_i=-f^{'}(x_i)$ this can also be thought of as the direction
+of the \addtoindex{Steepest Descent}.\\
+Our first step along the direction of \addtoindex{Steepest Descent}. We will choose a point
+\[ x_1=x_0+\alpha r_0\]
+A \textbf{line search} is a procedure that chooses $\alpha$ to minimize f along
+the line.\\
+From calculus, $\alpha$ minimizes the directional derivative, $\frac{d}{dx}f(x_1)$ is equal to zero.\\
+By the chain rule
+\[\frac{d}{d\alpha}f(x_1)=f^{'}(x_1)^T\frac{d}{d\alpha}(x_1)=f^{'}(x_1)r_0 \]
+Setting this expression to zero we find that $\alpha$ should be chosen so that 
+$r_0$ and $f^{'}(x_1)$ are orthogonal.\\
+To determine $\alpha$, note $f^{'}(x_1)=-r_1$ and we have
+\[r_1^{T}r_0=0 \]
+\[(b-Ax_1)^{T}r_0=0 \]
+\[(b-A(x_0+\alpha r_0))^{T}r_0=0 \]
+\[(b-Ax_0)^{T}r_0-\alpha (Ar_0)^{T}r_0=0 \]
+\[(b-Ax_0)^{T}r_0=\alpha (Ar_0)^{T}r_0 \]
+\[(b-Ax_0)^{T}r_0=\alpha r_0^{T}Ar_0 \]
+\[r_0^{T}r_0=\alpha r_0^{T}Ar_0 \]
+\[\alpha = \frac{r_0^Tr_0}{r_0^TAr_0}\]
+Putting it all together the method for \addtoindex{Steepest Descent} is:
+\[r_i=b-Ax_i \]
+\[\alpha_i = \frac{r_i^Tr_i}{r_i^TAr_i}\]
+\subsection{Convergence Analysis of Steepest Descent}
+To understand the convergence, let us first consider, where $e_i$ is an eigenvector of A
+with eigenvalue $\lambda_e$, this means the residual is $r_i=-Ae_i=-\lambda_e e_i$.
+\[e_{i+1} = e_{i} +\frac{r_i^Tr_i}{r_i^TAr_i}r_i \]
+\[e_{i+1} = e_{i} +\frac{r_i^Tr_i}{\lambda_er_i^Tr_i}(-\lambda_e e_i)=0 \]
+More general analysis we can express $e_i$ as a linear combination of eigenvectors of A.
+Now
+\begin{equation}
+\label{1 e}
+e_i = \sum_{j-1}^{n} \xi_jv_j
+\end{equation}
+from \ref{1 e} and the orthogonal nature of $e_i$ we get.
+\begin{equation}
+\label{2 e}
+r_i = -Ae_i = - \sum_{j} \xi_j \lambda_j v_j
+\end{equation}
+
+\begin{equation}
+||e_i|| = e_i^Te_i = \sum \xi_j^2
+\end{equation}
+\begin{equation}
+e^T_iAe_i =( \sum_j \xi_j v_j^T) \sum_j \xi_j \lambda_j v_j = \sum \xi^2 \lambda_j 
+\end{equation}
+
+\begin{equation}
+||r_i||^2 = \sum_j \xi_j^2 \lambda_j^2
+\end{equation}
+\begin{equation}
+r_i^TAr_i = \sum_j \xi_j^2 \lambda_j^3
+\end{equation}
+\ref{2 e} shows $r_i$ expressed as a sum of eigenvectors
+\begin{equation}
+e_{i+1} = e_{i} +\frac{\sum_j\xi_j\lambda_j^2}{\sum_j \xi_j^2 \lambda_j}r_i
+\end{equation}
+To bound the convergence we use the energy norm $||e||_A=(e^TAe)^{\frac{1}{2}}$
+\begin{eqnarray*}
+||e_{i+1}||^2_a &= &e_{i+1}^TAe_{i+1}\\
+&=&(e_i^T+\alpha_ir_i^T)A(e_i + \alpha_i r_i)\\
+&=& e_i^TAe_i+2 \alpha_i r_i^TAe_i + \alpha^2_i r_i^T A r_i \\
+& = & ||e_i||^2_A+2\frac{r_i^Tr_i}{r_i^TAr_i}(-r_i^Tr_i)+\left(\frac{r_i^Tr_i}{r_i^TAr_i}\right)^2r_i^TAr_i\\
+&=&||e_i||_A^2-\frac{(r_i^Tr_i)^2}{r_i^TAr_i}\\
+&=&||e_i||_A^2\left( 1-\frac{(r_i^Tr_i)^2}{(r_i^TAr_i)(e_i^TAe_i)}\right)\\
+&=&||e_i||_A^2\left( 1-\frac{(\sum_{j}\xi_{j}^2\lambda^2)^2}{(\sum_j \xi_{j}^2\lambda^3 )( \sum_{j}\xi_{j}^2\lambda  )}\right)\\
+&=&||e_i||_A^2\omega^2, \ \ \ \omega^2=\left( 1-\frac{(\sum_{j}\xi_{j}^2\lambda^2)^2}{(\sum_j \xi_{j}^2\lambda^3 )( \sum_{j}\xi_{j}^2\lambda  )}\right)\\
+\end{eqnarray*}
+The value of $\omega$ determines the rate of convergence of \addtoindex{Steepest Descent}. 
+It can be shown that 
+\[ \omega^2 \leq \frac{(K-1)}{(K+1)} \]
+where $K=\frac{\lambda_{max}}{\lambda_{min}}$
+The convergence results for the \addtoindex{Steepest Descent} are 
+\[||e_i||_A\leq\left(\frac{(K-1)}{(K+1)}\right)^i||e_0||_A \]
+from this we can say
+\begin{eqnarray*}
+ \frac{f(x_i)-f(x)}{f(x_0)-f(x)} &=& \frac{\frac{1}{2}e_i^TAe_i}{\frac{1}{2}e_0^TAe_0}\\
+&\leq  &\left(\frac{(K-1)}{(K+1)}\right)^{2i}
+\end{eqnarray*}
+\section{Method of Conjugate Gradient}
+\addtoindex{Steepest Descent} often finds itself taking steps in the same direction as an earlier
+step.  This is why we introduce a set of orthogonal search directions $d_i$.
+We define $e_1$ orthogonal to $d_0$, and
+\[
+x_{i+1}= x_i + \alpha_i d_i. \]
+To find $\alpha_i$, we use the fact that $e_{i+1}$ should be orthogonal to $d_i$
+therefore avoiding steps in the same direction.
+\[ d^{T}_{i}e_{i+1} =0\]
+\[ d^{T}_{i}(e_{i}+\alpha_id_i) =0\]
+\begin{equation}
+\label{alpha indefined}
+\alpha_i = - \frac{d_i^Te_i}{d_i^Td_i}
+\end{equation}
+Unfortunately this is of no use as $\alpha_i$ cannot be computed without $e_i$ and if we know $e_i$ we would know the solution.\\
+The solution is to make the search directions A-orthogonal, $d_i^TAd_j=0$ for $i\not= j$.\\
+We now require $e_{i+1}$ to be A-orthogonal to $d_i$ this is equivalent to finding 
+the minimum point along the search direction $d_i$.\\
+To see this, set the directional derivative to zero:
+\[\frac{d}{d\alpha}f(x_{i+1}) = 0 \]
+\[(f^{'})^T\frac{d}{d\alpha}x_{i+1} = 0 \]
+\[-r_{i+1}^Td_i=0 \]
+\[d^T_iAe_{i+1} = 0 \]
+this leads us to a new expression for $\alpha_i$ from 
+\ref{alpha indefined} we have 
+\[
+\alpha_i = - \frac{d_i^Te_i}{d_i^Td_i}
+\]
+\begin{equation}
+\label{alpha_i}
+\alpha_i = \frac{d_i^Tr_i}{d_i^TAd_i}
+\end{equation}
+To prove that this does compute x in n steps express the error term as a linear
+combination of search directions
+\[e_0 = \sum_{j=0}^{n-1}\delta_jd_j \]
+The values of $\delta_j$ can be found by using orthogonality.
+\[d_k^TAe_0 = \sum_{j=0}^{n-1}\delta_jd_k^TAd_j \]
+\[d_k^TAe_0 = \delta_kd_k^TAd_k \]
+\begin{eqnarray*}
+\delta_k&= &\frac{d_k^TAe_0}{d_k^TAd_k} \\
+&= &\frac{d_k^TA(e_0+\sum_{i=0}^{k-1}\alpha_id_i)}{d_k^TAd_k} 
+\end{eqnarray*}
+\begin{equation}
+\label{delta_k}
+\delta_k =  \frac{d_k^TAe_k}{d_k^TAd_k} \\
+\end{equation}
+Equation \ref{delta_k} and \ref{alpha_i} implies that $\alpha_i=\delta_i$.\\
+We can now look at the error term 
+\begin{eqnarray*}
+e_i &= &e_0 - \sum_{j=0}^{i-1} \alpha_j d_j \\
+ &= & \sum_{j=0}^{n-1} \delta_j d_j - \sum_{j=0}^{i-1} \delta_j d_j 
+\end{eqnarray*}
+After n iterations, every component is cut away, and $e_n=0$.$\bigodot$
+\subsection{Gram-Schmidt Conjugation}
+Now to define a set of orthogonal search directions $ \{d_j\}$. We use the
+Conjugate Gram-Schmidt process.\\
+Suppose we have a set of n linearly independent vectors $u_0,u_1,...,u_{n-1}$.
+Set $d_0=u_0$,
+\[d_i = u_i + \sum_{k=0}^{i-1}\beta_{ik}d_k \]
+where
+\begin{equation}
+\label{11}
+\beta = - \frac{u^{T}_iAd_j}{d^T_jAd_j}
+\end{equation}
+Because $d_i$ are constructed from the $u$ vectors the subspace spanned by
+$u_0,u_1,..,u_{i-1}$ is $D_i$ and the residuals $r_i$ is orthogonal to these 
+previous vectors
+\begin{equation}
+\label{AAA}
+d_i^Tr_j = u_i^Tr_j+\sum_{k=0}^{i-1}\beta_{ik}d_{k}^Tr_j 
+\end{equation}
+\begin{equation}
+0=u_i^Tr_j \ \ i<j
+\end{equation}
+from \ref{AAA} we have 
+\begin{equation}
+d_i^T r_i=u^T_ir_i
+\end{equation}
+\[r_{i+1} = - Ae_{i+1} \]
+\begin{equation}
+\label{15}
+=A(e_i+\alpha_id_i ) = r_i+\alpha_iAd_i \end{equation}
+We can now say that the search vectors are built from the residuals which are orthogonal
+\[r_i^Tr_j=0. \]
+Equation \ref{15} shows that each new residual is a linear combination of the previous residuals $Ad_{i-1}\in D_i$.
+\[ D_{i+1}=D_i \bigcup AD_i \] 
+therefore
+\begin{eqnarray*}
+D_i &=& span\{d_0,Ad_0,...,A^{i-1}d_0 \}\\
+D_i &=& span\{r_0,Ar_0,...,A^{i-1}r_0 \}.
+\end{eqnarray*}
+This subspace is called the Krylow subspace.  From \ref{11} and using the inner product and \ref{15} we have:
+\[r_i^Tr_{j+1}=r_i^Tr_j-\alpha_j r_i^TAd_j \]
+\[
+\alpha_j r_i^TAd_j = r_i^Tr_j- r_i^Tr_{j+1}\]
+\[
+r_i^TAd_j =\left\{ \begin{array}{ll}  \frac{1}{\alpha_i}r_i^Tr_i & for \ \ i=j\\
+= -\frac{1}{\alpha_{i+1}}r_i^Tt_i & for \ \ i=j+1 \\
+= 0 &\mbox{otherwise} \end{array} \right.
+\]
+Therefore
+\[
+\beta_{ij} =\left\{ \begin{array}{ll}  
+= -\frac{1}{\alpha_{i+1}}\frac{r_i^Tt_i}{d^T_{i-1}Ad_{i-1}} & for \ \ i=j+1\\
+= 0, & i>j+1 \end{array} \right.
+\]
+Simplifying further
+\begin{eqnarray*}
+\beta_i &= &\frac{r^T_ir_i}{d^T_{i-1}r_{i-1}}\\
+ &= &\frac{r^T_ir_i}{r^T_{i-1}r_{i-1}}.
+\end{eqnarray*}
+Putting all of this together we have the conjugate gradient method.\\
+Our initial guess of $x_0$ gives us
+\[d_0 = r_0 = b-Ax_0 \]
+Our general method is of the form:
+\[\alpha_i = \frac{r_i^Tr_i}{d_i^TAd_i} \]
+\[x_{i+1} = x_i + \alpha_id_i \]
+\[r_{i+1} =r_i -\alpha_iAd_i \]
+\[\beta_{i+1} = \frac{r^T_{i+1}r_{i+1}}{r^T_{i}r_{i}}\]
+\[d_{i+1}=r_{i+1}+\beta_{i+1}d_i \]
+This method will get the correct answer within n steps, where n is the dimension
+of the matrix.
+

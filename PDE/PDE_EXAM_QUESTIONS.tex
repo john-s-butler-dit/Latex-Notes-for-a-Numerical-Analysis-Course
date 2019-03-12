@@ -1,0 +1,187 @@
+\newpage
+\chapter{Problem Sheet}
+\begin{enumerate}
+
+\item
+
+	\begin{enumerate}
+		\item
+		State the 3 classes and conditions of 2nd order Partial Differential Equations defined by the characteristic curves.
+		
+		\item
+		Given the non-dimensional form of the heat equation
+		\[\frac{\partial U}{\partial t} = \frac{\partial^2 U}{\partial x^2}.\]
+		supply sample boundary conditions to specify this problem.\\
+		Write a fully implicit scheme to solve this partial differential equation.
+		\item
+		Derive the local truncation error for the fully implicit method, for the heat equation.
+		\item
+		Show that the method is unconditionally stable using von Neumann's method.
+		%with boundary conditions
+		%\[ u(0,t)=u(\pi,t)=0, \ \ 0<t \]
+		%and initial conditions
+		%\[ u(x,0)=sin(x), 0\leq x \leq \pi.\]
+		%Approximate the solution of the heat equation using the Crank-Nicholson method
+		%with k=0.01 and $h=\frac{\pi}{10}$ for one time step.\\
+		%The exact solution is $u(x,t)=e^{-t}sin(x)$
+		
+
+	\end{enumerate}
+
+\item
+
+	\begin{enumerate}
+		\item
+		State the 3 classes and conditions of 2nd order Partial Differential Equations defined by the characteristic curves.
+		\item
+		Given the non-dimensional form of the heat equation
+		\[\frac{\partial U}{\partial t} = \frac{\partial^2 U}{\partial x^2},\]
+		supply sample boundary conditions to specify this problem.\\
+		Write an explicit scheme to solve this partial differential equation.
+		\item
+		Derive the local truncation error for the explicit method, for the heat equation.\\
+						
+		\item
+		Show that the method is consistent, convergent and stable for $\frac{k}{h^2}<\frac{1}{2}$, where k is the step-size in the $t$ direction and $h$ is the step-size
+		in the $x$ direction.
+		%with boundary conditions
+		%\[ u(0,t)=u(\pi,t)=0, \ \ 0<t \]
+		%and initial conditions
+		%\[ u(x,0)=sin(x), 0\leq x \leq \pi.\]
+		%Approximate the solution of the heat equation using the Crank-Nicholson method
+		%with k=0.01 and $h=\frac{\pi}{10}$ for one time step.\\
+		%The exact solution is $u(x,t)=e^{-t}sin(x)$
+		
+					
+	\end{enumerate}
+	\item
+		\begin{enumerate}
+		\item
+		State the 3 classes and conditions of 2nd order Partial Differential Equations defined by the characteristic curves.
+		\item
+		Given the non-dimensional form of the heat equation
+		\[\frac{\partial U}{\partial t} = \frac{\partial^2 U}{\partial x^2},\]
+		supply sample boundary conditions to specify this problem.\\
+		Write an the Crank-Nicholson method to solve this partial differential equation.
+		\item
+		Derive the local truncation error for the Crank-Nicholson method, for the heat equation.\\
+						
+		\item
+		Show that the method is unconditionally stable using von Neumann's method.
+		%with boundary conditions
+		%\[ u(0,t)=u(\pi,t)=0, \ \ 0<t \]
+		%and initial conditions
+		%\[ u(x,0)=sin(x), 0\leq x \leq \pi.\]
+		%Approximate the solution of the heat equation using the Crank-Nicholson method
+		%with k=0.01 and $h=\frac{\pi}{10}$ for one time step.\\
+		%The exact solution is $u(x,t)=e^{-t}sin(x)$
+		
+			
+	\end{enumerate}
+	\item
+	\begin{enumerate}
+		\item
+		Approximate the Poisson equation 
+		\[ -\nabla^2U(x,y)=f(x,y) \ \ \ \ \ \ (x,y) \in \Omega=(0,1)\times (0,1) \]
+		with boundary conditions
+		\[U(x,y) = g(x,y) \ \ \ \ \ \ \ \  (x,y)\in\delta\Omega-boundary \]
+		using the five point method.  Sketch how the finite difference scheme may be 
+		rewritten in the form $Ax=b$, where A is a sparse
+		$N^2\times N^2$ matrix, $b$ is an $N^2$ component matrix and $x$ is an $N^2$
+		component vector of unknowns.
+		(Assume your 2d discretised grid contains $N$ components in the $x$ and $y$ direction).
+		%with boundary conditions
+		%\[ u(0,t)=u(\pi,t)=0, \ \ 0<t \]
+		%and initial conditions
+		%\item
+		%Prove that the five-point difference analog $-\nabla^2_h$ is consistent to order 2 with $-\nabla^2$.
+		
+		\item Prove (DISCRETE MAXIMUM PRINCIPLE).
+		if $\nabla^2_hV_{ij}\geq 0$ for all points $(x_i,y_j) \in \Omega_h$, then
+		\[ \max_{(x_i,y_j)\in\Omega_h}V_{ij}\leq  \max_{(x_i,y_j)\in\partial\Omega_h}V_{ij}\]
+		If $\nabla^2_hV_{ij}\leq 0$ for all points $(x_i,y_j) \in \Omega_h$, then
+		\[ \min_{(x_i,y_j)\in\Omega_h}V_{ij}\geq  \min_{(x_i,y_j)\in\partial\Omega_h}V_{ij}\]
+
+		\item
+		Hence prove:\\
+		Let $U$ be a solution to the Poisson equation and let $w$ be the grid function
+		that satisfies the discrete analog
+		\[-\nabla_h^2w_{ij}=f_{ij} \ \ \mbox{ for } (x_i,y_j)\in\Omega_h, \]
+		\[w_{ij}=g_{ij} \ \ \mbox{ for } (x_i,y_j)\in\partial\Omega_h. \]
+		Then there exists a positive constant $K$ such that
+		\[||U-w||_{\Omega}\leq KMh^2 \]
+		where
+		\[ M=\left\{
+		\left|\left|\frac{\partial^4 U}{\partial x^4} \right|\right|_{\infty},
+		\left|\left|\frac{\partial^4 U}{\partial x^3\partial y} \right|\right|_{\infty},
+		,...,
+		\left|\left|\frac{\partial^4 U}{\partial y^4} \right|\right|_{\infty}
+		\right\}
+		\]
+		You may assume:\\
+		\textbf{Lemma}\\
+		If the grid function $V:\Omega_h\bigcup\partial\Omega_h\rightarrow R$ satisfies the boundary condition $V_{ij}=0$ for $(x_i,y_j)\in \partial\Omega_h$, then
+		\[||V||_{\Omega}\leq \frac{1}{8}||\nabla_h^2V||_{\Omega} \]
+		\end{enumerate}
+	
+
+
+
+	
+	\item
+		\begin{enumerate}
+		\item
+		For a finite difference scheme approximating a partial differential equation of the form
+		\[\frac{\partial U}{\partial t}=-a\frac{\partial U}{\partial x}+f(x,t), \ \ x \in R, \ \ \ t>0 \]
+		\[ U(x,0)= U_0(x), \ \ \ x\in R \]
+		define what is meant by:
+		\begin{enumerate}
+			\item convergence,
+			\item consistency,
+			\item stability.
+		\end{enumerate}
+		\item
+		Describe the forward Euler/centered difference method for the transport equation
+		and	derive the local truncation error.
+		\item
+		Define the Courant Friedrichs Lewy condition and state how it is related to stability.
+		\item
+		Show that the method is stable under the Courant Friedrichs Lewy condition using Von Neumann analysis, you may assume  $f(x,t)=0.$
+
+	\end{enumerate}	
+\item
+	Consider the second order differential equation 
+	\[\frac{d^2u}{dx^2}+u=x \ \]
+	with boundary conditions
+	\[u(0)=0 \ \ \ \ \ u(1)=0 \]
+	\begin{enumerate}
+		\item
+		Show that the solution $u(x)$ of this equation satisfies the weak form
+		\[ \int_{0}^{1} dx \left(-\frac{du}{dx}\frac{dv}{dx}+uv-xv \right) = 0\]
+		for all $v(x)$ which are sufficiently smooth and which satisfy
+		\[v(0)=0 \ \ \ \ \ v(1)=0 \]
+		\item
+		By splitting the interval $x\in [0,1]$ into $N$ equal elements of size $h$, where
+		$Nh=1$, one can define nodes $x_i$ and finite element shape functions as 
+		follows
+		\[x_i=ih \]
+		\[\phi_i(x)=\left\{\begin{array}{ll} 
+		0 & 0\leq x \leq x_{i-1}\\
+		\frac{x-x_{i-1}}{h} & x_{i-1}\leq x \leq x_{i}\\
+		\frac{x_{i+1}-x}{h} & x_{i}\leq x \leq x_{i+1}\\
+		0 & x_{i+1}\leq x \leq 1\\
+		\end{array} \right. \]
+		A finite element approximation to the differential equation is obtained by approximating $u(x)$ and $v(x)$ with linear combinations of these finite element shape
+		functions, $\phi_i$, where
+		\[ u_{n} = \sum_{i=1}^{N-1}\alpha_i \phi_i(x) \]
+		\[ v_{n} = \sum_{j=1}^{N-1}\beta_j \phi_j(x) \]
+		Show that the equation which results from this approximation has the form
+		\[K\alpha= F \]
+		where K is an $N-1 \times N-1$ sparse matrix, $F$ is an $N-1$ component vector
+		and $\alpha$ is an $N-1$ component vector of unknown co-efficient $\alpha_i$.
+		\item
+		What structure does the matrix $K$ have?
+		Evaluate the first component of the main diagonal of $K$.
+\end{enumerate}
+
+\end{enumerate}

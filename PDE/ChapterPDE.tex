@@ -1,0 +1,141 @@
+\chapter{Partial Differential Equations}
+\section{Introduction}
+Partial Differential Equations (\addtoindex{PDE}), occur frequently in maths, natural science
+and engineering.\\
+\addtoindex{PDE}'s are problems involving rates of change of functions of several variables.\\
+The following involve 2 independent variables:
+\begin{eqnarray*}
+-\nabla^2u=-\frac{\partial^2u}{\partial x^2}-\frac{\partial^2u}{\partial y^2}=f(x,y)&\mbox{Poisson Eqn}\\
+\frac{\partial u}{\partial t}+v\frac{\partial u}{\partial x}=0&\mbox{Advection Eqn}\\
+\frac{\partial u}{\partial t}-D\frac{\partial^2 u}{\partial x^2}=0&\mbox{Heat Eqn}\\
+\frac{\partial^2 u}{\partial t^2}-c^2\frac{\partial^2 u}{\partial x^2}=0&\mbox{Wave Equation}
+\end{eqnarray*}
+Here $v,D,c$ are real positive constants.  In these cases $x,y$ are the space
+coordinates and $t,x$ are often viewed as time and space coordinates, respectively.\\
+These are only examples and do not cover all cases.  In real occurrences \addtoindex{PDE}'s
+usually have 3 or 4 variables.\\
+\section{PDE Classification}
+\addtoindex{PDE}'s in two independent variables x and y have the form
+\[ \Phi\left(x,y,u,\frac{\partial u}{\partial x},\frac{\partial u}{\partial y},\frac{\partial^2 u}{\partial x^2},...\right) = 0 \]
+where the symbol $\Phi$ stands for some functional relationship.\\
+As we saw with BVP this is too general a case so we must define new classes of the
+general \addtoindex{PDE}.
+\begin{definition}
+The order of a \addtoindex{PDE} is the order of the highest derivative that appears.\\
+ie Poisson is 2nd order, Advection eqn is 1st order. $\circ$
+\end{definition}
+Most of the mathematical theory of \addtoindex{PDE}'s concerns linear equations of first or second order.\\
+After order and linearity (linear or non-linear), the most important classification
+scheme for \addtoindex{PDE}'s involves geometry.\\
+Introducing the ideas with an example:\\
+\begin{example}
+\begin{equation}\label{ex}
+\alpha(t,x)\frac{\partial u}{\partial t}+\beta\frac{\partial u}{\partial x}=\gamma(t,x)\end{equation}
+A solution $u(t,x)$ to this \addtoindex{PDE} defines a surface $\{t,x,u(t,x)\}$ lying over some region of the $(t,x)$-plane.\\
+Consider any smooth path in the $(t,x)$-plane lying below the solution $\{t,x,u(t,x)\}$.\\  Such a path has a parameterization $(t(s),x(s))$ where the parameter
+s measures progress along the path.\\
+What is the rate of change $\frac{d u}{d s}$ of the solution as we travel along the path $(t(s),x(s))$.\\
+The chain rule provides the answer
+\begin{equation}\label{chain}\frac{d t}{d s}\frac{\partial u}{\partial t}+
+\frac{d x}{d s}\frac{\partial u}{\partial x}
+=\frac{d u}{d s}\end{equation}
+Equation (\ref{chain}) holds for an arbitrary smooth path in the $(t,x)$-plane.  
+Restricting attention to a specific family of paths leads to a useful observation:
+When
+\begin{equation}\frac{dt}{ds}=\alpha(t,x) \mbox{  and  } \frac{dx}{ds}=\beta(t,x)
+\end{equation}
+the simultaneous validity of (\ref{ex}) and (\ref{chain}) requires that
+\begin{equation}\label{gamma}
+\frac{du}{ds}=\gamma(t,x).
+\end{equation}
+Equation (\ref{gamma}) defines a family of curves $(t(s),x(s))$ called characteristic curves in the plane $(t,x)$.\\
+Equation (\ref{gamma}) is an ode called the characteristic equation that the solution must satisfy along only the characteristic curve.\\
+Thus the original \addtoindex{PDE} collapses to an ODE along the characteristic curves. Characteristic 
+curves are paths along which information about the solution to the \addtoindex{PDE} propagates
+from points where the initial value or boundary values are known.
+$\diamond$\end{example}
+Consider a second order \addtoindex{PDE} having the form
+\begin{equation}
+\alpha(x,y)\frac{\partial^2u}{\partial x^2}+\beta(x,y)\frac{\partial^2 u}{\partial x\partial y}+\gamma(x,y)\frac{\partial^2u}{\partial y^2} = \Psi(x,y,u,\frac{\partial u}{\partial x},\frac{\partial u }{\partial y})
+\end{equation}
+Along an arbitrary smooth curve $(x(s),y(s))$ in the $(x,y)$-plane, the gradient
+$\left( \frac{\partial u}{\partial x}, \frac{\partial u}{\partial y}\right)$ of the solution varies according to the chain rule:
+\[ \frac{dx}{ds}\frac{\partial^2u}{\partial y\partial x}+\frac{dy}{ds}\frac{\partial^2 u}{\partial y\partial x}=\frac{d}{ds}\left(\frac{\partial u}{\partial x}\right)\]
+\[ \frac{dx}{ds}\frac{\partial^2u}{\partial x \partial y}+\frac{dy}{ds}\frac{\partial^2u}{\partial y^2}=\frac{d}{ds}\left(\frac{\partial u}{\partial y}\right)\]
+if the solution $u(x,y)$ is continuously differentiable then these relationships
+together with the original \addtoindex{PDE} yield the following system:
+\begin{equation}
+\label{matrix char} 
+\left(\begin{array}{ccc}
+\alpha & \beta & \gamma \\
+\frac{dx}{ds}&\frac{dy}{ds}&0\\
+0&\frac{dx}{ds}&\frac{dy}{ds}\\
+\end{array}\right)
+\left(\begin{array}{c}
+\frac{\partial^2u}{\partial x^2}\\
+\frac{\partial^2u}{\partial x\partial y}\\
+\frac{\partial^2u}{\partial y^2}\\
+\end{array}\right)
+=
+\left(\begin{array}{c}
+\Psi\\
+\frac{d}{ds}\left(\frac{\partial u}{\partial x}\right)\\
+\frac{d}{ds}\left(\frac{\partial u}{\partial y}\right)\\
+\end{array}\right)
+\end{equation} 
+By analogy with the first order case we determine the characteristic curves bu where the \addtoindex{PDE} is redundant  with the chain rule.  This occurs when the determinant
+of the matrix in (\ref{matrix char}) vanishes that is when
+\[
+\alpha\left( \frac{dy}{ds}\right)^2
+-
+\beta\left( \frac{dy}{ds}\right)\left( \frac{dx}{ds}\right)
++
+\gamma\left( \frac{dx}{ds}\right)^2=0
+\]
+eliminating the parameter $s$ reduces this equation to the equivalent condition
+\[
+\alpha\left( \frac{dy}{dx}\right)^2
+-
+\beta\left( \frac{dy}{dx}\right)
++
+\gamma
+=0
+\]
+Formally solving this quadratic for $\frac{dy}{dx}$, we find
+\[\frac{dy}{dx}=\frac{\beta\pm\sqrt{\beta^2-4\alpha\gamma}}{2\alpha}\]
+This pair of ODE's determine the characteristic curves.  From this equation we
+divide into 3 classes each defined with respect to $\beta^2-4\alpha\gamma$.
+\begin{enumerate}
+\item
+\textbf{HYPERBOLIC}\\
+$\beta^2-4\alpha\gamma>0$
+This gives two families of real characteristic curves.
+\item
+\textbf{PARABOLIC}\\
+$\beta^2-4\alpha\gamma=0$
+This gives exactly one family of real characteristic curves.
+\item
+\textbf{ELLIPTIC}\\
+$\beta^2-4\alpha\gamma<0$
+This gives no real characteristic equations.
+\end{enumerate}
+\begin{example}
+\underline{The wave equation}
+\[c^2\frac{\partial^2u}{\partial x^2}-\frac{\partial^2u}{\partial t^2}=0\]
+now equating this with our formula for the characteristics we have
+\[\frac{dt}{dx}=\frac{0\pm\sqrt{0+4c^2}}{2}=\pm c\]
+this implies that the characteristics are $x+ct=const$ and $x-ct=const$.
+This means that the effects travel along the characteristics.\\
+\underline{Laplace equation}
+\[\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2u}{\partial y^2} =0\]
+from this we have $-4(1)(1)< 0$ which implies it is elliptic.\\
+This means that information at one point affects all other points.\\
+\underline{\addtoindex{Heat equation}}
+\[\frac{\partial^2u}{\partial x^2}-\frac{\partial u}{\partial t}=0\]
+from this we have $\beta^2-4\alpha\gamma=0$ this implies that the equation is
+parabolic thus we have
+\[ \frac{\partial t}{\partial x}=0\]
+$\diamond$\\
+\end{example} 
+We can also state that hyperbolic and parabolic are Boundary value problems
+and initial value problems.  While, elliptic problems are boundary value problems.

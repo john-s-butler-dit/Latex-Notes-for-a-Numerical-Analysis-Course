@@ -1,0 +1,52 @@
+\chapter{Higher Order Methods}
+\section{Higher order Taylor Methods}
+The Taylor expansion
+\[ y(t_{i+1})=y(t_i)+h y^{'}(t_i)+\frac{h^2}{2}y^{'}(t_i)+..+\frac{h^{n+1}}{(n+1)!}y^{n+1}(\xi_i) \]
+can be used to design more accurate higher order methods. 
+By differentiating the original \addtoindex{Ordinary Differential Equation} $y^{'}=f(t,y)$  higher ordered can be derived 
+method it requires the function to be continuous and differentiable.\\
+In the general case of Taylor of order n:
+\[ w_0=\alpha \]
+\[ w_{i+1} = w_i + hT^n(t_i,w_i), \mbox{   for   } \ i=0,...,N-1, \]
+where
+\begin{equation} T^{n}(t_i,w_i) = f(t_i,w_i)+\frac{h}{2}f'(t_i,w_i)+...\frac{h^{n-1}}{n!}f^{n-1}(t_i,w_i). \end{equation}
+\begin{example}
+Applying the general Taylor method to create methods of order two and four to
+the initial value problem
+\[y^{'}=y-t^2+1, \ \ \ 0\leq t \leq 2, \ \ \ y(0)=0.5, \]
+from this we have 
+\[ f^{'}(t,y(t)) = \frac{d}{dt}(y-t^2+1) = y'-2t=y-t^2+1-2t, \]
+\[ f^{''}(t,y(t)) = y-t^2-2t-1, \]
+\[ f^{'''}(t,y(t)) = y-t^2-2t-1. \]
+From these derivatives we have
+\begin{eqnarray*}
+T^{2}(t_i,w_i)&=&f(t_i,w_i)+\frac{h}{2}f^{'}(t_i,w_i)\\
+&=&w_i-t_i^2+1+\frac{h}{2}(w_i-t_i^2-2t_i+1)\\
+&=&\left(1+\frac{h}{2}\right)(w_i-t_i^2-2t_i+1)-ht_i
+\end{eqnarray*}
+and
+\begin{eqnarray*}
+T^{4}(t_i,w_i)&=&f(t_i,w_i)+\frac{h}{2}f^{'}(t_i,w_i)\\
+& &+\frac{h^2}{6}f^{''}(t_i,w_i)+\frac{h^3}{24}f^{''}(t_i,w_i)\\
+&=&\left(1+\frac{h}{2}+\frac{h^2}{6}+\frac{h^3}{24}\right)(w_i-t_i^2)\\
+& &-\left(1+\frac{h}{3}+\frac{h^2}{12}\right)ht_i\\
+& & +1+\frac{h}{2}-\frac{h^2}{6}-\frac{h^3}{24}
+\end{eqnarray*}
+From these equations we have,
+Taylor of order two
+\[w_0=0.5\]
+\[w_{i+1}=w_i+h\left[\left(1+\frac{h}{2}\right)(w_i-t_i^2-2t_i+1)-ht_i
+\right] \]
+and Taylor of order 4
+\begin{eqnarray*}w_{i+1}&=&w_i+h\left[\left(1+\frac{h}{2}+\frac{h^2}{6}+\frac{h^3}{24}\right)(w_i-t_i^2)\right.\\
+& &\left.-\left(1+\frac{h}{3}+\frac{h^2}{12}\right)ht_i
+ +1+\frac{h}{2}-\frac{h^2}{6}-\frac{h^3}{24}
+\right] \end{eqnarray*}
+The local truncation error for the 2nd order method is 
+\[\tau_{i+1}(h) = \frac{y_{i+1}-y_i}{h} -T^2(t_i,y_i) = \frac{h^2}{6}f^2(\xi_i,y(x_i))\]
+where $\xi \in (t_i,t_{i+1})$.
+\end{example}
+In general if $y \in C^{n+1}[a,b]$
+\[\tau_{i+1}(h)=\frac{h^n}{(n+1)!}f^{n}(\xi_i,y(\xi_i))~O(h^n). \]
+The issue is that for every differential equation a new method has be to derived.
+

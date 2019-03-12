@@ -1,0 +1,786 @@
+\chapter{Approximation Theory}
+The main purpose of Approximation theory is to replace a complicated function by one which is simpler and more
+manageable.
+\section{Lagrange}
+Set of point $(x_i,y_i)$ all i $0\leq i \leq n $ i.e. n+1 points.
+Define a polynomial of degree n, which satisfies all points.
+
+Assume there exists a poly of degree n which has the properties
+
+\begin{eqnarray}
+L_{i}(x_j) = 0 \hspace{0.2 in}
+L_{i}(x_i) = 1 
+\label{Lagrange poly 1}
+\end{eqnarray}
+We may then write
+\[p_n(x) = \sum_{i=0}^{n} L_{i}(x)y_{i} \]
+
+Now to define $L_{i}$.  If $L_i$ is to satisfy criteria then it must contain a factor
+\[ (x-x_0)(x-x_1)...(x-x_{i-1})(x-x_{i+1})...(x-x_n) \]
+Since it has n terms it is a poly of degree n.  Therefore
+\[ L_i = A_i(x-x_0)(x-x_1)...(x-x_{i-1})(x-x_{i+1})...(x-x_n) \]
+$A_i $ is chosen such that (s.t.) (\ref{Lagrange poly 1}) is satisfied.
+\[A_{i} = \frac{1}{(x-x_0)(x-x_1)...(x-x_{i-1})(x-x_{i+1})...(x-x_n)} \]
+\[L_{i} = \Pi_{j=0,j \neq i}^{n} \frac{x-x_j}{x_i-x_j} \]
+
+To prove the uniqueness suppose that there is another poly $q_n$ of degree at most n s.t. $q_{n}(x_{i}) = y_i$.\\
+Now $p_n - q_n$ is itself a poly of degree at most n and vanishes at n+1 points $x_i$ because
+\[ p_n(x_i) - q_n(x_i) = y_i - y_i =0 \]
+However by the fundamental theorem of Algebra a poly of degree n has at most n roots unless it is identically zero. Hence $q_n = p_n$.
+\subsection*{Example:}
+\begin{quote}
+\begin{tabular}{lrrr}
+x & 0 & 1 & 3 \\ \hline
+f(x) & 1 & 3 & 2 
+\end{tabular}
+\end{quote}
+\[ L_0 = \frac{(x-1)(x-3)}{(0-1)(0-3)},
+ L_1 = \frac{(x-0)(x-3)}{(1-0)(1-3)},
+ L_2 = \frac{(x-0)(x-1)}{(3-0)(3-1)} \]
+
+\[ P_2(2) = 1.L_0(2)+3.L_1(2)+2.L_2(2) = \frac{10}{3} \]
+
+\begin{theorem}
+\label{Lagrange Thm}
+Let [a,b] be any interval containing the distinct points $x_i$ (i=0,1,..,n).  If all derivatives of f up to and including $f^{n+1}$ exist and are continuous on
+[a,b] the corresponding to each value of x in [a,b] $\exists$ a number $\xi$
+in (a,b) s.t.
+\[ f(x) - p_n(x) = (x-x_0)(x-x_1)...(x-x_n) \frac{f^{n+1}(\xi)}{(n+1)!} \]
+\end{theorem}
+\begin{proof}
+Exercise
+\end{proof}
+\textbf{Similar} \textbf{interpolation:}
+Divided Difference,
+Finite Difference form,
+Hermite Interpolation.
+\section{Splines}
+\begin{definition} 
+\emph{Spline function}
+Given a strictly increasing sequence of real numbers $a=x_0,x_1,...,x_n=n$ a 
+spline function S(x) of degree m with the knots $x_0,...x_n$ is a function of order $m \geq 1 $ defined on the entire real line having the following two properties:
+\begin{enumerate}
+\item
+S(x) is a polynomial of degree $< m$ on each subinterval $[x_{i-1},x_i]$;
+\item
+$S^{r}(x)$ is continuous on $[a,b]$ for $0\leq r \leq m-1$.
+\end{enumerate} 
+\end{definition}
+
+\underline{Cubic Spline} is the most popular for m=4.
+From this point on we only deal with Cubic Splines.
+\begin{equation}
+S_i(x) = a_i(x-x_i)^3 + b_i(x-x_i)^2+c_i(x-x_i)+d_i
+\label{S_i original}
+\end{equation}
+\begin{subequations}
+\label{S_i conditions}
+\begin{equation}
+\label{S_i conditions a}
+S_i(x_i) = y_i \ \ i=0,1,..,n-1 \ S_{n-1}(x_n) = y_n;
+\end{equation}
+\begin{equation}
+\label{S_i conditions b}
+S_i(x_{i+1}) = S_{i+1}(x_{i+1})  i=0,1,..,n-2
+\end{equation}
+\begin{equation}
+\label{S_i conditions c}
+S_i^{'}(x_{i+1}) = S_{i+1}^{'}(x_{i+1}) i=0,1,..,n-2
+\end{equation}
+\begin{equation}
+\label{S_i conditions d}
+S_i^{''}(x_{i+1}) = S_{i+1}^{''}(x_{i+1}) i=0,1,..,n-2
+\end{equation}
+\end{subequations}
+If there are n+1 points the number of intervals  and number of equations are n.
+There are 4n unknowns which are the $a_i,b_i,c_i,d_i$ for i=0,1,...,n-1.
+Immediately \ref{S_i conditions a}
+gives
+\begin{equation}
+\label{d_i}
+d_i = y_i
+\end{equation}
+
+(\ref{S_i conditions b}) gives
+\begin{eqnarray*}
+y_{i+1} &= &a_i(x_{i+1}-x_i)^3 + b_i(x_{i+1}-x_i)^2+c_i(x_{i+1}-x_i)+y_i \\
+& = &  a_ih_i^3 + b_ih_i^2+c_ih_i+y_i \ \ i=0,...,n-1\\
+h_i=(x_{i+1}-x_i)
+\end{eqnarray*}
+Differentiate (\ref{S_i original})
+
+\begin{equation}
+\label{S_i derivatives}
+S_i^{'}(x) = 3a_i(x-x_i)^2 + 2b_i(x-x_i)+c_i\\
+S_i^{''}(x) = 6a_i(x-x_i) + 2b_i \ \ for \ \ i=0,...,n-1\\
+\end{equation}
+Development is simplified if we write in terms of the 2nd derivative that is, if we let $M_i = S^{''}$ for i=0,..n-1 and $M_n = S_{n-1}^{''}(x_{n})$
+
+\begin{eqnarray*}
+M_i &=& 6a_i(x_i-x_i) + 2b_i\\
+& = & 2 b_i \\
+M_{i+1} &=& 6a_i(x_{i+1}-x_i) + 2b_i\\
+& = &6a_ih_i+ 2 b_i
+\end{eqnarray*}
+Hence we write
+\begin{equation}
+\label{b_i}
+b_i = \frac{M_i}{2}
+\end{equation}
+\begin{equation}
+\label{a_i}
+a_i = \frac{M_{i+1}- M_i}{6h_i}
+\end{equation}
+We substitute the relations for $a_i,b_i,c_i,d_i$ given (\ref{a_i}),(\ref{b_i}) and
+(\ref{d_i}) into (\ref{S_i original}) to get.
+\begin{eqnarray*}
+y_{i+1} & = & \frac{(M_{i+1}-M_{i})}{6h_i}h^3_i + \frac{M_i}{2}h_i^2+c_ih_i+y_i \\
+c_i & = & \frac{y_{i+1}-y_{i}}{h_i} - \frac{2h_iM_i+h_iM_{i+1}}{6} 
+\end{eqnarray*}
+We now evoke the condition that the slopes of the 2 cubics that join at the point $(x_i,y_i)$ are the same (\ref{S_i conditions c}).
+\begin{equation*}
+y_i^{'} = 3a_i(x_i-x_i)^2 + 2b_i(x_i-x_i)+c_i = c_i
+\end{equation*}
+In the previous interval from $x_{i-1}$ to $x_i$ the slope at its right end will
+be 
+\begin{equation*}
+y_i^{'} = 3a_{i-1}h_{i-1}^2 + 2b_{i-1}h_{i-1}+c_{i-1} 
+\end{equation*}
+Equating these and replacing a,b,c,d we get
+
+\begin{eqnarray}
+\label{M form}
+h_{i-1}M_{i-1} + 2(h_{i-1}+h_{i})M_i+h_iM_{i+1} &= &6(\frac{y_{i+1} - y_{i}}{h_i} -\frac{y_{i}-y_{i-1}}{h_{i-1}})\\
+& = & 6(f[x_i,x_{i+1}] - f[x_{i-1},x_{i}])
+\end{eqnarray}
+This gives us n-1 equations and n+1 unknowns.
+Writing this in Matrix form:
+\begin{tiny}
+\[ 
+	\left( \begin{array}{ccccccc}
+    h_0 & 2(h_0+h_1) & h_1 & & & &\\
+     & h_1 & 2(h_1+h_2) & h_2& & &\\
+     &  & h_2 & 2(h_2+h_3)&h_3 & &\\
+     &  & . & & & &\\
+     &  &  &. & & &\\
+     &  &  & &. & &\\
+     &  &  & h_{n-2} &2(h_{n-2}-h_{n-1}) &h_{n-1} &\end{array} \right)
+	\left( \begin{array}{c}
+      M_0\\
+      M_1\\
+      M_2\\
+      M_3\\
+      .\\
+      .\\
+      .\\
+M_{n-1}	\\
+      M_n\end{array} \right)
+=
+6	\left( \begin{array}{c}
+      f[x_1,x_2]-f[x_0,x_1]\\
+    f[x_2,x_3]-f[x_1,x_2]  \\
+   f[x_3,x_4]-f[x_2,x_3]   \\
+      .\\
+      .\\
+      .\\
+  f[x_{n-1},x_{n}]-f[x_{n-2},x_{n-1}]    \end{array} \right)
+\] 
+\end{tiny}
+We need 2 more equations to solve to do this we introduce conditions:
+\begin{enumerate}
+\item
+Take $M_0=0$ and $M_n=0$.  This makes the end cubics approach linearity at the extremities.  This condition, called a natural spline, matches precisely to the 
+drafting device. This technique is used very frequently.
+\[ 
+	\left( \begin{array}{cccccc}
+      2(h_0+h_1) & h_1 & & & &\\
+      h_1 & 2(h_1+h_2) & h_2& & &\\
+       & h_2 & 2(h_2+h_3)&h_3 & &\\
+       & . & & & &\\
+       &  &. & & &\\
+       &  & &. & &\\
+      & &  & h_{n-2} &2(h_{n-2}-h_{n-1}) &\end{array} \right)
+\]
+
+\item
+Another often used condition is to force the slopes at each end to assume specified values.  When that is not known, the slope might be estimated from the points.
+If $f^{'}(x_0)=A$ and $f^{'}(x_n)=B$, we use these relations:
+
+\begin{eqnarray}\label{end points} \mbox{At the Left end:  }& 2h_0M_0+h_1M_1=6(f[x_0,x_1]-A). \\
+\mbox{At the right end:  } &h_{n-1}M_{n-1}+2h_{n}M_{n}=6(B-f[x_{n-1},x_n]). \end{eqnarray}
+
+\[ 
+	\left( \begin{array}{cccccc}
+      2(h_0) & h_1 & & & &\\
+      h_1 & 2(h_1+h_2) & h_2& & &\\
+       & h_2 & 2(h_2+h_3)&h_3 & &\\
+       & . & & & &\\
+       &  &. & & &\\
+       &  & &. & &\\
+      & &  & h_{n-2} &2(h_{n-1}) &\end{array} \right)
+\]
+
+\item
+Take $S_0=S_1$, $S_{n-1}=S_{n-2}$.  This is equivalent  to assuming that the end cubics approach parabolas at their extremities
+\[ 
+	\left( \begin{array}{cccccc}
+      (3h_0+2h_1) & h_1 & & & &\\
+      h_1 & 2(h_1+h_2) & h_2& & &\\
+       & h_2 & 2(h_2+h_3)&h_3 & &\\
+       & . & & & &\\
+       &  &. & & &\\
+       &  & &. & &\\
+      & &  & h_{n-2} &(2h_{n-2}-3h_{n-1}) &\end{array} \right)
+\]
+
+\end{enumerate}
+Rephrasing equation (\ref{M form}) such that we have:
+\[\mu_jM_{j-1} +2M_j +\lambda_{j+1}M_{j+1} = d_j \]
+\[ \lambda_j = \frac{h_{j+1}}{h_{j}+h_{j+1}} \, \mu_1=1-\lambda_j=\frac{h_j}{h_j+h_{j+1}} \]
+\[d_j = \frac{6}{h_j+h_{j+1}}\left(f[x_{j},x_{j+1}]-f[x_{j-1},x_{j}]\right) \ \
+j=1,...,n-1 \]
+\begin{theorem}
+If $f\in C^{4}[a,b]$ and $|f^{4}(x)|\leq L$ for $x \in [a,b]$ then,
+\[
+||M-F||\leq ||r|| \leq \frac{3}{4}L||\Delta||^{2} \]
+\end{theorem}
+Notation:
+\[
+M=\left( \begin{array}{c}
+      M_0\\
+      M_1\\
+      .\\
+      .\\
+      .\\
+      M_n\end{array} \right)
+F=
+\left( \begin{array}{c}
+      f^{''}(x_0)\\
+      f^{''}(x_1)\\
+      .\\
+      .\\
+      .\\
+      f^{''}(x_n)\end{array} \right)
+\]
+\[r=d-AF \]
+\[||\Delta||=max_j|x_{j+1}-x_{j}| \]
+
+\begin{proof}
+By defn $r_0=d_0-2f^{''}(x_0)-f^{''}(x_1)$ and from (\ref{end points})
+\[
+r_0 = \frac{6}{h_1}\left(\frac{y_1-y_0}{h_1} - y'_0\right) -2f^{''}(x_0) - f^{''}(x_1) \]
+Using Taylor expansion $y_1=f(x_1)$ and $f^{''}(x)$ in terms of the value and the derivatives of the function f at $x_0$ yields.
+\begin{eqnarray*}
+r_0&=& \frac{6}{h_1}(f^{'}(x_0)+\frac{h_{1}}{2}f^{''}(x_0)+\frac{h_1^2}{6}f^{'''}(x_0) + \frac{h_{1}^3}{24}f^{4}(\tau_1)-f^{'}(x_0) )\\
+& & -2f^{''}(x_0) - [f^{''}x_0+h_1f^{''}(x_0)+\frac{h_1^2}{2}f^{4}(\tau_2)]\\
+&=& \frac{h_1^2}{4}f^{4}(\tau_1) - \frac{h_{1}^2}{2}f^{4}(\tau_2)
+\end{eqnarray*}
+with $\tau_1,\tau_2 \in [x_0,x_1]$. Hence
+\[ |r_0| \leq \frac{3}{4} L ||\Delta||^2 \]
+Analogously we find
+\[
+r_n = d_n - f^{''}(x_{n-1})-2f^{''}(x_n) \]
+that 
+\[ |r_n| \leq \frac{3}{4} L ||\Delta||^2 \]
+For the remaining components of $r=d-AF$ we find similarly
+\begin{eqnarray*}
+r_j&=&d_j - \mu_jf^{''}(x_{j-1})-2f^{''}(x_j) -\lambda_{j+1}f^{''}(x_{j+1})\\
+&=&\frac{6}{h_j+h_{j+1}}\left(f[x_{j},x_{j+1}]-f[x_{j-1},x_{j}]\right)\\ & & -
+\frac{h_{j}}{h_{j}+h_{j+1}}f^{''}(x_{j-1}) - 2f^{''}(x_j)
+\frac{h_{j+1}}{h_{j}+h_{j+1}}f^{''}(x_{j+1}) 
+\end{eqnarray*}
+Taylors formula at $x_j$ then gives
+\begin{eqnarray*}
+r_j & =& \frac{1.0}{h_j+h_{j+1}}\left[ \frac{h_{j+1}^3}{4}f^{4}(\tau_1 )  \frac{h_{j+1}^3}{4}f^{4}(\tau_2 )  -\frac{h_{j+1}^3}{4}f^{4}(\tau_3 )  -\frac{h_{j+1}^3}{4}f^{4}(\tau_4 ) \right]
+\end{eqnarray*}
+where $\tau_1, \tau_2, \tau_3,\tau_4 \in [x_{j-1},x_{j+1}],$
+\[ |r_j| \leq \frac{3}{4}L \frac{[h_{j+1}^3+h_j^3]}{h_j+h_{j+1}}\leq \frac{3}{4}L||\Delta||^2 \]
+for j=1,...,n-1
+\[
+||r|| \leq \frac{3}{4} L || \Delta ||^2 \]
+and since $r=A(M-F)$ implies $||M-F|| \leq ||r||$ using the non-singular properties of A.
+\end{proof} $\bigodot$
+\begin{theorem}
+Suppose 
+$f \in C^{4}[a,b]$ and $ |f^{4}(x)| \leq L $for $x \in [a,b]$. Let $\Delta$ be a partition
+$\Delta = \{ a=x_0 < ... < x_n = b \} $ of the interval $[a,b]$, and K be a constant
+\[
+\frac{||\Delta||}{|x_{j+1}-x_{j}|} \leq K
+\]
+If $S_{\Delta}$ is the Spline function which interpolates the values of the function f at the knots $x_0,...x_n \in \Delta$
+and satisfies $S^{'}_{\Delta} = f^{'}(x)$ for $(a,b) $ then there exists constants $C_{k} \leq 2$ which do depend on the partition $\Delta$ such that for $ x \in [a,b]$
+\[
+|f^{(k)}(x)-S_{\Delta}^{k}(x)|\leq C_{k}LK||\Delta||^{4-k} \]
+for k=0,1,2,3.
+\end{theorem}
+\begin{proof}
+We prove the proposition first for k=3.
+For $x \in [x_{j-1},x_j]$
+\begin{eqnarray*}
+S^{'''}_{\Delta}(x)-f^{'''}(x)& = &\frac{M_j-M_{j-1}}{h_j} - f^{'''}(x)\\
+& = & \frac{M_j - f^{''}(x_j)}{h_j} -\frac{M_{j-1}-f^{''}(x_{j-1})}{h_j}\\
+& & + \frac{f^{''}(x_j)-f^{''}(x) - [f^{''}(x_{j-1}-f^{''}(x)]}{h_j} -f^{'''}(x)
+\end{eqnarray*}
+Using previous proof and Taylors Thm at we conclude
+\begin{eqnarray*}
+ ||S^{'''}_{\Delta}(x)-f^{'''}(x)|| &\leq& \frac{3}{2}L\frac{||\Delta||^2}{h_j}\\
+& & + \frac{1}{h_j} \left|(x_j-x)f^{'''}(x) + \frac{(x_j-x)^2}{2} f^4(\eta_1)\right.\\
+& & \left.- (x_{j-1}-x)f^{'''}(x) + \frac{(x_{j-1}-x)^2}{2} f^4(\eta_2) - h_jf^{'''}(x) \right| \\
+&\leq& \frac{3}{2} L \frac{||\Delta||^2}{h_j} + \frac{L}{2} \frac{||\Delta||^{2}}{h_j} \ \ \ \eta_1,\eta_2 \in [x_{j-1},x_{j}]
+\end{eqnarray*}
+By hypothesis $\frac{||\Delta||}{h_j} \leq K $ for every interval.
+Thus $|f^{'''}(x) - S^{'''}_{\Delta}(x)| \leq 2LK||\Delta||$
+To prove the proposition for k=2 we observe for each $x \in (a,b)$ a closest
+knot $x_j = x_j(x)$ for which $|x_j(x) - x| \leq \frac{1}{2}||\Delta||$.
+\begin{eqnarray*}
+f^{''}(x) - S_{\Delta}^{''}(x) & = & f^{''}(x_j(x)) - S_{\Delta}^{''}(x_j(x)) 
++ \int^{x}_{x(x_j)}(f^{'''}(t)-S_{\Delta}^{'''}(t))dt
+\end{eqnarray*}
+and since $K \geq 1$
+
+\begin{eqnarray*}
+|f^{''}(x) - S_{\Delta}^{''}(x)| & \leq & \frac{3}{4} L ||\Delta||^2 +\frac{1}{2}||\Delta||2LK||\Delta|| \\
+& \leq & \frac{7}{4}LK||\Delta||^2  \ \ x \in [a,b]
+\end{eqnarray*}
+We consider k=1 next. In addition to the boundary points $\xi_0 = a, \xi_{n+1}=b$
+$\exists$ by Rolle's Theorem, n further points $\xi \in (x_{j-1},x_j),\ \ j=1,...,n$
+\[
+f^{'}(\xi_j) = S_{\Delta}^{'}(\xi_j) \ \ j=0,..,n+1
+\]
+For $x \in [a,b] \ \exists$ a closest of the above points $\xi_j = \xi_j(x)$, for
+which consequently 
+\[
+|\xi_j(x)-x| \leq ||\Delta||
+\]
+
+Thus
+\[
+f^{'}(x)-S^{'}_{\Delta}(x) = \int_{\xi_j(x)}^{x}(f^{''}(t)-S^{''}_{\Delta}(t))dt
+\]
+\begin{eqnarray*}
+|f^{'}(x) - S_{\Delta}^{'}(x)| & \leq & \frac{7}{4} L K ||\Delta||^2 ||\Delta||\\
+& \leq & \frac{7}{4}LK||\Delta||^3  \ \ x \in [a,b]
+\end{eqnarray*}
+The case k=0. Since 
+\[
+f(x)-S_{\Delta}(x) = \int_{\xi_j(x)}^{x}(f^{'}(t)-S^{'}_{\Delta}(t))dt
+\]
+It follows from the above result for k=1 that 
+\begin{eqnarray*}
+|f(x) - S_{\Delta}(x)| & \leq & \frac{7}{4} L K ||\Delta||^3 \frac{1}{2}||\Delta||\\
+& \leq & \frac{7}{8}LK||\Delta||^4  \ \ x \in [a,b]
+\end{eqnarray*}
+\end{proof} $\bigodot$
+\section{Bezier Curves and B-Splines}
+Bezier curves named after the French engineer P. Bezier of Renault.
+For the curves the points are more like "control" points, we select them to determine
+the shape of the curve we are working on.\\
+We consider mainly the cubic version of these curves. We will express $y=f(x)$ in parametric form.
+The parametric form represents a relation between x and y by two equations
+$x=F_1(u), \ y=F_2(u)$, u is called the parameter.\\
+When x and y are expressed in terms of a parameter $u \  (x(u),y(u)) \ 0\leq u \leq 1$
+defines a set of points (x,y) associated with the values of u.\\
+Control points $P_i = (x_i,y_i) \ i=0,1,..,n$.\\
+The nth degree Bezier polynomial determined by n+1 control points is given by
+\[
+P(u) = \sum^{n}_{i=0}
+\left( \begin{array}{c}
+      n \\
+      i\end{array} \right)
+(1-u)^{n-i}u^i P_i \]
+\[
+\left( \begin{array}{c}
+      n \\
+      i\end{array} \right)
+= \frac{n!}{i!(n-i)!}
+ \]
+For n=3,
+\[
+x(u) = (1-u)^3x_0+3(1-u)^2ux_1+3(1-u)u^2x_2+u^3x_3
+\]
+\[
+y(u) = (1-u)^3y_0+3(1-u)^2uy_1+3(1-u)u^2y_2+u^3y_3
+\]
+\textbf{Properties of a Bezier Curve}
+\begin{enumerate}
+\item
+$P(0)=P_0$ \hspace{0.2 in} $P(1)=P_3$;
+\item
+Since $\frac{dx}{du}=3(x_1-x_0)$
+and $\frac{dy}{du}=3(y_1-y_0)$ at u=0, the slope of the curve at u=0 is 
+$\frac{dy}{dx}=\frac{y_1-y_0}{x_1-x_0}$ which  is the slope at the secant line 
+between $P_0$ and $P_1$.  Similarly, for the slope at u=1.
+\item
+The curve is contained in the convex hull determined by the 4 points.
+\end{enumerate}
+\subsection*{B-Splines}
+$P_i = (x_i,y_i)$ i=0,..,n  cubic B-splines for the interval $P_i,P_{i+1}$ i =1,..n-1 is
+\begin{eqnarray*}
+B_i(u) & = & \sum^{2}_{k=-1} b_k P_{i+k} \\
+b_{-1} & = & \frac{(1-u)^3}{6} \\
+b_{0} & = & \frac{u^3}{2}-u^2+\frac{2}{3} \\
+b_{1} & = & \frac{-u^3}{2}-\frac{u^2}{2}+\frac{u}{2}+\frac{1}{6} \\
+b_{2} & = & \frac{u^3}{6} \ \ 0 \leq u \leq 1 \\
+\end{eqnarray*}
+\begin{equation*}
+B_i(u)  = 
+ (\frac{(1-u)^3}{6}) P_{i-1} +
+ (\frac{u^3}{2}-u^2+\frac{2}{3}) P_{i} +
+ (\frac{-u^3}{2}-\frac{u^2}{2}+\frac{u}{2}+\frac{1}{6}) P_{i_1}
+ +(\frac{u^3}{6})P_{i+2}
+\end{equation*}
+\textbf{Properties of a B-Spline}
+\begin{enumerate}
+\item
+B-Splines are pieced together so they agree at their joints in three ways
+\begin{eqnarray*}
+B_i(1)=B_{i+1}(0)&=&\frac{P_i+4P_{i+1}+P_{i+2}}{6}\\
+B_i^{'}(1)=B_{i+1}^{'}(0)&=&\frac{-P_i+P_{i+2}}{2}\\
+B_i^{''}(1)=B_{i+1}^{''}(0)&=& P_i-2P_{i+1}+P_{i+2}
+\end{eqnarray*}
+\item
+The portion of the curve determined by each group of four points is within
+the convex hull of these points.
+\end{enumerate}
+\textbf{End Points}
+While our system of polynomials are defined for i=1 to i=n-1 we need to 
+create extra points s.t. the end points are include.\\
+We create $P_{-2},P_{-1},P_{n+1},P_{n+2}$s.t. $P_0 = P_{-1}=P_{-2}$ and
+$P_{n} = P_{n+1} = P_{n+2}$.\\
+\textbf{Matrix Form:}
+\begin{eqnarray*}
+B_{i}(u) &=& \frac{1}{6}[u^3,u^2,u^1,1]
+\left[\begin{array}{cccc}
+-1 & 3 & -3 & 1 \\
+3 & -6 & 3 & 0 \\
+-3 & 0 & 3 & 0 \\
+1 & 4 & 1 & 1 \end{array} \right]
+\left[\begin{array}{c}
+P_{i-1} \\
+P_{i} \\
+P_{i+1} \\
+P_{i+2} \end{array} \right]\\
+&=&\frac{u^{T}M_b P}{6}
+\end{eqnarray*}
+\section{Linear square approximation}
+There is no justification for insisting that the data points be reproduced exactly, and such and approximation may well be very misleading since unwanted oscillations are likely.  A more satisfactory approach would be to find a line which
+passes closest to all points.
+Formula for the line.
+\[y_{i} = ax_i +b \]
+Let $e_i$ denote the error in relation to each point.
+\begin{eqnarray*}
+ S &= &e_{1}^2 + e_{2}^2+ . . . + e_{n}^2 \\
+& = & \sum_{i=1}^{n}e_i^2 \\
+& = & \sum_{i=1}^{n}(y_i-ax_i-b)^2
+\end{eqnarray*}
+To minimise the error we calculate a and b by differentiating S wrt to a and b
+respectively and setting to 0.
+\begin{eqnarray*}
+\frac{\delta S}{\delta a}& = 0 =& \sum_{i=1}^{n}2(y_i-ax_i-b)(-x_i)\\
+\frac{\delta S}{\delta b}& = 0 =& \sum_{i=1}^{n}2(y_i-ax_i-b)(-1)
+\end{eqnarray*}
+Rearranging these equations we have 2 equations a 2 unknowns of the form.
+\begin{eqnarray*}
+a\sum x_{i}^2 + b \sum x_i &= & \sum x_i y_i \\
+a\sum x_{i}^2 + b N &= & \sum  y_i 
+\end{eqnarray*}
+This can be solved easily.  Now for a more general form.
+\begin{eqnarray*}
+y & = & a_0 +a_1 x + ... + a_n x^n \\
+e_i & = Y_i-y_i= & Y_i - a_0 -a_1 x_i - ... - a_n x_i^n \\
+S = & \sum_{i=1}^n e_i^2 = &\sum_{i=1}^n (Y_i - a_0 -a_1 x_i - ... - a_n x_i^n)^2 \\
+\end{eqnarray*}
+Differentiating w.r.t. each of the constants $a_i$ for $i=0,..,n$ and setting each of these to minimise error.
+\begin{eqnarray*}
+\frac{\delta S}{\delta a_0}&= 0 =& \sum_{i=1}^{n}2(Y_i - a_0 -a_1 x_i - ... - a_n x_i^n)(-1) \\
+\frac{\delta S}{\delta a_1}&= 0 =& \sum_{i=1}^{n}2(Y_i - a_0 -a_1 x_i - ... - a_n x_i^n) (-x_i)\\
+.&.&.\\
+.&.&.\\
+.&.&.\\
+\frac{\delta S}{\delta a_n}&= 0 =& \sum_{i=1}^{n}2(Y_i - a_0 -a_1 x_i - ... - a_n x_i^n) (-x_i^n)
+\end{eqnarray*}
+putting this into matrix form.
+\begin{equation}\left[
+\begin{array}{ccccccc}
+N&\sum x_i & \sum x_i^2 & \sum x_i^3 &.&.& \sum x^n_i\\
+\sum x_i & \sum x_i^2 & \sum x_i^3 &.&.& .&\sum x^{n+1}_i\\
+.&.& .&.& .&.& .\\
+.&.& .&.& .&.& .\\
+\sum x_i^n & \sum x_i^{n+1} & \sum x_i^{n+2} &.&.& .&\sum x^{2n}_i
+\end{array}\right]
+a = 
+\left[
+\begin{array}{c}\sum Y_i\\
+.\\
+.\\
+.\\
+\sum x_i^nY_i\end{array}\right]
+\end{equation}
+This matrix is ill conditioned at n=4,5 there is no real problem but as n gets larger
+round-off error will arise.
+\section{Trigonometric Interpolation}
+Trigonometric interpolation is for periodic functions, $f(t+2\pi)=f(t)$.
+Using combinations of cos(hx) and sin(hx) for integer h.
+\begin{equation}
+\label{Trig inter}
+\phi(x) = \frac{A_0}{2} + \sum_{h=1}^M(A_{h}cos(hx) + B_h sin(hx))
+\end{equation}
+\begin{equation}
+\phi(x) = \frac{A_0}{2} + \sum_{h=1}^{M-1}(A_{h}cos(hx) + B_h sin(hx)) +\frac{A_M}{2}cos(Mx)
+\end{equation}
+respectively N = 2M+1 (odd) and N=2M.\\
+As before we require
+\[P_{n}(t_i)=f(t_i) \ \ \ i=0,..N \]
+But due to the periodic nature of f we require the nodes to lie
+$0\leq t \leq \pi \ \ (or \ -\pi \leq t \leq \pi)$
+\[0=t_0 < t_1 < ... < t_n = 2 \pi \]
+\[x_k = \frac{2\pi k}{N} \ \ k=0,..,N-1 \]
+De Moivre' formula:
+\[
+e^{i\theta}=cos\theta+isin\theta \ \ i-imaginary
+\]
+\[cos\theta =\frac{ e^{i\theta}  +e^{-i\theta}}{2} \ \ sin\theta = \frac{ e^{i\theta}  -e^{-i\theta}}{2}
+\]
+\begin{equation}
+p(x) = \beta_0+\beta_1 e^{ix}+...+\beta_{N-1}e^{N-1}ix
+\end{equation}
+with complex coefficients $\beta_j$ s.t.
+\[p(x_k)=f_k \ \ k=0,...,N-1 \]
+Indeed 
+\[
+e^{-hix_k}=
+e^{-2\pi ihk/N}=
+e^{(N-h)ix_k}
+\]
+\[
+cos(hx_k) = \frac{ e^{hix_k}  +e^{(N-h)ix_k}}{2}
+\ \ sin(hx_k) = \frac{ e^{hix_k}  -e^{(N-h)ix_k}}{2}
+\]
+Making these substitutions into (\ref{Trig inter}).\\
+We can express $A_h,B_h$ in terms of $\beta_j$.
+\begin{enumerate}
+\item
+If N is odd then N=2M+1
+\[\beta_0=\frac{A_0}{2} \ \ \beta_j=\frac{1}{2}(A_j-iB_j), \ \ \beta_{N-j}=\frac{1}{2}(A_j+iB_j) \ \ j=1,..,M
+\]
+\[A_0=2\beta_0 \ \  A_h=\beta_h+\beta_{N-h}, \ \ B_{h}=i(\beta_h+\beta{N-h}) \ \ j=1,..,M
+\]
+\item
+If N is even N=2M
+\[\beta_0=\frac{A_0}{2} \ \ \beta_j=\frac{1}{2}(A_j-iB_j), \ \ \beta_{N-j}=\frac{1}{2}(A_j+iB_j) \ \ j=1,..,M-1 \beta_{M}=\frac{A_{M}}{2}
+\]
+\[A_0=2\beta_0 \ \ A_h=\beta_h+\beta_{N-h}, \ \ B_{h}=i(\beta_h+\beta{N-h}) \ \ j=1,..,M
+\]
+\end{enumerate}
+$\phi(x)$ and its corresponding exponential poly p(x) cores pond for all support arguments $x_k=2\pi k N$ of equidistant partition of the interval $[0,2\pi]$
+\[
+f_k=\phi(x_k)=p=(x_k) \ \ \ k =0,...,N-1
+\]
+However $\phi(x)=p(x)$ need not hold for intermediate points $x\not=x_k$.  The
+two interpolant problems are equivalent in so far as a solution to one problem will
+produce a solution to the other via the coefficients.\\
+p(x) has a simpler structure than $\phi(x)$.
+Abbreviating
+\[ \omega = e^{ix} \ \ \omega_k=e^{ix_k}\]
+\[P(\omega) = \beta_0+\beta_i \omega +...+\beta_{N-1}\omega^{N-1} \]
+and since $\omega_j \not= \omega_k \ \ 0\leq j \leq k\leq N-1$ it becomes clear we 
+are just faced with a standard poly interpolation problem in disguise.\\
+\begin{theorem}
+For any support points $(x_{k},f_{k})$ k=0,,..N-1 with $f_k$ complex and $x_k = 2\pi k\backslash N$ there
+exists a unique phase polynomial
+\[ p(x) = \beta_0 + \beta_1 e^{ix} +...+ \beta_{N-1} e^{(N-1)ix} \]
+with
+\[ p(x_k)=f_k \]
+for k=0,1,..,N-1\\
+\end{theorem}
+\begin{theorem}
+If the integer r is not a multiple of 2m then
+\[
+\sum_{j=0}^{2m-1} cosrx_j =0 \ and \ 
+\sum_{j=0}^{2m-1} sinrx_j =0 
+\]
+Also
+\[
+\sum_{j=0}^{2m-1} (cosrx_j)^2 =m \ and \ 
+\sum_{j=0}^{2m-1} (sinrx_j)^2 =m 
+\]
+\\
+\end{theorem}
+\begin{proof}
+\[
+\sum_{j=0}^{2m-1} (cosrx_j) +
+i\sum_{j=0}^{2m-1} (sinrx_j) =
+\sum_{j=0}^{2m-1} [(cosrx_j) +i(sinrx_j)] =
+\sum_{j=0}^{2m-1}e^{irx_j} 
+\]
+But $e^{irx_j}=e^{ir2\pi j/N}$. Since 
+$\sum_{j=0}^{2m-1}e^{irx_j} $ is a geometric series with first term 1 and ratio
+$e^{ir2\pi/N}\not=1$ we have 
+\[ \sum_{j=0}^{2m-1}e^{irx_j} =\frac{1-(e^{ir\pi/M})^{N}}{1-e^{ir2\pi/N}}
+ =\frac{1-(e^{2ir\pi})}{1-e^{ir2\pi/N}}
+ \]
+But $e^{ir2\pi}=cos(2r\pi)+sin(2r\pi)=1$, so
+\[
+\sum_{j=0}^{2m-1} (cosrx_j) +
+i\sum_{j=0}^{2m-1} (sinrx_j) = 0 \]
+which implies
+\[
+\sum_{j=0}^{2m-1} (cosrx_j) =0
+\sum_{j=0}^{2m-1} (sinrx_j) = 0 \]
+
+\[
+\sum_{j=0}^{2m-1} (cosrx_j)^2 =
+\sum_{j=0}^{2m-1} \frac{1}{2}(1+cos2rx_j) =\frac{1}{2}(2m+0)=m
+\]
+Also
+\[
+\sum_{j=0}^{2m-1} (sinrx_j)^2 =m
+\]
+\end{proof}$\bigodot$
+\begin{theorem}
+The phase polynomial $p(x) = \sum_{j=0}^{N-1} \beta_j e^{jix}$ satisfies 
+\[ p(x_k)=f_k \]
+for $f_k$ complex and $x_k = 2\pi k \backslash N$ iff
+\[
+\beta_j = \frac{1}{N} \sum_{k=0}^{N-1} f_k \omega^{-j}_k = \frac{1}{N} \sum_{k=0}^{N-1} f_k e^{-2 \pi jk\backslash N}
+\]
+j=0,1,.. N-1.
+\\
+\end{theorem}
+
+\begin{proof}
+Using the vector notation
+\[f=(f_0,f_1,...f_{N-1})^{T}\]
+\[\frac{1}{N}\sum_{k=0}^{N-1}f_{k}\omega^{-j}_k=\frac{1}{N}[f,\omega^j]
+=\frac{1}{N}[\beta_0\omega+...+\beta_{N-1}\omega^{N-1},\omega^{j}]=\beta_j
+\]
+\end{proof}$\bigodot$
+
+\begin{theorem}
+The trigonometric expressions 
+\[
+\phi(x) = \frac{A_0}{2} + \sum^{m}_{h=0} (A_h cos hx + B_h sin hx) \]
+\[
+\phi(x) = \frac{A_0}{2} + \sum^{m-1}_{h=0} (A_h cos hx + B_h sin hx)+\frac{A_{m}}{2}cosmx \]
+
+where N=2m+1 and N=2m respectively satisfy
+\[\phi(x_k) = f_k \ \ k=0,1,..,N-1 \]
+for $x_k=2 \pi k \backslash N $ iff the coefficients of $\phi(x)$ are given by
+\[ A_h = \frac{2}{N} \sum_{k=0}^{N-1} f_k cos x_k h = \frac{2}{N} \sum_{k=0}^{N-1} f_k cos 2\pi k \backslash N h \]
+\[
+B_h = \frac{2}{N} \sum_{k=0}^{N-1} f_k sin x_k h = \frac{2}{N} \sum_{k=0}^{N-1} f_k sin 2\pi k \backslash N h \]
+\end{theorem}
+\begin{proof}
+\[A_h=\beta_h+\beta_{N-h} = \frac{1}{N} \sum_{k=0}^{N-1}f_k(e^{-hix_{k}}+e^{-(N-h)ix_k} \]
+\[B_h=i(\beta_h-\beta_{N-h}) = \frac{i}{N} \sum_{k=0}^{N-1}f_k(e^{-hix_{k}}-e^{-(N-h)ix_k} \]
+\end{proof}$\bigodot$
+\begin{theorem}
+The constants in the summation
+\[S_n(x) = \frac{A_0}{2}+A_n cosnx +\sum_{k=1}^{n-1}(A_kcos(kx)+B_ksin(kx)) \]
+Minimise the least square sum.
+\[
+E(A_0,...,A_N,B_1,...,B_{N-1}) = \sum_{j=0}^{2m-1}(y_j-S_n(x_j))^2 \]
+
+\end{theorem}
+\begin{proof}
+Similar to the least squares with setting partial derivatives of E wrt $A_k$ and
+$B_k$ to zero.ie,
+\[
+0=\frac{\partial E}{\partial B_k} = 2\sum_{j=0}^{2m-1}(y_j-S_n(x_j))(-sin(kx_j))
+\]
+so
+\begin{eqnarray*}
+0&=&\sum_{j=0}^{2m-1}y_j(sinkx_j) - \frac{A_0}{2}\sum_{j=0}^{2m-1}sinkx_j
+-A_n\sum_{j=0}^{2m-1}sinkx_jcosnx_j \\
+& &- \sum_{l=0}^{2m-1}A_l\sum_{j=0}^{2m-1}sinkx_jcoslx_j 
+-\sum_{l=0,l\not=k}^{2m-1}B_l \sum_{j=0}^{2m-1}sinkx_jsinlx_j\\
+& & -B_k\sum_{j=0}^{2m-1}(sinkx_j)^2
+\end{eqnarray*}
+From orthogonality all but the first and last are zero and the previous Theorems
+show the final sum is $\frac{N}{2}$
+\[
+B_k=\frac{1}{m}\sum_{j=0}^{2m-1}y_j(sinkx_j)\] 
+\end{proof}$\bigodot$
+\textbf{Example:}
+See notes
+\section{Chebyshev Polynomial}
+\begin{definition}
+The Chebyshev polynomial $ {T_{n}(x)}$ are orthogonal on $(-1,1)$ w.r.t. the weight function $w(x) = (1-x^2)^{-\frac{1}{2}}$.
+\end{definition}
+\begin{definition}
+$\{ \phi_0,\phi_1,...,\phi_n  \}$ is said to be an orthogonal set of functions,
+for the interval [a,b] with respect to the weight function w if
+\[
+\int^{a}_{b}w(x)\phi_{j}(x)\phi_{k}(x)dx = \left\{\begin{array}{c}0 \ when \ j\not=k\\
+\\
+\alpha_k > 0 \ when\ j=k \end{array}\right.
+\]
+If in addition $\alpha=1$ for each k=0,..n the set is said to be orthonormal.
+\end{definition}
+
+\subsection*{Defining $T_{n}$}
+\[T_0(x) =1, \ \ T_{1}(x)=x \]
+\[T_2(x) =2x^2-1, \ \ T_3(x) =4x^3-3x \]  
+
+\[T_{n+1}(x) = 2xT_{n}(x) - T_{n-1}(x) \ \ with \ \ T_{0}=1 \ and \ T_{1}=x \]
+$T_{n}(x)$ can also be defined as 
+\[T_{n}(x) = cos[n (arccos (x))]\] 
+Introducing the substitution $ \theta = (arccos (x))$ changes the equation to
+\[T_{n}(\theta(x)) = cosn \theta  \ \ \theta\in[0,\pi] \] 
+recurrence relation is derived by noting that
+
+\[T_{n+1}(x) = cos(n\theta) cos\theta -sin(n\theta)sin\theta \] 
+and
+\[T_{n-1}(x) = cos(n\theta) cos\theta +sin(n\theta)sin\theta \] 
+so
+\[T_{n+1}(x) = 2cos(n\theta) cos\theta -T_{n-1} \]
+Returning to the variable x gives
+\[T_{n+1}(x) = 2x T_{n}(x)  -T_{n-1}(x) \]
+
+\[
+\int^{1}_{-1}\frac{T_{n}(x)T_{m}(x)}{\sqrt{1-x^2}}dx = \left\{\begin{array}{c}0 \ when \ m\not=n\\
+\pi \ n=m=0 \\
+\frac{\pi}{2} \ when\ j=k\not=0 \end{array}\right.
+\]
+\subsection*{Expressing x in terms of $T_{n}$}
+\[1=T_{0}, \ \ x = T_1 \]
+\[x^2=\frac{1}{2}(T_{0}+T_{2}), \ \ x^2 =\frac{1}{4}(3T_1+T_3) \]
+\textbf{Example: see notes}\\
+If P(x) is the interpolative poly of degree at most n with nodes at the roots of $T_{n+1}(x)$.
+\[
+\max_{x\in [-1,1]} |f(x)-P_n(x)| \leq \frac{1}{2^n(n+1)!}\max_{x\in[-1,1]}|f^{n+1}(x)| \ \ \  f \in C^{n+1}[-1,1] \]
+
+\subsection*{Chebyshev Economisation}
+\textbf{Purpose:} To approximate a given Nth degree poly
+\[
+P_{N}(x) = c_0 + c_1 x +...+c_Nx^N \ \ \ c_N\not=0
+\]
+Approximated on $I+[a,b]$ by a poly $p_{eccon}(x)$ of lower degree.
+
+\begin{enumerate}
+\item
+Scale $\xi \in [-1,1]$
+\[q_{N}(\xi) = P_N(a+\frac{(b-a)}{2}(\xi+1) \]
+\item
+Get the Chebyshev expansion.
+\[q_{N}(\xi) = d_0 + d_1 T_2(\xi) +...+d_NT_{N}(\xi) 
+\]
+\item
+Economise
+\[q_{eccon}(\xi) = d_0 + d_1 T_2(\xi) +...+d_kT_{k}(\xi)  \ \ k< N
+\]
+\item
+Expand
+\[q_{eccon}(\xi) = e_0 + e_1 \xi +...+e_k\xi^k  
+\]
+\item
+Un-scale $I=[a,b]$
+\begin{eqnarray*}
+p_{eccon}(\xi) & =&q_{eccon}(-1+2\frac{x-a}{b-a})  \\
+&=& \gamma_0 + \gamma_1 x +...+\gamma_kx^k  \ \ a \leq x \leq b
+\end{eqnarray*}
+\item
+Error
+\[
+|P_{n}(x)-p_{eccon}(x)| \leq |d_{k+1}|+ ...+|d_n| \]
+\end{enumerate}

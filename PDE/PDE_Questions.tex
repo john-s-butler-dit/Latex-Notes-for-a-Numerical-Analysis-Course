@@ -1,0 +1,343 @@
+\section{Parabolic Equations Questions}
+\begin{enumerate}
+\section{Explicit Equations}
+	\item 
+\begin{enumerate}
+	
+	\item 
+	Use the central difference formula for the second derivative 
+	\[ f^{''}(x_0)=\frac{f(x_0+h)-2f(x_0)+f(x_0-h)}{h^2}+\mathcal{O}(h^2)\]
+	to derive the explicit numerical scheme
+	\[w_{j,k+1}=rw_{j-1,k}+(1-2r)w_{j,k}+rw_{j+1,k},\]
+	where $r=\frac{k}{h^2}$, $k$ is the step in the time direction and $h$ is the step in the $x$ direction, 
+	for the Heat equation 
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+	\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}. \]
+\begin{flushright}
+\textbf{[10 marks]}
+\end{flushright}
+	
+	\item Consider the problem
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+	\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}, \]
+	with the boundary conditions
+	\[ u(0,t)=1, \ u(1,t)=1,   \]
+	and initial condition
+	\[	u(x,0)=4x^2-4x+1.\]
+		Taking $h=\frac{1}{4}$ in the $x$-direction and $k=\frac{1}{32}$ in the $t$-direction, set up and solve the corresponding systems of finite difference equations for one time step.\\
+\begin{flushright}
+\textbf{[18 marks]}
+\end{flushright}
+	\item
+	For the explicit method what is the step-size requirement for $h$ and $k$ for the method to be stable.
+\begin{flushright}
+\textbf{[5 marks]}
+\end{flushright}
+	
+	
+\end{enumerate}
+
+	\item 
+\begin{enumerate}
+	
+	\item 
+	Use the central difference formula for the second derivative 
+	\[ f^{''}(x_0)=\frac{f(x_0+h)-2f(x_0)+f(x_0-h)}{h^2}+\mathcal{O}(h^2)\]
+	to derive the explicit numerical scheme
+	\[w_{j,k+1}=rw_{j-1,k}+(1-2r)w_{j,k}+rw_{j+1,k},\]
+	where $r=\frac{k}{h^2}$, $k$ is the step in the time direction and $h$ is the step in the $x$ direction, 
+	for the Heat equation 
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+	\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}. \]
+
+\begin{flushright}
+\textbf{[10 marks]}
+\end{flushright}
+	
+	\item Consider the problem
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+		\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}, \]
+
+	with the boundary conditions
+	\[ u(0,t)=1, \ u(1,t)=1,   \]
+	and initial condition
+	\[	u(x,0)=\begin{cases}
+	1-x & \text{for }0\leq t \leq \frac{1}{2}\\
+	x & \text{for } \frac{1}{2}\leq t \leq 1
+	\end{cases}. \]
+		Taking $h=\frac{1}{5}$ in the $x$-direction and $k=\frac{1}{250}$ in the $t$-direction, set up and solve the corresponding systems of finite difference equations for one time step.\\
+\begin{flushright}
+\textbf{[18 marks]}
+\end{flushright}
+	\item
+	For the explicit method what is the step-size requirement for $h$ and $k$ for the method to be stable.
+\begin{flushright}
+\textbf{[5 marks]}
+\end{flushright}
+	
+	
+\end{enumerate}
+
+	\item 
+\begin{enumerate}
+	
+	\item 
+	Use the central difference formula for the second derivative 
+	\[ f^{''}(x_0)=\frac{f(x_0+h)-2f(x_0)+f(x_0-h)}{h^2}+\mathcal{O}(h^2)\]
+	to derive the explicit numerical scheme
+	\[w_{j,k+1}=rw_{j-1,k}+(1-2r)w_{j,k}+rw_{j+1,k},\]
+	where $r=\frac{k}{h^2}$, $k$ is the step in the time direction and $h$ is the step in the $x$ direction, 
+	for the Heat equation 
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+	\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}. \]
+
+\begin{flushright}
+\textbf{[10 marks]}
+\end{flushright}
+	
+	\item Consider the problem
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+	\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}, \]
+
+	with the boundary conditions
+	\[ u(0,t)=0, \ u(1,t)=0,   \]
+	and initial condition
+	\[	u(x,0)=2\sin(2\pi x) \]
+		Taking $h=\frac{1}{6}$ in the $x$-direction and $k=\frac{1}{144}$ in the $t$-direction, set up and solve the corresponding systems of finite difference equations for one time step.\\
+\begin{flushright}
+\textbf{[18 marks]}
+\end{flushright}
+	\item
+	For the explicit method what is the step-size requirement for $h$ and $k$ for the method to be stable.
+\begin{flushright}
+\textbf{[5 marks]}
+\end{flushright}
+	
+	
+\end{enumerate}
+\section{Implicit Methods}
+
+	\item 
+\begin{enumerate}
+	
+	\item 
+	Use the central difference formula for the second derivative 
+	\[ f^{''}(x_0)=\frac{f(x_0+h)-2f(x_0)+f(x_0-h)}{h^2}+\mathcal{O}(h^2)\]
+	to derive the implicit numerical scheme
+	\[-rw_{j-1,k}+(1+2r)w_{j,k}-rw_{j+1,k}=w_{j,k},\]
+	where $r=\frac{k}{h^2}$, $k$ is the step in the time direction and $h$ is the step in the $x$ direction, 
+	for the Heat equation 
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+		\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}. \]
+
+\begin{flushright}
+\textbf{[13 marks]}
+\end{flushright}
+	
+	\item Consider the problem
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+		\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}, \]
+
+	with the boundary conditions
+	\[ u(0,t)=1, \ u(1,t)=1,   \]
+	and initial condition
+	\[	u(x,0)=4x^2-4x+1.\]
+		Taking $h=\frac{1}{4}$ in the $x$-direction and $k=\frac{1}{32}$ in the $t$-direction, set up and write in matrix form (but do not solve) the corresponding systems of finite difference equations for one time step.\\
+\begin{flushright}
+\textbf{[20 marks]}
+\end{flushright}
+\end{enumerate}
+
+	\item 
+\begin{enumerate}
+	
+	\item 
+	Use the central difference formula for the second derivative 
+	\[ f^{''}(x_0)=\frac{f(x_0+h)-2f(x_0)+f(x_0-h)}{h^2}+\mathcal{O}(h^2)\]
+	to derive the implicit numerical scheme
+	\[-rw_{j-1,k}+(1+2r)w_{j,k}-rw_{j+1,k}=w_{j,k},\]
+	where $r=\frac{k}{h^2}$, $k$ is the step in the time direction and $h$ is the step in the $x$ direction, 
+	for the Heat equation 
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+		\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}. \]
+
+\begin{flushright}
+\textbf{[13 marks]}
+\end{flushright}
+	
+	\item Consider the problem
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+		\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\},\]
+
+	with the boundary conditions
+	\[ u(0,t)=1, \ u(1,t)=1,   \]
+	and initial condition
+	\[	u(x,0)=\begin{cases}
+	1-x & \text{for }0\leq t \leq \frac{1}{2}\\
+	x & \text{for } \frac{1}{2}\leq t \leq 1
+	\end{cases}. \]
+		Taking $h=\frac{1}{5}$ in the $x$-direction and $k=\frac{1}{250}$ in the $t$-direction, set up and write in matrix form (but do not solve) the corresponding systems of finite difference equations for one time step.\\
+\begin{flushright}
+\textbf{[20 marks]}
+
+\end{flushright}
+	
+	
+\end{enumerate}
+
+	\item 
+\begin{enumerate}
+	
+	\item 
+	Use the central difference formula for the second derivative 
+	\[ f^{''}(x_0)=\frac{f(x_0+h)-2f(x_0)+f(x_0-h)}{h^2}+\mathcal{O}(h^2)\]
+	to derive the implicit numerical scheme
+	\[-rw_{j-1,k}+(1+2r)w_{j,k}-rw_{j+1,k}=w_{j,k},\]
+	where $r=\frac{k}{h^2}$, $k$ is the step in the time direction and $h$ is the step in the $x$ direction, 
+	for the Heat equation 
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+		\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}. \]
+
+\begin{flushright}
+\textbf{[13 marks]}
+\end{flushright}
+	\item Consider the problem
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+		\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}, \]
+
+	with the boundary conditions
+	\[ u(0,t)=0, \ u(1,t)=0,   \]
+	and initial condition
+	\[	u(x,0)=2\sin(2\pi x) \]
+		Taking $h=\frac{1}{6}$ in the $x$-direction and $k=\frac{1}{144}$ in the $t$-direction, set up and write in matrix form (but do not solve) the corresponding systems of finite difference equations for one time step.\\
+\begin{flushright}
+\textbf{[20 marks]}
+\end{flushright}
+	
+	
+\end{enumerate}
+
+
+\section{Crank Nicholson Methods}
+
+	\item 
+\begin{enumerate}
+	
+	\item 
+	Use the central difference formula for the second derivative 
+	\[ f^{''}(x_0)=\frac{f(x_0+h)-2f(x_0)+f(x_0-h)}{h^2}+\mathcal{O}(h^2)\]
+	to derive the Crank Nicholson numerical scheme
+	\[-rw_{j-1,k}+(2+2r)w_{j,k}-rw_{j+1,k}=rw_{j-1,k}+(2-2r)w_{j,k}+rw_{j+1,k},\]
+	where $r=\frac{k}{h^2}$, $k$ is the step in the time direction and $h$ is the step in the $x$ direction, 
+	for the Heat equation 
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+		\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}. \]
+
+\begin{flushright}
+\textbf{[13 marks]}
+\end{flushright}
+	
+	\item Consider the problem
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+		\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}, \]
+
+	with the boundary conditions
+	\[ u(0,t)=1, \ u(1,t)=1,   \]
+	and initial condition
+	\[	u(x,0)=4x^2-4x+1.\]
+		Taking $h=\frac{1}{4}$ in the $x$-direction and $k=\frac{1}{32}$ in the $t$-direction, set up and write in matrix form (but do not solve) the corresponding systems of finite difference equations for one time step.\\
+\begin{flushright}
+\textbf{[20 marks]}
+\end{flushright}
+\end{enumerate}
+
+	\item 
+\begin{enumerate}
+	
+	\item 
+	Use the central difference formula for the second derivative 
+	\[ f^{''}(x_0)=\frac{f(x_0+h)-2f(x_0)+f(x_0-h)}{h^2}+\mathcal{O}(h^2)\]
+	to derive the Crank Nicholson numerical scheme
+	\[-rw_{j-1,k}+(2+2r)w_{j,k}-rw_{j+1,k}=rw_{j-1,k}+(2-2r)w_{j,k}+rw_{j+1,k},\]
+	where $r=\frac{k}{h^2}$, $k$ is the step in the time direction and $h$ is the step in the $x$ direction, 
+	for the Heat equation 
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+	\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}. \]
+
+\begin{flushright}
+\textbf{[13 marks]}
+\end{flushright}
+	
+	\item Consider the problem
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+	\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}, \]
+
+	with the boundary conditions
+	\[ u(0,t)=1, \ u(1,t)=1,   \]
+	and initial condition
+	\[	u(x,0)=\begin{cases}
+	1-x & \text{for }0\leq t \leq \frac{1}{2}\\
+	x & \text{for } \frac{1}{2}\leq t \leq 1
+	\end{cases}. \]
+		Taking $h=\frac{1}{5}$ in the $x$-direction and $k=\frac{1}{250}$ in the $t$-direction, set up and write in matrix form (but do not solve) the corresponding systems of finite difference equations for one time step.\\
+\begin{flushright}
+\textbf{[20 marks]}
+
+\end{flushright}
+	
+	
+\end{enumerate}
+
+	\item 
+\begin{enumerate}
+	
+	\item 
+	Use the central difference formula for the second derivative 
+	\[ f^{''}(x_0)=\frac{f(x_0+h)-2f(x_0)+f(x_0-h)}{h^2}+\mathcal{O}(h^2)\]
+	to derive the Crank Nicholson numerical scheme
+	\[-rw_{j-1,k}+(2+2r)w_{j,k}-rw_{j+1,k}=rw_{j-1,k}+(2-2r)w_{j,k}+rw_{j+1,k},\]
+	where $r=\frac{k}{h^2}$, $k$ is the step in the time direction and $h$ is the step in the $x$ direction, 
+	for the Heat equation 
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+		\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}. \]
+
+\begin{flushright}
+\textbf{[13 marks]}
+\end{flushright}
+	\item Consider the problem
+	\[\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2} \]
+	on the rectangular domain
+		\[\Omega=\{(t,x)| \ 0\leq t, 0 \leq x \leq 1\}, \]
+
+	with the boundary conditions
+	\[ u(0,t)=0, \ u(1,t)=0,   \]
+	and initial condition
+	\[	u(x,0)=2\sin(2\pi x) \]
+		Taking $h=\frac{1}{6}$ in the $x$-direction and $k=\frac{1}{144}$ in the $t$-direction, set up and write in matrix form (but do not solve) the corresponding systems of finite difference equations for one time step.\\
+\begin{flushright}
+\textbf{[20 marks]}
+\end{flushright}
+	
+	
+\end{enumerate}
+
+
+\end{enumerate}
+
