@@ -95,7 +95,7 @@ Lax-Friedrichs
 \[ u^{n+1}_j=\frac{u^{n}_{j+1}+u_{j-1}^n}{2}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1})\]
 \item
 Lax-Wendroff
-\[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1})+\frac{\lambda}{2}a^2(u^{n}_{j+1}-2u_{j}^n+u^{n}_{j-1})\]
+\[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1})+\frac{\lambda^2}{2}a^2(u^{n}_{j+1}-2u_{j}^n+u^{n}_{j-1})\]
 \item
 Upwind
 \[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}(u^{n}_{j+1}-u^{n}_{j-1})+\frac{\lambda}{2}|a|(u^{n}_{j+1}-2u_{j}^n+u^{n}_{j-1})
