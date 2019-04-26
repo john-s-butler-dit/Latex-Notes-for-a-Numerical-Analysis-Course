@@ -1,5 +1,6 @@
 # Numerical Methods for Differential Equations
-This github repository is notes on Numerical methods for Differential Equations
+This github repository contains LaTex notes on Numerical methods for Differential Equations.
+Below is the table of contents
 
 ## Part 1 numerical solutions to ordinary differential equations 
 
@@ -32,7 +33,7 @@ This github repository is notes on Numerical methods for Differential Equations
 #### 5.3 Problem Sheet 4 63
 ## Part 2 numerical solutions to boundary value problems
 
-### Chapter 7 boundary value problems 70
+### Chapter 7 Boundary Value Problems 70
 #### 7.1 Systems of equations 70
 #### 7.2 Higher order Equations 71
 #### 7.3 Boundary Value Problems 72
@@ -62,16 +63,11 @@ This github repository is notes on Numerical methods for Differential Equations
 #### 11.2 Specific Examples 133
 #### 11.3 Consistency and Convergence 142
 #### 11.4 elliptic equations questions 147
-### Chapter 13 hyperbolic equations 150
+### Chapter 13 Hyperbolic Equations 150
 #### 13.1 The Wave Equation 151
 #### 13.2 Finite Difference Method for Hyperbolic equations 152
 #### 13.3 Analysis of the Finite Difference Methods 153
 #### 13.4 Consistency 153
 #### 13.5 Stability 153
 #### 13.6 Courant Freidrich Lewy Condition 153
-### Chapter 14 variational methods 156
-#### 14.1 Ritz -Galerkin Method 158
-#### 14.2 Finite Element 159
-#### 14.3 Error 160
-### Chapter 16 bibliography 167
-### Chapter 17 index 169
+### Chapter 14 Variational and Finite Element methods 
