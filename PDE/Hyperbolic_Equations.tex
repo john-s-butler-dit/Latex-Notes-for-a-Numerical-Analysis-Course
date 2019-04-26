@@ -25,22 +25,7 @@ $a$, $a_0$ and $f$ are given functions of the variables $(x,t)$, the characteris
 curves are still defined as before. In this case the solutions of (\ref{hyper})
 satisfy along the characteristics the following differential equation
 \[\frac{du}{dt}=f-a_0u \mbox{ on } (x(t),t) \]
-\begin{example}
-Burgers equation
-\[\frac{\partial u}{\partial t}+ u\frac{\partial u}{\partial x} =0 \]
-This is a non-trivial non-linear hyperbolic equation. Taking initial condition
-\[ u(x,0) = u_0(x) = \left\{ \begin{array}{cc} 
-1 & x_0\leq 0 \\
-1-x & 0\leq x_0\leq 1 \\
-0 & x_0\geq 1 
- \end{array} \right.\]
-the characteristic line issuing from the point $(x_0,0)$ is given by
-\[ x(t) = x_0+tu_0(x_0) = \left\{ \begin{array}{cc} 
-x_0+t& x_0\leq 0 \\
-x_0+t(1-x_0) & 0\leq x_0\leq 1 \\
-x_0 & x_0\geq 1 
- \end{array} \right.\]
-\end{example}
+
 \section{The Wave Equation}
 Consider the second-order hyperbolic equation
 \begin{equation}
@@ -88,17 +73,17 @@ and let
 Here are some explicit methods 
 \begin{itemize}
 \item
-Forward Euler/centered
-\[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1})\]
+Forward Euler/centered method:
+\[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1}),\]
 \item
-Lax-Friedrichs
-\[ u^{n+1}_j=\frac{u^{n}_{j+1}+u_{j-1}^n}{2}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1})\]
+Lax-Friedrichs method,
+\[ u^{n+1}_j=\frac{u^{n}_{j+1}+u_{j-1}^n}{2}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1}),\]
 \item
-Lax-Wendroff
-\[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1})+\frac{\lambda^2}{2}a^2(u^{n}_{j+1}-2u_{j}^n+u^{n}_{j-1})\]
+Lax-Wendroff method,
+\[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}a(u^{n}_{j+1}-u^{n}_{j-1})+\frac{\lambda^2}{2}a^2(u^{n}_{j+1}-2u_{j}^n+u^{n}_{j-1}),\]
 \item
-Upwind
-\[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}(u^{n}_{j+1}-u^{n}_{j-1})+\frac{\lambda}{2}|a|(u^{n}_{j+1}-2u_{j}^n+u^{n}_{j-1})
+Upwind method,
+\[ u^{n+1}_j=u^{n}_{j}-\frac{\lambda}{2}(u^{n}_{j+1}-u^{n}_{j-1})+\frac{\lambda}{2}|a|(u^{n}_{j+1}-2u_{j}^n+u^{n}_{j-1}).
 \]
 \end{itemize}
 
@@ -164,3 +149,19 @@ therefore the method is unstable for the Courant Freidrich Lewy.
 Hence
 \[ \xi<1\]
 for $a \lambda \leq 1$.
+\begin{example}
+These methods can be applied to the Burgers equation
+\[\frac{\partial u}{\partial t}+ u\frac{\partial u}{\partial x} =0 \]
+as there it is a non-trivial non-linear hyperbolic equation. Taking initial condition
+\[ u(x,0) = u_0(x) = \left\{ \begin{array}{cc} 
+1, & x_0\leq 0, \\
+1-x, & 0\leq x_0\leq 1, \\
+0, & x_0\geq 1. 
+ \end{array} \right.\]
+the characteristic line issuing from the point $(x_0,0)$ is given by
+\[ x(t) = x_0+tu_0(x_0) = \left\{ \begin{array}{cc} 
+x_0+t,& x_0\leq 0 \\
+x_0+t(1-x_0), & 0\leq x_0\leq 1, \\
+x_0 & x_0,\geq 1. 
+ \end{array} \right.\]
+\end{example}

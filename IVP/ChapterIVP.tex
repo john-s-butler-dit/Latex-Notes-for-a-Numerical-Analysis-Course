@@ -21,41 +21,41 @@ y(x_0)=y_0.
 \textbf{Simple Example}\\
 The differential equation describes the rate of change of an oscillating input. 
 The general solution of the equation
-\begin{equation}\label{ODE_sine} y^{'}=sin(x) \end{equation}
-is 
-\[ y=-cos(x)+c. \]
-With the initial condition
-\[y(0)=2\]
+\begin{equation}\label{ODE_sine} y^{'}=\sin(x) \end{equation}
+is, 
+\[ y=-\cos(x)+c, \]
+with the initial condition,
+\[y(0)=2,\]
 then it is easy to find $c=2$.\\
-Thus the desired solution is
-\[ y=2-cos(x) \]
+Thus the desired solution is,
+\[ y=2-\cos(x). \]
 \end{example}
 
 The more general \addtoindex{Ordinary Differential Equation} is of the form
 \begin{equation}
 \label{general ODE}
-y^{'}=f(x,y)
+y^{'}=f(x,y),
 \end{equation}
 is approached in a similar fashion.\\
 Let us consider
-\[ y^{'} = a(x)y(x)+b(x)\]
+\[ y^{'} = a(x)y(x)+b(x),\]
 The given functions $a(x)$ and $b(x)$ are assumed continuous for this equation
-\[f(x,z)=a(x)z(x)+b(x) \] 
+\[f(x,z)=a(x)z(x)+b(x), \] 
 and the general solution can be found using the method of integrating factors.
 \begin{example}
 \textbf{General Example}\\
 Differential equations of the form
 \begin{equation}
 \label{eqn A}
-y^{'}(x)=\lambda y(x) +b(x), \ \ \ \ x \geq x_0
+y^{'}(x)=\lambda y(x) +b(x), \ \ \ \ x \geq x_0,
 \end{equation}
 where  $\lambda$ is a given constant and $b(x)$ is a continuous integrable function has a unique analytic. Multiplying the equation (\ref{eqn A}) by the 
 integrating factor $e^{-\lambda x}$, we can reformulate
-\[\frac{d(e^{-\lambda x}y(x))}{dx}=e^{-\lambda x}b(x) \]
+\[\frac{d(e^{-\lambda x}y(x))}{dx}=e^{-\lambda x}b(x). \]
 Integrating both sides from $x_0$ to $x$ we obtain
-\[(e^{-\lambda x}y(x))=c+\int_{x_0}^{x}e^{-\lambda t}b(t)dt \]
+\[(e^{-\lambda x}y(x))=c+\int_{x_0}^{x}e^{-\lambda t}b(t)dt, \]
 so the general solution is
-\[y(x)=ce^{\lambda x}+\int_{x_0}^{x}e^{\lambda(x-t)}b(t)dt \]
+\[y(x)=ce^{\lambda x}+\int_{x_0}^{x}e^{\lambda(x-t)}b(t)dt, \]
 with $c$ an arbitrary constant
 \[ c=e^{-\lambda x_0} y(x_0). \]
 \end{example}
@@ -66,7 +66,7 @@ $y^{'} = e^{xy^4}$, or discontinuous or stochastic. There for a numerical method
 \section{Numerical approximation of Differentiation}
 \subsection{Derivation of Forward Euler for one step}
 The left hand side of a initial value problem $\frac{df}{dx}$ can be approximated by  \textbf{Taylors theorem} expand about a point $x_0$ giving:
-\begin{equation}f(x_1) = f(x_0)+(x_1-x_0)f^{'}(x_0) + \tau \end{equation}
+\begin{equation}f(x_1) = f(x_0)+(x_1-x_0)f^{'}(x_0) + \tau, \end{equation}
 where $\tau$ is the truncation error,
 \begin{equation}\tau = \frac{(x_1-x_0)^2}{2!}f^{''}(\xi), \ \ \ \ \ \ \xi \in [x_0,x_1]. \end{equation}
 Rearranging and letting $h=x_1-x_0$ the equation becomes
@@ -76,8 +76,8 @@ The forward Euler method can also be derived using a variation on the Lagrange i
 called the divided difference. \\
 Any function $f(x)$ can be approximated by a polynomial of degree $P_n(x)$ and an error term,
 \begin{eqnarray*}
-f(x)&=&P_n(x) + error\\
-&=&f(x_0)+f[x_0,x_1](x-x_0)+f[x_0,x_1,x_2](x-x_0)(x-x_1)\\
+f(x)&=&P_n(x) + error,\\
+&=&f(x_0)+f[x_0,x_1](x-x_0)+f[x_0,x_1,x_2](x-x_0)(x-x_1),\\
 & &+...+f[x_0,...,x_n]\Pi_{i=0}^{n-1}(x-x_i)+error,
 \end{eqnarray*}
 where 
@@ -86,46 +86,45 @@ where
 \[f[x_0,x_1,..,x_n] = \frac{f[x_1,x_2,...,x_n]-f[x_0,x_1,...,x_{n-1}]}{x_n-x_0},\]
 Differentiating $P_n(x)$
 \begin{eqnarray*}
-P_n^{'}(x)=f[x_0,x_1]+f[x_0,x_1,x_2]\{(x-x_0)+(x-x_1)\} \\
-+...+f[x_0,...,x_n]\sum_{i=0}^{n-1}\frac{(x-x_0)...(x-x_{n-1})}{(x-x_i)}\end{eqnarray*}
+P_n^{'}(x)=f[x_0,x_1]+f[x_0,x_1,x_2]\{(x-x_0)+(x-x_1)\}, \\
++...+f[x_0,...,x_n]\sum_{i=0}^{n-1}\frac{(x-x_0)...(x-x_{n-1})}{(x-x_i)},\end{eqnarray*}
 and the error becomes
 \[
 error= (x-x_0)...(x-x_n)\frac{f^{n+1}(\xi)}{(n+1)!}.
 \]
 Applying this to define our first derivative, we have
 \[
-f^{'}(x)=f[x_0,x_1] = \frac{f(x_1)-f(x_0)}{x_1-x_0}\]
-This leads us other formulas for computing the derivatives
-\[ f^{'}(x) = \frac{f(x_1)-f(x_0)}{x_1-x_0}+O(h) \ \ \mbox{Euler}\]
-\[ f^{'}(x) = \frac{f(x_1)-f(x_{-1})}{x_1-x_{-1}}+O(h^2) \ \ \mbox{Central}\]
+f^{'}(x)=f[x_0,x_1] = \frac{f(x_1)-f(x_0)}{x_1-x_0},\]
+this leads us other formulas for computing the derivatives
+\[ f^{'}(x) = \frac{f(x_1)-f(x_0)}{x_1-x_0}+O(h), \ \ \mbox{  Euler,  }\]
+\[ f^{'}(x) = \frac{f(x_1)-f(x_{-1})}{x_1-x_{-1}}+O(h^2), \ \ \mbox{    Central.  }\]
 Using the same method we can get out computational estimates for the 2nd 
 derivative
-\[f^{''}(x_0)=\frac{f_{2}-2f_1+f_0}{h^2}+O(h^2)\]
-\[f^{''}(x_0)=\frac{f_{1}-2f_0+f_{-1}}{h^2}+O(h^2)\ \ \mbox{central}\]
+\[f^{''}(x_0)=\frac{f_{2}-2f_1+f_0}{h^2}+O(h^2),\]
+\[f^{''}(x_0)=\frac{f_{1}-2f_0+f_{-1}}{h^2}+O(h^2), \ \ \mbox{   central.}\]
 \begin{example} To numerically solve the first order \addtoindex{Ordinary Differential Equation} (\ref{general ODE})
 \[ y^{'} = f(x,y), \]
 \[a\leq x \leq b, \]
-the derivative $y{'}$ is approximated by \[\frac{w_{i+1}-w_{i}}{x_{i+1}-x_{i}}=\frac{w_{i+1}=w_{i}}{h}\]
+the derivative $y{'}$ is approximated by \[\frac{w_{i+1}-w_{i}}{x_{i+1}-x_{i}}=\frac{w_{i+1}-w_{i}}{h},\]
 where $w_i$ is the numerical approximation of $y$ at $x_i$.
 The Differential Equation is converted to a discrete difference equation with steps of size $h$, 
 \[\frac{w_{i+1}-w_i}{h}=f(x_i,w). \]
 Rearranging the difference equation gives the equation 
-\[w_{i+1}=w_i+h*f(x_i,w) \]
+\[w_{i+1}=w_i+hf(x_i,w), \]
 which can be used to approximate the solution at $w_{i+1}$ given information about $y$ at point $x_i$.
 \end{example}
 
-\subsubsection{Simple example ODE $y'=sin(x)$}
+\subsubsection{Simple example ODE $y'=\sin(x)$}
 
 \begin{example} Applying the Euler formula to the first order equation with an oscillating input
 (\ref{ODE_sine})
-\[ y^{'} = sin(x), \]
+\[ y^{'} = \sin(x), \]
 \[0\leq x \leq 10. \]
 The equation can be approximated using the forward Euler as 
-\[\frac{w_{i+1}-w_i}{h}=sin(x_i). \]
+\[\frac{w_{i+1}-w_i}{h}=\sin(x_i). \]
 Rearranging the equation gives the discrete difference equation with the unknowns on the left and the know values of the right
-\[w_{i+1}=w_i+hsin(x_i). \]
-The Python code bellow implements this difference equation. The output of the code is shown in Figure \ref{Sine wave ODE}
-\end{example}
+\[w_{i+1}=w_i+h\sin(x_i). \]
+The Python code bellow implements this difference equation. The output of the code is shown in Figure \ref{Sine wave ODE}.
 
 
 \begin{lstlisting}[language=Python, caption=Python Numerical and Analytical Solution of Eqn \ref{ODE_sine} ]
@@ -134,28 +133,29 @@ import numpy as np
 import math 
 import matplotlib.pyplot as plt
 
-dx=0.01
-x_end=10
+h=0.01
+a=0
+b=10
 
-N=int(x_end/dx)
-Numerical_Solution=np.zeros(N)
+N=int(b-a/h)
+w=np.zeros(N)
 x=np.zeros(N)
 Analytic_Solution=np.zeros(N)
 
 # Initial Conditions
-Numerical_Solution[0]=1.0
+w[0]=1.0
 x[0]=0
 Analytic_Solution[0]=1.0
 for i in range (1,N):
-    Numerical_Solution[i]=Numerical_Solution[i-1]+dx*math.sin(x[i-1])
-    x[i]=x[i-1]+dx
+    w[i]=w[i-1]+h*math.sin(x[i-1])
+    x[i]=x[i-1]+h
     Analytic_Solution[i]=2.0-math.cos(x[i])
 
 fig = plt.figure(figsize=(8,4))
 
 # --- left hand plot
 ax = fig.add_subplot(1,3,1)
-plt.plot(x,Numerical_Solution,color='red')
+plt.plot(x,w,color='red')
 #ax.legend(loc='best')
 plt.title('Numerical Solution')
 
@@ -166,7 +166,7 @@ plt.title('Analytic Solution')
 
 #ax.legend(loc='best')
 ax = fig.add_subplot(1,3,3)
-plt.plot(x,Analytic_Solution-Numerical_Solution,color='blue')
+plt.plot(x,Analytic_Solution-w,color='blue')
 plt.title('Error')
 
 # --- title, explanatory text and save
@@ -175,15 +175,16 @@ plt.tight_layout()
 plt.subplots_adjust(top=0.85)
 \end{lstlisting}
 
+\end{example}
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{sine_wave}
-\caption{Python output: Numerical (left), Analytic (middle) and error(right) for $y'=sin(x)$ Equation \ref{ODE_sine} with h=0.01}
+\caption{Python output: Numerical (left), Analytic (middle) and error(right) for $y'=\sin(x)$ Equation \ref{ODE_sine} with h=0.01}
 \label{Sine wave ODE}
 \end{figure}
 
-\subsubsection{Simple example problem population growth $y^{'}=\ve y $ }
+\subsubsection{Simple example problem population growth $y^{'}=\ve y. $ }
 
 \begin{example}
 Simple population growth can be describe as a first order differential equation of the form: \begin{equation}\label{ODE_Growth} y^{'}=\ve y. \end{equation}
@@ -206,7 +207,6 @@ is approximated by
 Rearranging the equation gives the difference equation
 \[w_{i+1}=w_i+h(0.5w_i). \]
 The Python code below and the output is plotted in Figure \ref{GROWTH ODE Figure}.
-\end{example}
 
 \begin{lstlisting}[language=Python, caption=Python Numerical and Analytical Solution of Eqn \ref{ODE_Growth} ]
 # Numerical solution of a differential equation
@@ -214,21 +214,22 @@ import numpy as np
 import math 
 import matplotlib.pyplot as plt
 
-dx=0.01
+h=0.01
 tau=0.5
-x_end=10
+a=0
+b=10
 
-N=int(x_end/dx)
-Numerical_Solution=np.zeros(N)
+N=int((b-a)/h)
+w=np.zeros(N)
 x=np.zeros(N)
 Analytic_Solution=np.zeros(N)
 
 Numerical_Solution[0]=1
 x[0]=0
-Analytic_Solution[0]=1
+w[0]=1
 
 for i in range (1,N):
-    Numerical_Solution[i]=Numerical_Solution[i-1]+dx*(tau)*Numerical_Solution[i-1]
+    w[i]=w[i-1]+dx*(tau)*w[i-1]
     x[i]=x[i-1]+dx
     Analytic_Solution[i]=math.exp(tau*x[i])
 
@@ -236,7 +237,7 @@ for i in range (1,N):
 fig = plt.figure(figsize=(8,4))
 # --- left hand plot
 ax = fig.add_subplot(1,3,1)
-plt.plot(x,Numerical_Solution,color='red')
+plt.plot(x,w,color='red')
 #ax.legend(loc='best')
 plt.title('Numerical Solution')
 
@@ -255,6 +256,7 @@ fig.suptitle('Exponential Growth Solution', fontsize=20)
 plt.tight_layout()
 plt.subplots_adjust(top=0.85)
 \end{lstlisting}
+\end{example}
 
 \begin{figure}[H]
 \centering
@@ -262,6 +264,7 @@ plt.subplots_adjust(top=0.85)
 \caption{Python output: Numerical (left), Analytic (middle) and error(right) for $y^{'}=\ve y$  Eqn \ref{ODE_Growth} with h=0.01 and $\ve=0.5$}
 \label{GROWTH ODE Figure}
 \end{figure}
+
 \subsubsection{Example of exponential growth with a wiggle}
 
 \begin{example}
@@ -271,7 +274,6 @@ This complicates the exact solution but the numerical approach is more or less t
 The difference equation is 
 \[w_{i+1}=w_i+h(0.5w_i+w_i\sin(x_i)). \]
 Figure \ref{GROWTH ODE WIGGLE} illustrates the numerical solution of the differential equation.
-\end{example}
 
 \begin{figure}[H]
 \centering
@@ -280,12 +282,13 @@ Figure \ref{GROWTH ODE WIGGLE} illustrates the numerical solution of the differe
 \label{GROWTH ODE WIGGLE}
 \end{figure}
 
+\end{example}
 
 \subsection{Theorems about Ordinary Differential Equations}
 \begin{definition}
 A function $f(t,y)$ is said to satisfy a \textbf{\addtoindex{Lipschitz Condition}} in the variable $y$ on 
 the set $D \subset R^2$ if a constant $L>0$ exist with the property that
-\[|f(t,y_1)-f(t,y_2)| < L|y_1-y_2| \]
+\[|f(t,y_1)-f(t,y_2)| < L|y_1-y_2|, \]
 whenever $(t,y_1),(t,y_2) \in D$.  The constant L is call the \addtoindex{Lipschitz Condition}
 of $f$.
 \end{definition}
@@ -297,25 +300,25 @@ belongs in $D$ for each $\lambda \in [0,1]$.
 \begin{theorem}
 Suppose $f(t,y)$ is defined on a convex set $D \subset R^2$. If a constant
 $L>0$ exists with
-\[\left|\frac{\partial f(t,y)}{\partial y}\right|\leq L \]
+\[\left|\frac{\partial f(t,y)}{\partial y}\right|\leq L, \]
 then $f$ satisfies a \addtoindex{Lipschitz Condition} an $D$ in the variable $y$ with
 Lipschitz constant L.
 \end{theorem}
 \begin{theorem}
 Suppose that
-$D= \{(t,y) | a\leq t \leq b, -\infty <y < \infty \}$
+$D= \{(t,y) | a\leq t \leq b, -\infty <y < \infty \},$
 and $f(t,y)$ is continuous on $D$ in the variable $y$ then the initial value
-problem has a unique solution $y(t)$ for $a\leq t \leq b$
+problem has a unique solution $y(t)$ for $a\leq t \leq b$.
 \end{theorem}
 \begin{definition}
 The initial-value problem 
-\[\frac{dy}{dt}=f(t,y), \ \ \ \ \  a\leq t \leq b\]
+\[\frac{dy}{dt}=f(t,y), \ \ \ \ \  a\leq t \leq b,\]
 with initial condition
-\[y(a) = \alpha \]
+\[y(a) = \alpha, \]
 is said to be well posed if:
 \begin{itemize}
 \item
-A unique solution $y(t)$ to the problem exists.
+A unique solution $y(t)$ to the problem exists;
 \item
 For any $\varepsilon >0$ there exists a positive constant $k(\varepsilon)$
 with the property that whenever $|\varepsilon_0| < \varepsilon$ and with
@@ -341,7 +344,7 @@ If $f(t,y)$ is continuous and satisfies a \addtoindex{Lipschitz Condition} in th
 the set $D$, then the initial value problem 
 \[\frac{dy}{dt}=f(t,y), \ \ \  a\leq t \leq b,\]
 with initial condition
-\[y(a) = \alpha \]
+\[y(a) = \alpha, \]
 is well-posed.
 \end{theorem}
 \begin{example}
@@ -352,15 +355,15 @@ has the solution $z(x)=1+\va e^{-x}$ $x \leq 0$.\\
 Thus 
 \[y(x)-z(x)=-\va e^{-x} \]
 \[|y(x)-z(x)|\leq |\va| \ \ \ \ x \geq 0 \]
-Therefore the problem is said to be stable. This is illustrated in Figure{Stable ODE}. 
-\end{example}
-\begin{figure}[h]
+Therefore the problem is said to be stable. This is illustrated in Figure \ref{Stable ODE}. 
+\begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{Stable_example}
+\includegraphics[scale=0.4]{Stable_example}
 \caption{Python output: Illustrating Stability $y^{'}(x)=-y(x)+1$ with the initial condition $y(0)=1$ and $z^{'}(x)=-z(x)+1$ with the initial condition $z(0)=1+\va$, $\va=0.1$}
 \label{Stable ODE}
 \end{figure}
 
+\end{example}
 
 \section{One-Step Methods}
 Dividing $[a,b]$ in to N subsections
@@ -369,18 +372,19 @@ the formula $t_i=a+ih$ for $i=0,1,...,N$.
 One-Step Methods for \addtoindex{Ordinary Differential Equation}'s only use one previous point to get
 the approximation for the next point.  The initial condition gives $y(a=t_0)=\alpha$, this gives the starting point of our one step method.  The general formula
 for One-step methods is 
-\[ w_{i+1}=w_i+h\Phi(t_i,w_i,h) \] 
+\[ w_{i+1}=w_i+h\Phi(t_i,w_i,h), \] 
 where $w_i$ is the approximated solution of the \addtoindex{Ordinary Differential Equation} at the point $t_i$
 \[w_i\approx y_i.\]
 
 \subsection{Euler's Method}
 The simplest example of a one step method is Euler. The derivative is replaced
 by the Euler approximation. The \addtoindex{Ordinary Differential Equation}
-\[ \frac{dy}{dt}=f(t,y) \]
-becomes
+\[ \frac{dy}{dt}=f(t,y), \]
+is discretised
 \[\frac{y_i-y_{i-1}}{h}=f(t_{i-1},y_{i-1}) +T\]
 T is the truncation error.\\
 \begin{example}
+Consider the Initial Value Problem
 \[y^{'} = -\frac{y^2}{1+t}, \ \ \ a=0\leq t \leq b=0.5, \]
 with the initial condition $y(0)=1$
 the Euler approximation is
@@ -417,20 +421,20 @@ For all $ x \geq 0.1$ and any positive m we have \[0\leq (1+x)^m \leq e^{mx}.\]
 
 \begin{lemma}
 \label{lemma 2}
-If s and t are positive real numbers $\{a_i\}_{i=0}^{N}$ is a sequence satisfying $a_0 \geq \frac{-t}{s}$ and $a_{i+1} \leq (1+s)a_i +t $
-then
+If s and t are positive real numbers $\{a_i\}_{i=0}^{N}$ is a sequence satisfying $\displaystyle a_0 \geq \frac{-t}{s}$ and $a_{i+1} \leq (1+s)a_i +t $
+then,
 \[a_{i+1} \leq e^{(i+1)s}\left(a_0+\frac{t}{s}\right)-\frac{t}{s}. \] 
 \end{lemma}
 \begin{theorem}
 \label{Euler bound}
 Suppose $f$ is continuous and satisfies a \addtoindex{Lipschitz Condition} with constant
-L on $D=\{(t,y)|a\leq t \leq b, -\infty < y < \infty \}$ and that a constant M
+L on $D=\{(t,y)|a\leq t \leq b, -\infty < y < \infty \}$ and that a constant $M$
 exists with the property that 
 \[ |y^{''}(t)|\leq M. \]
 Let $y(t)$ denote the unique solution of the \addtoindex{Initial Value Problem}
 \[ y^{'}=f(t,y), \ \ \ a\leq t \leq b, \ \ \ y(a)=\alpha, \]
 and $w_0,w_1,...,w_N$ be the approx generated by the Euler method for some
-positive integer N.  Then for $i=0,1,...,N$
+positive integer $N$.  Then for $i=0,1,...,N$
 \[ |y(t_i)-w_i| \leq \frac{Mh}{2L}|e^{L(t_i-a)}-1|. \]
 \end{theorem}
 \begin{proof}
@@ -466,29 +470,29 @@ so $L=1$. The exact solution is $y(t)=(t+1)^2-\frac{1}{2}e^t$ from this we have
 Using the above inequality we have we have
 \[|y_i-w_i| \leq \frac{h}{2}(0.5e^2-2)(e^{t_i}-1).\]
 Figure \ref{UpperBound Figure} illustrates the upper bound of the error and the actual error.
-\end{example}
-\begin{figure}[h]
+
+\begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{UpperBound}
 \caption{Python output: Illustrating upper bound $y^{'}=y-t^2+1$ with the initial condition $y(0)=0.5$ }
 \label{UpperBound Figure}
 \end{figure}
-
+\end{example}
 Euler method is a typical one step method, in general such methods are given by
 function $\Phi(t,y;h;f)$. Our initial condition is $w_0=y_0$, for $i=0,1,..$
 \[w_{i+1}=w_i+h\Phi(t_i,w_i:h:f)\]
 with $t_{i+1}=t_i+h$.\\
-In the Euler case $\Phi(t,y;h;f)=f(t,y)$ and is of order 1.\\
+In the Euler case $\Phi(t,y;h;f)=f(t,y)$ and is of order $1$.\\
 Theorem \ref{Euler bound} can be extend to higher order one step methods with the variation 
 \[ |y(t_i)-w_i| \leq \frac{Mh^p}{2L}|e^{L(t_i-a)}-1| \]
-where p is the order of the method.
+where $p$ is the order of the method.
 \begin{definition}
 The difference method $w_0=\alpha$
 \[w_{i+1}=w_i+h\Phi(t_i,w_i),\]
 for $i=0,1,...,N-1$ has a local truncation error given by
 \begin{eqnarray*}
 \tau_{i+1}(h) &=&\frac{y_{i+1}-(y_i+h\Phi(t_i,y_i))}{h},\\ 
-&=&\frac{y_{i+1}-y_{i}}{h} -\Phi(t_i,y_i)
+&=&\frac{y_{i+1}-y_{i}}{h} -\Phi(t_i,y_i),
 \end{eqnarray*}
 for each $i=0,..,N-1$ where as usual $y_i=y(t_i)$ denotes the exact solution
 at $t_i$.
@@ -496,23 +500,22 @@ at $t_i$.
 For Euler method the local truncation error at the ith step for the problem
 \[ y^{'} = f(t,y), \ \ \ a\leq t \leq b, \ \ y(a)=\alpha, \]
 is
-\[\tau_{i+1}(h) =\frac{y_{i+1}-y_{i}}{h} -f(t_i,y_i) \]
+\[\tau_{i+1}(h) =\frac{y_{i+1}-y_{i}}{h} -f(t_i,y_i), \]
 for $i=0,..,N-1$.\\
 But we know Euler has \[\tau_{i+1}=\frac{h}{2}y^{''}(\xi_i), \ \ \xi_i \in (t_i,t_{i+1}),\]
 When $y^{''}(t)$ is known to be bounded by a constant M on $[a,b]$ this implies
 \[|t_{i+1}(h)| \leq \frac{h}{2}M \sim O(h). \]
 $O(h)$ indicates a linear order of error. The higher the order the more accurate the method.
-
 \newpage
-\subsection{Problem Sheet}
+\section{Problem Sheet}
 \begin{enumerate}
 \item
 Show that the following functions satisfy the Lipschitz condition on $y$ on the indicated set $D$:
 \begin{enumerate}
 \item
-$f(t,y)=ty^3,$  $D=\{(t,y);-1\leq t \leq 1, 0\leq y \leq 10\}$
+$f(t,y)=ty^3,$  $D=\{(t,y);-1\leq t \leq 1, 0\leq y \leq 10\};$
 \item 
-$f(t,y)=\frac{t^2y^2}{1+t^2},$  $D=\{(t,y);0\leq t, -10\leq y \leq 10 \}$
+$f(t,y)=\frac{t^2y^2}{1+t^2},$  $D=\{(t,y);0\leq t, -10\leq y \leq 10 \}.$
 
 \end{enumerate}
 \item
@@ -522,16 +525,16 @@ Apply Euler's Method to approximate the solution of the given initial value prob
 $y'=t-y, \ \ (0\leq t \leq 4)$\\
 with the initial condition $y(0)=1,$\\
 $N=4$, 
-$y(t)=2e^{-t}+t-1$\\
+$y(t)=2e^{-t}+t-1,$\\
 
-The Lipschitz constant is determined on  $D=\{(t,y);0\leq t \leq 4, y\in \rm I\!R \}$
+The Lipschitz constant is determined on  $D=\{(t,y);0\leq t \leq 4, y\in \rm I\!R \}.$
 \item 
 $y'=y-t, \ \ (0\leq t \leq 2)$\\
 with the initial condition $y(0)=2,$\\
 $N=4$, 
-$y(t)=e^{t}+t+1$\\
+$y(t)=e^{t}+t+1$.\\
 
-The Lipschitz constant is determined on  $D=\{(t,y);0\leq t \leq 2, y\in \rm I\!R \}$
+The Lipschitz constant is determined on  $D=\{(t,y);0\leq t \leq 2, y\in \rm I\!R \}.$
 \end{enumerate}
 
 \end{enumerate}
