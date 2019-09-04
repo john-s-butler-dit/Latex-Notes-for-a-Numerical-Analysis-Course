@@ -1,5 +1,7 @@
 # Numerical Methods for Differential Equations
-This github repository contains LaTex notes on Numerical methods for Differential Equations.
+This github repository contains LaTex notes for the module
+[Numerical Analysis for Ordinary and Partial Differential Equations](http://127.0.0.1:7780/files/Teaching/Numerical_Analysis_for_Differential_Equations.pdf).
+
 Below is the table of contents
 
 ## Part 1 numerical solutions to ordinary differential equations 
