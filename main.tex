@@ -81,8 +81,10 @@
 
 \usepackage{chngcntr}
 \counterwithin{figure}{section}
+\usepackage{titlepic}
 
-\title{Numerical Methods for Differential Equations}
+\title{Numerical Analysis with Applications in Python}
+\titlepic{\includegraphics{HeatEquationFigures/Fully_implicit/r_equals_half/solution_plot_image.png}}
 %\title{Introduction to Numerical Methods}
 \author{John S Butler}
 \date{}
@@ -126,6 +128,21 @@
 \begin{document}
 
 %\maketitle
+\begin{titlepage}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\center
+\textsc{\LARGE
+John S Butler
+} \\[1cm]
+\includegraphics[scale=0.75]{HeatEquationFigures/Fully_implicit/r_equals_half/solution_plot_image.png} \\[1cm]
+\HRule \\[0.4cm]
+{ \huge \bfseries Numerical Methods for Differential Equations with Python\\[0.15cm] }
+\HRule \\
+\includegraphics[scale=0.6]{PoissonEqn/PoissonEqn_SineWave_BC.png} 
+
+%\today \\ [1cm]
+\end{titlepage}
+
 
 %\include{FrontBackMatter/abstract}
 %\include{FrontBackMatter/dedication}
@@ -141,7 +158,7 @@
 
 %\include{LINEAR_SYSTEMS/ChapterLinearSystems}
 
-\part{Numerical Solutions to Ordinary Differential Equations}
+%\part{Numerical Solutions to Ordinary Differential Equations}
 \part{Initial Value Problems}
 \include{IVP/ChapterIVP}
 \include{IVP/HigherOrderTaylor}

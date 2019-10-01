@@ -1,5 +1,5 @@
 \chapter{Elliptic PDE's}
-The \addtoindex{Poisson equation} is
+The \addtoindex{Poisson equation} is,
 \begin{equation}
 -\nabla^2U(x,y)=f(x,y), \ \ \ (x,y) \in \Omega=(0,1)\times (0,1), \label{PoissonEq} \end{equation}
 where $\nabla$ is the Laplacian,
@@ -429,6 +429,11 @@ w_{4,0}=\sin(2\pi x_4) =0  & \ \ \ & w_{4,4}=\sin(2\pi x_4) =0 \\
 
 \end{array}
 \]
+\begin{figure}[H]
+  \caption{Sine Wave Boundary Conditions.}\label{Sine_waveBC}
+  \centering
+    \includegraphics[width=0.5\textwidth]{PoissonEqn/SineWave_BC}
+\end{figure}
 
 The system of equations are written in matrix form:
 \[\left(\begin{array}{ccccccccc}
@@ -533,7 +538,7 @@ Figure \ref{SolPossLap} shows the approximate solution of the Laplacian Equation
 \begin{figure}[H]
   \caption{Numerical solution of the homogeneous differential equation }\label{SolPossLap}
   \centering
-    \includegraphics{PoissonEqn/solution_homogeneous}
+    \includegraphics[width=0.8\textwidth]{PoissonEqn/PoissonEqn_SineWave_BC}
 \end{figure}
 
 \subsection{Example 2: non-homogeneous equation with zero boundary}
@@ -628,6 +633,11 @@ w_{4,0}=0  & \ \ \ & w_{4,4}=0 \\
 
 \end{array}
 \]
+\begin{figure}[H]
+  \caption{Sine Wave Boundary Conditions.}\label{Sine_waveBC}
+  \centering
+    \includegraphics[width=0.5\textwidth]{PoissonEqn/Zero_BC}
+\end{figure}
 
 The system of equations can be written in matrix form:
 \[\left(\begin{array}{ccccccccc}
@@ -701,9 +711,9 @@ w_{3,3}
 \]	
 Figure \ref{SolPossZero} shows the numerical solution of the Poisson Equation with zero boundary conditions.
 \begin{figure}[H]
-  \caption{Numerical solution of the differential equation with 0 boundary conditions }\label{SolPossZero}
+  \caption{Numerical solution of the differential equation with zero boundary conditions }\label{SolPossZero}
   \centering
-    \includegraphics{PoissonEqn/solution_zero_boundary}
+    \includegraphics[width=0.8\textwidth]{PoissonEqn/PoissonEqn_Zero_BC}
 \end{figure}
 
 \subsection{Example 3: Inhomogeneous equation with non-zero boundary}

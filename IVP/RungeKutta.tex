@@ -121,9 +121,9 @@ with the initial condition $y(t_0)=\alpha$ is given by
 \[w_0=\alpha, \]
 \[w_{i+1}=w_i+\frac{h}{2}[f(t_i,w_i)+f(t_i+h,y_i+hf(t_i,w_i))] \]
 with an error of order $O(h^2)$.\\
-For ease of calculation this can be rewritten as :
-\[k_1=hf(t_i,w_i),\]
-\[k_2=hf(t_i+h,w_i+hk_1),\]
+For ease of calculation this can be rewritten as:
+\[k_1=f(t_i,w_i),\]
+\[k_2=f(t_i+h,w_i+hk_1),\]
 \[w_{i+1}=w_i+\frac{h}{2}[k_1+k_2]. \]
 
 \section{Third Order Runge Kutta methods}
