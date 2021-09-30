@@ -1,25 +1,25 @@
 \section{Difference Operators}
-Through out this chapter we will use $U$ to denote the exact solution and 
-$w$ to denote the numerical (approximate) solution.\\
-1-D difference operators
+Through out this chapter we will use $U(x_i)$ to denote the exact solution and 
+$U_i$ to denote the numerical (approximate) solution.\\
+1-D difference operators:
 \begin{eqnarray*}
-D^{+}U_{i}=\frac{U_{i+1}-U_{i}}{h_{i+1}} \ \ \ \mbox{ Forward} \\
-D^{-}U_{i}=\frac{U_{i}-U_{i-1}}{h_i} \ \ \ \mbox{ Backward} \\
-D^{0}U_{i}=\frac{U_{i+1}-U_{i-1}}{x_{i+1}-x_{i-1}} \ \ \ \mbox{ Centered} \\
+D^{+}U_{i}=\frac{U_{i+1}-U_{i}}{h_{i+1}}, \ \ \ \mbox{ Forward,} \\
+D^{-}U_{i}=\frac{U_{i}-U_{i-1}}{h_i}, \ \ \ \mbox{ Backward,} \\
+D^{0}U_{i}=\frac{U_{i+1}-U_{i-1}}{x_{i+1}-x_{i-1}}, \ \ \ \mbox{ Centered.} \\
 \end{eqnarray*}
-For 2-D Differences Schemes is similar when dealing with the x-direction we hold
-the y-direction constant and then dealing with the y-direction hold the x-direction
+For $2$-D Differences Schemes is similar when dealing with the $x$-direction we hold
+the $y$-direction constant and then dealing with the $y$-direction hold the $x$-direction
 constant.
 \begin{eqnarray*}
-D^{+}_xU_{ij}=\frac{U_{i+1j}-U_{ij}}{x_{i+1}-x_{i}} \ \ \ \mbox{ Forward in the x-direction} \\
-D^{+}_yU_{ij}=\frac{U_{ij+1}-U_{ij}}{y_{i+1-y_{i}}} \ \ \ \mbox{ Forward in the y-direction} \\
-D^{-}_xU_{ij}=\frac{U_{ij}-U_{i-1j}}{x_i-x_{i-1}} \ \ \ \mbox{ Backward in the x direction} \\
-D^{-}_yU_{ij}=\frac{U_{ij}-U_{ij-1}}{y_i-y_{i-1}} \ \ \ \mbox{ Backward in the y direction} \\
-D^{0}_xU_{ij}=\frac{U_{i+1j}-U_{i-1j}}{x_{i+1}-x_{i-1}} \ \ \ \mbox{ Centered in the x direction} \\
-D^{0}_yU_{ij}=\frac{U_{ij+1}-U_{ij-1}}{y_{i+1}-y_{i-1}} \ \ \ \mbox{ Centered in the y direction} 
+D^{+}_xU_{ij}=\frac{U_{i+1j}-U_{ij}}{x_{i+1}-x_{i}}, \ \ \ \mbox{ Forward in the x-direction} \\
+D^{+}_yU_{ij}=\frac{U_{ij+1}-U_{ij}}{y_{j+1}-y_{j}}, \ \ \ \mbox{ Forward in the y-direction} \\
+D^{-}_xU_{ij}=\frac{U_{ij}-U_{i-1j}}{x_i-x_{i-1}}, \ \ \ \mbox{ Backward in the x direction} \\
+D^{-}_yU_{ij}=\frac{U_{ij}-U_{ij-1}}{y_j-y_{j-1}}, \ \ \ \mbox{ Backward in the y direction} \\
+D^{0}_xU_{ij}=\frac{U_{i+1j}-U_{i-1j}}{x_{i+1}-x_{i-1}}, \ \ \ \mbox{ Centered in the x direction} \\
+D^{0}_yU_{ij}=\frac{U_{ij+1}-U_{ij-1}}{y_{j+1}-y_{j-1}}, \ \ \ \mbox{ Centered in the y direction} 
 \end{eqnarray*}
-Second derivatives
+Second derivatives approximations in the $x$ and $y$ direction:
 \begin{eqnarray*}
-\delta_x^{2}U_{ij}=\frac{2}{x_{i+1}-x_{i-1}}\left(\frac{U_{i+1j}-U_{ij}}{x_{i+1}-x_{i}}-\frac{U_{ij}-U_{i-1j}}{x_{i}-x_{i-1}}\right) \ \ \ \mbox{ Centered in $x$ direction} \\
-\delta_y^{2}U_{ij}=\frac{2}{y_{i+1}-y_{i-1}}\left(\frac{U_{ij+1}-U_{ij}}{y_{i+1}-y_{i}}-\frac{U_{ij}-U_{ij-1}}{y_{i}-y_{i-1}}\right) \ \ \ \mbox{ Centered in y direction} \\
+\delta_x^{2}U_{ij}=\frac{2}{x_{i+1}-x_{i-1}}\left(\frac{U_{i+1j}-U_{ij}}{x_{i+1}-x_{i}}-\frac{U_{ij}-U_{i-1j}}{x_{i}-x_{i-1}}\right), \ \ \ \mbox{ Centered in $x$ direction,} \\
+\delta_y^{2}U_{ij}=\frac{2}{y_{j+1}-y_{j-1}}\left(\frac{U_{ij+1}-U_{ij}}{y_{j+1}-y_{j}}-\frac{U_{ij}-U_{ij-1}}{y_{j}-y_{j-1}}\right), \ \ \ \mbox{ Centered in $y$ direction.} \\
 \end{eqnarray*}

@@ -29,7 +29,7 @@ which satisfies
 $U=2(1-x)$ for $\frac{1}{2}\leq x \leq 1$ for $t=0$ (the initial condition).
 \end{enumerate}
 Due to the initial conditions the problem is symmetric with respect to $x=0.5.$ 
-To illustrate the implementation and limitations of the explicit, implicit and Crank-Nicholson methods we will numerically solve the Heat Equation of the rod for three different values of $r$:
+To illustrate the implementation and limitations of the explicit, implicit and Crank-Nicolson methods we will numerically solve the Heat Equation of the rod for three different values of $r$:
 \begin{enumerate}
 \item[\textbf{Case 1}]
 Let $h=\frac{1}{10}$ and $k=\frac{1}{1000}$ so that $r=\frac{k}{h^2}=\frac{1}{10}$;
@@ -603,7 +603,7 @@ $\frac{3}{25}$&0. &    0.176&  0.288 & 0.288 & 0.176 & 0.
 \end{example}
 
 
-\section{Crank Nicholson Implicit method}
+\section{Crank Nicolson Implicit method}
 Since the implicit method requires that $k\leq \frac{1}{2}h^2$ a new method was
 needed which would work for all finite values of r.\\
 They considered the partial differential equation as being satisfied at the
@@ -689,7 +689,7 @@ rw_{Nj+1}\\
 \end{array}\right)
 \end{equation}
 
-\subsection{Example Crank-Nicholson solution of the Heat Equation} 
+\subsection{Example Crank-Nicolson solution of the Heat Equation} 
 In this case we look at a rod of unit length with each end in ice.\\
 The rod is heat insulated along its length so that temperature changes occur through
 heat conduction along its length and heat transfer at its ends, where w denotes
@@ -710,7 +710,7 @@ which satisfies
 $U=2(1-x)$ for $\frac{1}{2}\leq x \leq 1$ for $t=0$ (the initial condition)
 \end{enumerate}
 \begin{example}
-\subsubsection{Crank-Nicholson method $r=\frac{1}{10}$}
+\subsubsection{Crank-Nicolson method $r=\frac{1}{10}$}
 Let $h=\frac{1}{5}$ and $k=\frac{1}{250}$ so that $r=\frac{k}{h^2}=\frac{1}{10}$
 difference equation (\ref{2 crank}) becomes
 \[-0.1w_{i-1,j+1}+2.2w_{i,j+1}-0.1w_{i+1,j+1}=0.1w_{i-1,j}+1.8w_{i,j}+0.1w_{i+1,j} \]
@@ -769,7 +769,7 @@ To solve we need to invert the matix, to get
 
 \begin{center}
  \begin{table}[H]
- \caption{The Crank-Nicholson numerical solution $w$ of the Heat Equation for $r=\frac{1}{10}$ for 1 time step}
+ \caption{The Crank-Nicolson numerical solution $w$ of the Heat Equation for $r=\frac{1}{10}$ for 1 time step}
  \centering
 \begin{tabular}{l|cccccc}
 j/x&0&0.2&0.4&0.6&0.8&1.0\\ \hline
@@ -781,21 +781,21 @@ $\frac{1}{250}$&
 \end{center}
 
 \begin{figure}[H]
-  \caption{The Crank-Nicholson numerical solution $w$ of the Heat Equation for $r=\frac{1}{10}$ for 10 time steps each represented by a different line}
+  \caption{The Crank-Nicolson numerical solution $w$ of the Heat Equation for $r=\frac{1}{10}$ for 10 time steps each represented by a different line}
   \centering
     \includegraphics[width=0.5\textwidth]{HeatEquationFigures/CRN/r_equals_one_tenth/solution_plot_lines}
 \end{figure}
 
 
 \begin{figure}[H]
-  \caption{The colorplot of the Crank-Nicholson numerical solution $w$ of the Heat Equation for $r=\frac{1}{10}$.}
+  \caption{The colorplot of the Crank-Nicolson numerical solution $w$ of the Heat Equation for $r=\frac{1}{10}$.}
   \centering
     \includegraphics[width=0.5\textwidth]{HeatEquationFigures/CRN/r_equals_one_tenth/solution_plot_image}
 \end{figure}
 
 \end{example}
 \begin{example}
-\subsubsection{Crank-Nicholson method $r=\frac{1}{2}$}
+\subsubsection{Crank-Nicolson method $r=\frac{1}{2}$}
 Let $h=\frac{1}{5}$ and $k=\frac{1}{50}$ so that $r=\frac{k}{h^2}=\frac{1}{2}$
 difference equation (\ref{2 crank}) becomes
 \[-0.5w_{i-1,j+1}+3w_{i,j+1}-0.5w_{i+1,j+1}=\]
@@ -855,7 +855,7 @@ w_{5,1}+w_{5,0}\\
 
 \begin{center}
 \begin{table}[H]
- \caption{The Crank-Nicholson numerical solution $w$ of the Heat Equation for $r=\frac{1}{2}$ for 1 time step}
+ \caption{The Crank-Nicolson numerical solution $w$ of the Heat Equation for $r=\frac{1}{2}$ for 1 time step}
  \centering
 \begin{tabular}{l|cccccc}
 t/x&0&0.2&0.4&0.6&0.8&1.0\\ \hline
@@ -866,14 +866,14 @@ $\frac{1}{50}$&0.    &      0.37241379  & 0.63448276 & 0.63448276  & 0.37241379 
 \end{center}
 
 \begin{figure}[H]
-  \caption{The Crank-Nicholson numerical solution $w$ of the Heat Equation for $r=\frac{1}{2}$ for 10 time steps each represented by a different line}
+  \caption{The Crank-Nicolson numerical solution $w$ of the Heat Equation for $r=\frac{1}{2}$ for 10 time steps each represented by a different line}
   \centering
     \includegraphics[width=0.5\textwidth]{HeatEquationFigures/CRN/r_equals_half/solution_plot_lines}
 \end{figure}
 
 
 \begin{figure}[H]
-  \caption{The colorplot of the Crank-Nicholson numerical solution $w$ of the Heat Equation for $r=\frac{1}{2}$.}
+  \caption{The colorplot of the Crank-Nicolson numerical solution $w$ of the Heat Equation for $r=\frac{1}{2}$.}
   \centering
     \includegraphics[width=0.5\textwidth]{HeatEquationFigures/CRN/r_equals_half/solution_plot_image}
 \end{figure}
@@ -883,7 +883,7 @@ This method also gives an good approximation to the solution of the \addtoindex{
 \end{example}
 \begin{example}
 
-\subsubsection{Crank-Nicholson method for the Heat Equation with  $r=1$}
+\subsubsection{Crank-Nicolson method for the Heat Equation with  $r=1$}
 Let $h=\frac{1}{5}$ and $k=\frac{1}{25}$ so that $r=\frac{k}{h^2}=1$
 difference equation (\ref{2 crank}) becomes
 \[-w_{i-1,j+1}+4w_{i,j+1}-w_{i+1,j+1}=w_{i-1,j}+0w_{i,j}+w_{i+1,j} \]
@@ -942,7 +942,7 @@ w_{5,1}+w_{5,0}\\
 
 \begin{center}
 \begin{table}[H]
- \caption{The Crank-Nicholson numerical solution $w$ of the Heat Equation for $r=1$ for 3 time step}
+ \caption{The Crank-Nicolson numerical solution $w$ of the Heat Equation for $r=1$ for 3 time step}
  \centering
 \begin{tabular}{l|cccccc}
 t/x&0&0.2&0.4&0.6&0.8&1.0\\ \hline
@@ -956,14 +956,14 @@ $\frac{3}{25}$&0.    &      0.14695718&  0.23741548  &0.23741548&  0.14695718&  
 \end{center}
 
 \begin{figure}[H]
-  \caption{The Crank-Nicholson numerical solution $w$ of the Heat Equation for $r=1$ for 10 time steps each represented by a different line}
+  \caption{The Crank-Nicolson numerical solution $w$ of the Heat Equation for $r=1$ for 10 time steps each represented by a different line}
   \centering
     \includegraphics[width=0.5\textwidth]{HeatEquationFigures/CRN/r_equals_one/solution_plot_lines}
 \end{figure}
 
 
 \begin{figure}[H]
-  \caption{The colorplot of the Crank-Nicholson numerical solution $w$ of the Heat Equation for $r=1$.}
+  \caption{The colorplot of the Crank-Nicolson numerical solution $w$ of the Heat Equation for $r=1$.}
   \centering
     \includegraphics[width=0.5\textwidth]{HeatEquationFigures/CRN/r_equals_one/solution_plot_image}
 \end{figure}
@@ -974,7 +974,7 @@ $\frac{3}{25}$&0.    &      0.14695718&  0.23741548  &0.23741548&  0.14695718&  
 
 
 \section{The Theta Method}
-The Theta Method is a generalization of the Crank-Nicholson method and expresses
+The Theta Method is a generalization of the Crank-Nicolson method and expresses
 our partial differential equation as
 \begin{equation}
 \label{2 theta}
@@ -988,7 +988,7 @@ our partial differential equation as
 \item
 when $\theta=0$ we get the explicit scheme,
 \item
-when $\theta=\frac{1}{2}$ we get the Crank-Nicholson scheme,
+when $\theta=\frac{1}{2}$ we get the Crank-Nicolson scheme,
 \item
 and $\theta=1$ we get fully implicit backward finite difference method.
 \end{itemize}
@@ -1198,7 +1198,7 @@ w_{0j+1}=w_{0j} +2r((-1-h_x)w_{0j}+w_{1j})
 \]
 \subsubsection{Example 3}
 Using central difference approximation for the derivative boundary condition
-and the Crank-Nicholson method to approximate the \addtoindex{PDE}.\\
+and the Crank-Nicolson method to approximate the \addtoindex{PDE}.\\
 The difference equation is,
 \[\frac{w_{i,j+1}-w_{ij}}{k}=\frac{1}{2}\left\{\frac{w_{i+1j+1}-2w_{ij+1}+w_{i-1j+1}}{h^2}+
 \frac{w_{i+1j}-2w_{ij}+w_{i-1j}}{h^2}
@@ -1320,7 +1320,7 @@ $\xi$ is known as the amplification factor.
 The finite difference equation will be stable if $|w_{pq}|$ remains bounded for all q as $h \rightarrow 0, k\rightarrow 0$ and all $\beta$.\\
 If the exact solution does not increase exponentially with time then a necessary
 and sufficient condition is that 
-\[ |\xi|\leq 1 \]
+\[ |\xi|\leq 1. \]
 \subsection{Stability for the explicit FTCS Method}
 Investigating the stability of the fully explicit difference equation
 \[\frac{1}{k}(w_{pq+1}-w_{pq})=\frac{1}{h_x^2}(w_{p-1q}-2w_{pq}+w_{p+1q})\]
@@ -1374,7 +1374,7 @@ Hence \[\xi = \frac{1}{1+4r\sin^2(\frac{\beta h}{2})}\]
 $0 < \xi \leq 1$ for all $r>0$ and all $\beta$ therefore the equation is unconditionally stable.
 
 
-\subsection{Stability for the Crank Nicholson Method}
+\subsection{Stability for the Crank Nicolson Method}
 Investigating the stability of the fully implicit difference equation
 \[\frac{1}{k}(w_{pq+1}-w_{pq})=\frac{1}{2h_x^2}(w_{p-1q+1}-2w_{pq+1}+w_{p+1q+1})+\frac{1}{2h_x^2}(w_{p-1q}-2w_{pq}+w_{p+1q})\]
 approximating $\frac{\partial U}{\partial t}=\frac{\partial^2 U}{\partial x^2}$ at $(ph_x,qk)$. Substituting $w_{pq}=e^{i\beta x}\xi^{q}$ into the difference equation

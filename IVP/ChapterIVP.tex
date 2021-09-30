@@ -68,10 +68,10 @@ $y^{'} = e^{xy^4}$, or discontinuous or stochastic. There for a numerical method
 The left hand side of a initial value problem $\frac{df}{dx}$ can be approximated by  \textbf{Taylors theorem} expand about a point $x_0$ giving:
 \begin{equation}f(x_1) = f(x_0)+(x_1-x_0)f^{'}(x_0) + \tau, \end{equation}
 where $\tau$ is the truncation error,
-\begin{equation}\tau = \frac{(x_1-x_0)^2}{2!}f^{''}(\xi), \ \ \ \ \ \ \xi \in [x_0,x_1]. \end{equation}
+\begin{equation}h\tau = \frac{(x_1-x_0)^2}{2!}f^{''}(\xi), \ \ \ \ \ \ \xi \in [x_0,x_1]. \end{equation}
 Rearranging and letting $h=x_1-x_0$ the equation becomes
 \[f^{'}(x_0)=\frac{f(x_1)-f(x_0)}{h}-\frac{h}{2}f^{''}(\xi). \]
-
+Term $-\frac{h}{2}f^{''}(\xi)$ is known as the local truncation error.
 The forward Euler method can also be derived using a variation on the Lagrange interpolation formula
 called the divided difference. \\
 Any function $f(x)$ can be approximated by a polynomial of degree $P_n(x)$ and an error term,
@@ -300,7 +300,7 @@ belongs in $D$ for each $\lambda \in [0,1]$.
 \begin{theorem}
 Suppose $f(t,y)$ is defined on a convex set $D \subset R^2$. If a constant
 $L>0$ exists with
-\[\left|\frac{\partial f(t,y)}{\partial y}\right|\leq L, \]
+\[L\leq \left|\frac{\partial f(t,y)}{\partial y}\right|, \]
 then $f$ satisfies a \addtoindex{Lipschitz Condition} an $D$ in the variable $y$ with
 Lipschitz constant L.
 \end{theorem}
@@ -421,9 +421,9 @@ For all $ x \geq 0.1$ and any positive m we have \[0\leq (1+x)^m \leq e^{mx}.\]
 
 \begin{lemma}
 \label{lemma 2}
-If s and t are positive real numbers $\{a_i\}_{i=0}^{N}$ is a sequence satisfying $\displaystyle a_0 \geq \frac{-t}{s}$ and $a_{i+1} \leq (1+s)a_i +t $
+If s and t are positive real numbers $\{a_i\}_{i=0}^{N}$ is a sequence satisfying $\displaystyle a_0 \geq \frac{-q}{s}$ and $a_{i+1} \leq (1+s)a_i +q $
 then,
-\[a_{i+1} \leq e^{(i+1)s}\left(a_0+\frac{t}{s}\right)-\frac{t}{s}. \] 
+\[a_{i+1} \leq e^{(i+1)s}\left(a_0+\frac{q}{s}\right)-\frac{q}{s}. \] 
 \end{lemma}
 \begin{theorem}
 \label{Euler bound}
@@ -447,11 +447,11 @@ Consequently we have
 \[y(t_{i+1})-w_{i+1}=y(t_i)-w_i+h[f(t_i,y(t_i))-f(t_i,w_i)]+\frac{h^2}{2}y^{''}(\xi_i), \]
 and
 \[|y(t_{i+1})-w_{i+1}|\leq |y(t_i)-w_i|+h|f(t_i,y(t_i))-f(t_i,w_i)|+\frac{h^2}{2}|y^{''}(\xi_i)|. \]
-Since f satisfies a \addtoindex{Lipschitz Condition} in the second variable with constant L
+Since $f$ satisfies a \addtoindex{Lipschitz Condition} in the second variable with constant $L$
 and $|y^{''}|\leq M$ we have
 \[|y(t_{i+1})-w_{i+1}|\leq (1+hL)|y(t_i)-w_i|+\frac{h^2}{2}M. \]
 Using Lemma \ref{lemma 1} and \ref{lemma 2} and letting $a_j=(y_j-w_j)$ for each
-$j=0,..,N$ while $s=hL$ and $t=\frac{h^2M}{2}$ we see that
+$j=0,..,N$ while $s=hL$ and $q=\frac{h^2M}{2}$ we see that
 \[|y(t_{i+1}-w_{i+1}|\leq e^{(i+1)hL}(|y(t_0)-w_0|+\frac{h^2M}{2hL}) -\frac{h^2M}{2hL}. \]
 Since $w_0-y_0=0$ and $(i+1)h=t_{i+1}-t_0=t_{i+1}-a$ we have
 \[ |y(t_i)-w_i| \leq \frac{Mh}{2L}|e^{L(t_i-a)}-1|, \]
@@ -519,7 +519,7 @@ $f(t,y)=\frac{t^2y^2}{1+t^2},$  $D=\{(t,y);0\leq t, -10\leq y \leq 10 \}.$
 
 \end{enumerate}
 \item
-Apply Euler's Method to approximate the solution of the given initial value problems using the indicated number of time steps. Compare the approximate solution with the given exact solution, and compate the actual error with the theoretical error
+Apply Euler's Method to approximate the solution of the given initial value problems using the indicated number of time steps. Compare the approximate solution with the given exact solution, and compare the actual error with the theoretical error
 \begin{enumerate}
 \item
 $y'=t-y, \ \ (0\leq t \leq 4)$\\

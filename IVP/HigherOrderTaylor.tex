@@ -27,7 +27,7 @@ T^{2}(t_i,w_i)&=&f(t_i,w_i)+\frac{h}{2}f^{'}(t_i,w_i)\\
 and
 \begin{eqnarray*}
 T^{4}(t_i,w_i)&=&f(t_i,w_i)+\frac{h}{2}f^{'}(t_i,w_i)\\
-& &+\frac{h^2}{6}f^{''}(t_i,w_i)+\frac{h^3}{24}f^{''}(t_i,w_i)\\
+& &+\frac{h^2}{6}f^{''}(t_i,w_i)+\frac{h^3}{24}f^{'''}(t_i,w_i)\\
 &=&\left(1+\frac{h}{2}+\frac{h^2}{6}+\frac{h^3}{24}\right)(w_i-t_i^2)\\
 & &-\left(1+\frac{h}{3}+\frac{h^2}{12}\right)ht_i\\
 & & +1+\frac{h}{2}-\frac{h^2}{6}-\frac{h^3}{24}
@@ -50,3 +50,49 @@ In general if $y \in C^{n+1}[a,b]$
 \[\tau_{i+1}(h)=\frac{h^n}{(n+1)!}f^{n}(\xi_i,y(\xi_i))~O(h^n). \]
 The issue is that for every differential equation a new method has be to derived.
 
+\newpage
+\section{Problem Sheet 2 - Higher Order Methods (Taylor)}
+\begin{enumerate}
+
+\item
+Apply 2nd Order Taylor Method to approximate the solution of the given initial value problems using the indicated number of time steps. Compare the approximate solution with the given exact solution, and compare the actual error with the theoretical local and global error
+\begin{enumerate}
+\item
+$y'=t-y, \ \ (0\leq t \leq 4)$\\
+with the initial condition $y(0)=1,$\\
+$N=4$, 
+$y(t)=2e^{-t}+t-1,$\\
+
+The Lipschitz constant is determined on  $D=\{(t,y);0\leq t \leq 4, y\in \rm I\!R \}.$
+\item 
+$y'=y-t, \ \ (0\leq t \leq 2)$\\
+with the initial condition $y(0)=2,$\\
+$N=4$, 
+$y(t)=e^{t}+t+1$.\\
+
+The Lipschitz constant is determined on  $D=\{(t,y);0\leq t \leq 2, y\in \rm I\!R \}.$
+\end{enumerate}
+\item
+Apply 3rd Order Taylor Method to approximate the solution of the given initial value problems using the indicated number of time steps. Compare the approximate solution with the given exact solution, and compare the actual error with the theoretical local and global error
+\begin{enumerate}
+\item
+$y'=t-y, \ \ (0\leq t \leq 4)$\\
+with the initial condition $y(0)=1,$\\
+$N=4$, 
+$y(t)=2e^{-t}+t-1,$\\
+
+The Lipschitz constant is determined on  $D=\{(t,y);0\leq t \leq 4, y\in \rm I\!R \}.$
+\item 
+$y'=y-t, \ \ (0\leq t \leq 2)$\\
+with the initial condition $y(0)=2,$\\
+$N=4$, 
+$y(t)=e^{t}+t+1$.\\
+
+The Lipschitz constant is determined on  $D=\{(t,y);0\leq t \leq 2, y\in \rm I\!R \}.$
+\end{enumerate}
+\item
+Apply the Taylor method to approximate the solution of initial value problem
+\[ y'=ty+ty^2, \ \ \ (0\leq t \leq 2), \ \ \ y(0)=\frac{1}{2} \]
+using $N=4$ steps.
+\end{enumerate}
+\newpage

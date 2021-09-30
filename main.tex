@@ -78,6 +78,9 @@
 % initial definitions to save the chapter info (name and number)
 \def\thischaptertitle{}
 \def\thischapternumber{}
+\usepackage{pdflscape}
+\usepackage{tikz}
+\usetikzlibrary{mindmap,backgrounds}
 
 \usepackage{chngcntr}
 \counterwithin{figure}{section}
@@ -86,7 +89,7 @@
 \title{Numerical Analysis with Applications in Python}
 \titlepic{\includegraphics{HeatEquationFigures/Fully_implicit/r_equals_half/solution_plot_image.png}}
 %\title{Introduction to Numerical Methods}
-\author{John S Butler}
+\author{John S Butler, PhD, MSc, BA \\ TU Dublin}
 \date{}
 \makeindex 
 
@@ -157,8 +160,22 @@ John S Butler
 %\part{LinearSystems}
 
 %\include{LINEAR_SYSTEMS/ChapterLinearSystems}
+\chapter*{Overview}
+This book is divided into two parts;
+\begin{itemize}
+    \item Numerical Solutions to Ordinary Differential Equations, Chapters 1-6.
+    \item Numerical Solutions to Partial Differential Equations, Chapters 7-11.
+\end{itemize}
 
-%\part{Numerical Solutions to Ordinary Differential Equations}
+The first part introduces numerical methods for initial value problems (Chapters 1-5) and boundary value problems (Chapter 6). Chapter 1 covers some simple theorems of initial value problems as well as the Euler Method.
+Chapter 2 introduces higher order methods using the Taylor method.
+These methods are then extend in Chapter 3 to Runge Kutta methods.
+Chapter 4 introduces the Adams-Bashforth and Adams-Moulton explicit and implicit multi-step methods. Chapter 5 discusses the consistency, convergence of one-step and multi-step methods.
+
+
+All the notes are supplemented by iPython notebooks 
+\include{MindMap}
+\part{Numerical Solutions to Ordinary Differential Equations}
 \part{Initial Value Problems}
 \include{IVP/ChapterIVP}
 \include{IVP/HigherOrderTaylor}

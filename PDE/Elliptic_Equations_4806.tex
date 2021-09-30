@@ -3,7 +3,7 @@ The \addtoindex{Poisson equation} is,
 \begin{equation}
 -\nabla^2U(x,y)=f(x,y), \ \ \ (x,y) \in \Omega=(0,1)\times (0,1), \label{PoissonEq} \end{equation}
 where $\nabla$ is the Laplacian,
-\[ \nabla = \frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial x^2}, \]
+\[ \nabla = \frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}, \]
 with boundary conditions,
 \[U(x,y) = g(x,y), \ \ \  (x,y)\in\delta\Omega \text{-boundary.} \]
 \section{The five point approximation of the Laplacian}
@@ -29,7 +29,7 @@ w_{ij}&=&g_{ij} \ \ (x_i,y_j) \in \partial\Omega_h, \label{DiffPoisson}
 where $w_{ij}$ is the numerical approximation of $U$ at $x_i$ and $y_j$.
 Expanding the  the Poisson Difference Equation \ref{DiffPoisson} gives the five point method,
 \[-(w_{i-1j}+w_{ij-1}-4w_{ij}+w_{ij+1}+w_{i+1j})=h^2f_{ij} \]
-for $i=1,...,N-1$ and $j=1,...,N-1,$ which is depicted in Figure \ref{FivePoint} on a $6 \time 6$ discrete grid.
+for $i=1,...,N-1$ and $j=1,...,N-1,$ which is depicted in Figure \ref{FivePoint} on a $6 \times 6$ discrete grid.
 
 \begin{figure}[H]
   \caption{Graphical representation of the difference equation stencil}\label{FivePoint}
@@ -983,7 +983,7 @@ for some $\eta \in (y-h,y+h)$. We conclude that $\tau_h(x,y)=(\nabla-\nabla_h)\v
 $\bullet$\end{proof}
 Consistency does not guarantee that the solution to the difference equations approximates the exact solution to the \addtoindex{PDE}. 
 \begin{definition}
-Let $L_hw(\mathbf{x}_j)=f(\mathbf{x}_j)$ be a finite difference approximation, defined on a grid mesh size h, to a \addtoindex{PDE} $LU(\mathbf{x})=f(\mathbf{x})$ on a simply
+Let $L_hw(\mathbf{x}_j)=f(\mathbf{x}_j)$ be a finite difference approximation, defined on a grid mesh size $h$, to a \addtoindex{PDE} $LU(\mathbf{x})=f(\mathbf{x})$ on a simply
 connected set $D \subset R^n$. Assume that $w(x,y)=U(x,y)$ at all points (x,y) on the boundary $\partial\Omega$.  The finite difference scheme converges (or is convergent) if
 \[ \max_j|U(\mathbf{x}_j)-w(\mathbf{x}_j)| \rightarrow 0 \mbox{  as  } h \rightarrow 0.\]
 $\circ$
@@ -992,9 +992,9 @@ For the five point scheme there is a direct connection between consistency and c
 \begin{theorem}
 (DISCRETE MAXIMUM PRINCIPLE).
 If $\nabla^2_hV_{ij}\geq 0$ for all points $(x_i,y_j) \in \Omega_h$, then
-\[ \max_{(x_i,y_j)\in\Omega_h}V_{ij}\leq  \max_{(x_i,y_j)\in\partial\Omega_h}V_{ij}\]
+\[ \max_{(x_i,y_j)\in\Omega_h}V_{ij}\leq  \max_{(x_i,y_j)\in\partial\Omega_h}V_{ij}.\]
 If $\nabla^2_hV_{ij}\leq 0$ for all points $(x_i,y_j) \in \Omega_h$, then
-\[ \min_{(x_i,y_j)\in\Omega_h}V_{ij}\geq  \min_{(x_i,y_j)\in\partial\Omega_h}V_{ij}\]
+\[ \min_{(x_i,y_j)\in\Omega_h}V_{ij}\geq  \min_{(x_i,y_j)\in\partial\Omega_h}V_{ij}.\]
 \end{theorem}
 In other words, a grid function $V$ for which $\nabla^2_hV$ is nonnegative on $\Omega_h$ attains its maximum on the boundary $\partial\Omega_h$ of the grid.  Similarly, if $\nabla^2_hV$ is nonpositive on $\Omega_h$, then V attains its minimum on the boundary $\partial\Omega_h$.
 \begin{proof}
@@ -1030,7 +1030,7 @@ $\circ$
 \end{definition}
 \begin{lemma}
 If the grid function $V:\Omega_h\bigcup\partial\Omega_h\rightarrow R$ satisfies the boundary condition $V_{ij}=0$ for $(x_i,y_j)\in \partial\Omega_h$, then
-\[||V_||_{\Omega}\leq \frac{1}{8}||\nabla_h^2V||_{\Omega} \]
+\[||V_||_{\Omega}\leq \frac{1}{8}||\nabla_h^2V||_{\Omega}. \]
 \end{lemma}
 \begin{proof}
 Let $\nu = ||\nabla_{h}^2V||_{\Omega}$. Clearly for all points $(x_i,y_j)\in\Omega_h$,
@@ -1075,5 +1075,5 @@ If we subtract from this the identity equation $-\nabla_h^2w_{ij}=f_{ij}$ and no
 that $U-w$ vanishes on $\partial\Omega_h$, we find that
 \[ \nabla_h^2(U_{ij}-w_{ij})=\frac{h^2}{12}\left[ \frac{\partial^4 U}{\partial x^4}(\zeta_i,y_j)+\frac{\partial^4 U}{\partial y^4}(x_i,\eta_j) \right].\]
 It follows that
-\[ ||U-w||_{\Omega}\leq\frac{1}{8}||\nabla_h^2(U-w)||_{\Omega}\leq KMh^2\]
+\[ ||U-w||_{\Omega}\leq\frac{1}{8}||\nabla_h^2(U-w)||_{\Omega}\leq KMh^2.\]
 \end{proof}

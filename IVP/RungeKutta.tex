@@ -1,4 +1,4 @@
-\chapter{Runge--Kutta Method}
+\chapter{Runge-Kutta Method}
 The \addtoindex{Runge-Kutta method} (RK) method is closely related to the Taylor series expansions but no differentiation of $f$ is necessary.\\
 All RK methods will be written in the form
 \begin{equation}
@@ -34,7 +34,7 @@ and
 \begin{eqnarray*}\begin{aligned}R_n(t,y) = \\\left[\frac{1}{(n+1)!}\sum_{j=0}^{n+1}\left(\begin{array}{c}n+1 \\ j \end{array}\right)(t-t_0)^{n+1-j}(y-y_0)^j\frac{\partial^{n+1} f}{\partial y^j\partial t^{n+1-j}}(\xi,\mu)  \right]\end{aligned}
 \end{eqnarray*}
 \end{theorem}
-\section{Derivation of Second Order Runge Kutta}
+\section{Derivation of Second Order Runge-Kutta}
 Consider the explicit one-step method\\
 \begin{equation}
 \frac{w_{i+1}-w_i}{h}=F(f,t_i,w_i,h)
@@ -47,7 +47,7 @@ F(f,t,y,h)=a_0k_1+a_1k_2,
 F(f,t,y,h)=a_0f(t,y)+a_1f(t+\alpha_1,y+\beta_1),
 \end{equation}
 where $a_0+a_1=1.$\\
-\textbf{There is a free parameter in the derivation of the Runge Kutta method for this reason $a_0$ must be choosen}
+\textbf{There is a free parameter in the derivation of the Runge-Kutta method for this reason $a_0$ must be choosen}
 
 Deriving the second order \addtoindex{Runge-Kutta method} by using Theorem \ref{RK_Theorem} to determine values for values  $a_1,\alpha_1$ and $\beta_1$ with the property that $a_1f(t+\alpha_1,y+\beta_1)$ approximates the second order Taylor
 \[f(t,y)+\frac{h}{2}f^{'}(t,y) \]
@@ -77,8 +77,8 @@ gives the equations
 \[\frac{\partial f }{\partial t}(t,y): a_1\alpha_1=\frac{h}{2} \]
 and
 \[\frac{\partial f }{\partial y}(t,y): a_1\beta_1=\frac{h}{2}f(t,y). \]
-\subsection{Runge Kutta second order: Midpoint method}
-Choosing $a_0=0$ gives the unique values $a_1=1$, $\alpha_1=\frac{h}{2}$ and $\beta_1=\frac{h}{2}f(t,y)$
+\subsection{Runge-Kutta second order: Midpoint method}
+\underline{Choosing $a_0=0$} gives the unique values $a_1=1$, $\alpha_1=\frac{h}{2}$ and $\beta_1=\frac{h}{2}f(t,y)$
 so
 \[T^{2}(t,y) = f(t+\frac{h}{2},y+\frac{h}{2}f(t,y))-R_1(t+\frac{h}{2},y+\frac{h}{2}f(t,y))
 \]
@@ -104,8 +104,8 @@ The Figure \ref{Modified Euler Figure} illustrates the solution to the  $y^{'}=-
 \end{figure}
 for each $i=0,1,...N-1.$
 
-\subsection{2nd Order Runge Kutta $a_0=0.5$: Heun's method}
-Choosing $a_0=0.5$ gives the unique values $a_1=0.5$, $\alpha_1=h$ and $\beta_1=hf(t,y)$
+\subsection{2nd Order Runge-Kutta $a_0=0.5$: Heun's method}
+\underline{Choosing $a_0=0.5$} gives the unique values $a_1=0.5$, $\alpha_1=h$ and $\beta_1=hf(t,y)$
 such that 
 \[T^{2}(t,y)=F(t,y) = 0.5 f(t,y)+0.5 f(t+h,y+hf(t,y))-R_1(t+h,y+hf(t,y))
 \]
@@ -126,26 +126,26 @@ For ease of calculation this can be rewritten as:
 \[k_2=f(t_i+h,w_i+hk_1),\]
 \[w_{i+1}=w_i+\frac{h}{2}[k_1+k_2]. \]
 
-\section{Third Order Runge Kutta methods}
+\section{Third Order Runge-Kutta methods}
 Higher order methods are derived in a similar fashion.
-For the Third Order Runge Kutta methods 
+For the Third Order Runge-Kutta methods 
 \begin{equation}
-\frac{w_{i+1}-w_i}{h}=F(f,t_i,w_i,h)
+\frac{w_{i+1}-w_i}{h}=F(f,t_i,w_i,h),
 \end{equation}
 with
 \begin{equation}
-F(f,t,w,h)=a_0k_1+a_1k_2+a_2k_3
+F(f,t,w,h)=a_0k_1+a_1k_2+a_2k_3,
 \end{equation}
 where 
 \[a_0+a_1+a_2=1\] 
 and
-\[k_1=f(t_i,w_i)\]
-\[k_2=f(t_i+\alpha_1h,t_i+\beta_{11}k_1)\]
+\[k_1=f(t_i,w_i),\]
+\[k_2=f(t_i+\alpha_1h,t_i+\beta_{11}k_1),\]
 \[k_3=f(t_i+\alpha_2h,t_i+\beta_{21}k_1+\beta_{22}k_2)).\]
 The values of $a_0$, $a_1$, $a_2$, $\alpha_1,\alpha_2$, $\beta_{11}$,$\beta_{21}$, $\beta_{22}$ are derived by group the Taylor expansion,
-\begin{eqnarray}{lcl} y_{i+1}&=&y_{i}+hf(t_{i},y_{i})+{\frac {h^{2}}{2}}(f_{t}+f_{y}f)_{(t_{i},y_{i})}\\
+\begin{eqnarray*} y_{i+1}&=&y_{i}+hf(t_{i},y_{i})+{\frac {h^{2}}{2}}(f_{t}+f_{y}f)_{(t_{i},y_{i})}\\
 & &+{\frac {h^{3}}{6}}\left(f_{tt}+2f_{ty}f+f_{t}f_{y}+f_{yy}f^{2}+f_{y}f_{y}f\right)_{(t_{i},y_{i})}\\
-& &+O(h^{4}),\end{eqnarray}
+& &+O(h^{4}),\end{eqnarray*}
 with the 3rd order expand form:
 \[ y_{i+1}=y_{i}+ha_{1}f(t_{i},y_{i})+ha_{2}(f+\alpha_{1}hf_{t}+\beta_{11}hf_{y}f\]\[+{\frac {h^{2}}{2}}(f_{tt}\alpha_{1}^{2}+f_{yy}\beta_{11}^{2}f^{2}+2f_{ty}\alpha_{1}\beta_{11}f)+O_{2}(h^{3}))\]
 \[+ha_{3}(f+\alpha_{2}hf_{t}+f_{y}\left(\beta_{21}hf+\beta_{22}h(f+\alpha_{1}hf_{t}+\beta_{11}hf_{y}f+O_{3}(h^{2}))\right)\] 
@@ -154,13 +154,14 @@ with the 3rd order expand form:
  This results in 8 equations with 8 unknowns, but only 6 of these equations are independent. For this reason the are two free parameters to choose.
 
 For example, we can choose that \[\alpha_{2}=1,\beta_{11}=\frac{1}{2},\]then we obtain the following difference equation.
-\[ w_{i+1}=w_{i}+{\frac {h}{6}}(k_{1}+4k_{2}+k_{3})\]
+\[ w_{i+1}=w_{i}+{\frac {h}{6}}(k_{1}+4k_{2}+k_{3}),\]
 where
 \[k_{1}=f(t_{i},w_{i}),\]
 \[ k_{2}=f(t_{n}+1/2h,w_{n}+1/2hk_{1}),\]
 \[ k_{3}=f(t_{n}+h,w_{n}-hk_{1}+2hk_{2}).\]
 
-\section{Runge Kutta fourth order}
+\section{Runge-Kutta fourth order}
+The most commonly used Runge-Kutta method is the 4th Order Runge-Kutta method, which is given by the formulae,
 \[w_0 = \alpha, \]
 \[k_1 = hf(t_i,w_i), \]
 \[k_2 = hf(t_i+\frac{h}{2},w_i+\frac{1}{2}k_1), \]
@@ -168,8 +169,8 @@ where
 \[k_4 = hf(t_{i+1},w_i+k_3), \]
 \[w_{i+1}=w_{i}+\frac{1}{6}(k_1+2k_2+2k_3+k_4). \]
 \begin{example}
-Example Midpoint method
-\[y^{'}=y-t^2+1 \ \ \ 0 \leq t \leq 2 \ \ \ y(0)=0.5, \]
+Example Midpoint method,
+\[y^{'}=y-t^2+1, \ \ \ 0 \leq t \leq 2, \ \ \ y(0)=0.5, \]
 \[N=10, \ \ \ t_i=0.2i, \ \ \ h=0.2, \]
 \[w_0=0.5, \]
 \begin{eqnarray*}
@@ -177,12 +178,15 @@ w_{i+1} &=& w_{i} + 0.2f(t_i+\frac{0.2}{2},w_i+\frac{0.2}{2}f(t_i,w_i))\\
  &=& w_{i} + 0.2f(t_i+0.1,w_i+0.1(w_i-t^2_i+1))\\
  &=& w_{i} + 0.2(w_i+0.1(w_i-t^2_i+1)-(t_i+0.1)^2+1)\\
 \end{eqnarray*}
-Example Runge Kutta fourth order method
-\[y^{'}=y-t^2+1 \ \ \ 0 \leq t \leq 2 \ \ \ y(0)=0.5 \]
-\[N=10 \ \ \ t_i=0.2i \ \ \ h=0.2 \]
-\[w_0=0.5 \]
+\end{example}
+
+\begin{example}
+Example Runge-Kutta fourth order method
+\[y^{'}=y-t^2+1, \ \ \ 0 \leq t \leq 2, \ \ \ y(0)=0.5, \]
+\[N=10, \ \ \ t_i=0.2i, \ \ \ h=0.2, \]
+\[w_0=0.5, \]
 \begin{eqnarray*}
-k_1&=&h(w_i-t_i^2+1)\\
+k_1&=&h(w_i-t_i^2+1),\\
 k_2&=&h(w_i+\frac{1}{2}k_1-(t_i+\frac{h}{2})^2+1)\\
 k_3&=&h(w_i+\frac{1}{2}k_2-(t_i+\frac{h}{2})^2+1)\\
 k_4&=&h(w_i+\frac{1}{2}k_3-(t_i+h)^2+1)\\
@@ -203,7 +207,7 @@ w_{i+1} &=& w_{i} + \frac{1}{6}(k_1+2k_2+2k_3+k_4)
 \end{example}
 \section{Butcher Tableau}
 
-Another way of representing a Runge Kutta method is called the Butcher tableau named after John C Butcher(31 March 1933).
+Another way of representing a Runge-Kutta method is called the Butcher tableau named after John C Butcher (31 March 1933).
 
 \[ y_{i+1}=y_{i}+h\sum _{n=1}^{s}a_{n}k_{n},\] 
 where
@@ -214,17 +218,17 @@ These data are usually arranged in a mnemonic device, known as a Butcher tableau
 \begin{center}
  \begin{tabular}{c| c c c c c} 
  0&  &  & & & \\ 
- $c_2$& $\beta_{21}$ &  & & & \\ 
- $c_3$& $\beta_{31}$ & $\beta_{31}$ & & & \\ 
+ $\alpha_2$& $\beta_{21}$ &  & & & \\ 
+ $\alpha_3$& $\beta_{31}$ & $\beta_{31}$ & & & \\ 
  $\vdots $& $\vdots$ & $\vdots$  & & & \\ 
  
- $c_s$& $\beta_{s1}$ & $\beta_{s2}$ & $\cdots$& $\beta_{ss-1}$ & \\ 
+ $\alpha_s$& $\beta_{s1}$ & $\beta_{s2}$ & $\cdots$& $\beta_{ss-1}$ & \\ 
  \hline
  & $a_{1}$  & $a_{2}$ & $\cdots$ &$a_{s-1}$ & $a_s$ \\ 
 \end{tabular}
 \end{center}
 The method is consistent if 
-\[\sum_{j}^{s-1} \beta_{sj}=c_s.\]
+\[\sum_{j}^{s-1} \beta_{sj}=\alpha_s.\]
 \subsection{Heun's Method}
 The Butcher's Tableau for Heun's Method is:
 \begin{center}
@@ -235,8 +239,8 @@ The Butcher's Tableau for Heun's Method is:
  & $\frac{1}{2}$  & $\frac{1}{2}$   \\ 
 \end{tabular}
 \end{center}
-\subsection{4th Order Runge Kutta}
-The Butcher's Tableau for the 4th Order Runge Kutta is:
+\subsection{4th Order Runge-Kutta}
+The Butcher's Tableau for the 4th Order Runge-Kutta is:
 \begin{center}
  \begin{tabular}{c| c c c c} 
  $0$&    &  & & \\ 
@@ -249,7 +253,7 @@ The Butcher's Tableau for the 4th Order Runge Kutta is:
 \end{center}
 
 \section{Convergence Analysis}
-In order to obtain convergence of the general Runge Kutta we need to have the truncation
+In order to obtain convergence of the general Runge-Kutta we need to have the truncation
 $\tau_n(y)\rightarrow0$ as $h \rightarrow 0$.  Since,
 \[\tau(y)=\frac{y(t_{n+1})-y(t_n)}{h}-F(t_n,y(t_n),h;f), \]
 we require,
@@ -280,14 +284,14 @@ Looking at the midpoint method
 \end{eqnarray*}
 \end{example}
 \begin{theorem}
-Assume that the Runge Kutta method satisfies the \addtoindex{Lipschitz Condition}. Then
+Assume that the Runge-Kutta method satisfies the \addtoindex{Lipschitz Condition}. Then
 for the initial value problems
 \[ y^{'}=f(x,y),\]
 \[ y(x_0)=y_0. \]
 The numerical solution $\{ w_n\}$ satisfies
 \[ \max_{a\leq x\leq b}|y(x_n)-w_n| \leq e^{(b-a)L}|y_0-w_0|+\left[\frac{e^{(b-a)L}-1}{L} \right]\tau(h) \]
 where
-\[\tau(h) = \max_{a\leq x\leq b}|\tau_n(Y)|,\]
+\[\tau(h) = \max_{a\leq x\leq b}|\tau_n(h)|,\]
 If the consistency condition 
 \[ \delta(h) \rightarrow 0 \mbox{ as  } h\rightarrow 0, \]
 where
@@ -305,22 +309,22 @@ in which $e_n=y(t_n)-w_n$. Apply the \addtoindex{Lipschitz Condition} $L$ and th
 error we obtain
 \[|e_{n+1}| \leq (1+hL)|e_n| + h \tau_n(h). \]
 This nicely leads to the result.\\
-In most cases it is known by direct computation that $\tau(Y) \rightarrow 0$ as $h \rightarrow 0$
+In most cases it is known by direct computation that $\tau(h) \rightarrow 0$ as $h \rightarrow 0$
 an in that case convergence of $\{w_n \}$ and $y(t_n)$ is immediately proved.
 \\
 But all we need to know is that (\ref{C}) is satisfied .  To see this we write
 \[\begin{array}{ccc}
-h\tau_n &=& Y( t_{n+1})-Y(t_n) -hF(t_n,Y(t_n),h;f),\\
-&=&hY^{'}(t_n)+\frac{h^{2}}{2}Y^{''}(\xi_n) -hF(t_n,Y(t_n),h;f),\\
-h|\tau_n| &\leq& h\delta(h)+\frac{h^{2}}{2}|Y^{''}|.\\
-|\tau_n| &\leq& \delta(h)+\frac{h}{2}|Y^{''}|.\\
+h\tau_n &=& y( t_{n+1})-y(t_n) -hF(t_n,y(t_n),h;f),\\
+&=&hy^{'}(t_n)+\frac{h^{2}}{2}y^{''}(\xi_n) -hF(t_n,y(t_n),h;f),\\
+h|\tau_n| &\leq& h\delta(h)+\frac{h^{2}}{2}|y^{''}|.\\
+|\tau_n| &\leq& \delta(h)+\frac{h}{2}|y^{''}|.\\
 \end{array}
 \]
 Thus $\tau(h) \rightarrow 0$ as $h \rightarrow 0$
 \end{proof}
 From this we have
 \begin{corollary}
-If the RK method has a truncation error $\tau(Y)=O(h^{m+1})$ then the rate of
+If the RK method has a truncation error $\tau(h)=O(h^{m+1})$ then the rate of
 convergence of $\{w_n\}$ to $Y(t)$ is $O(h^m)$.
 \end{corollary}
 
@@ -361,7 +365,7 @@ step size to generate $w_{i+1}$ and $v_{i+1}$ to approximate $y(t_{i+1})$.  Then
 \begin{eqnarray*}
 \tau_{i+1} & = & \frac{y(t_{i+1})-y(t_i)}{h} - \phi(t_i,y(t_i),h) \\
 & = &  \frac{y(t_{i+1})-w_i}{h} - \phi(t_i,w_i,h) \\
-& = &  \frac{y(t_{i+1})-(w_i+h\phi(t_i,w_i,h)}{h}) \\
+& = &  \frac{y(t_{i+1})-(w_i+h\phi(t_i,w_i,h))}{h} \\
 & = &  \frac{y(t_{i+1})-w_{i+1}}{h} 
 \end{eqnarray*}
 Similarly
@@ -372,11 +376,11 @@ As a consequence
  &=& \frac{(y(t_{i+1})-v_{i+1})+(v_{i+1}-w_{i+1})}{h} \\
  &=& \Upsilon_{i+1}(h)+\frac{(v_{i+1}-w_{i+1})}{h}. 
 \end{eqnarray*}
-But $\tau_{i+1}(h)$ is $O(h^n)$ and $\Upsilon_{i+1}(h)$ is $O(h^{n+1})$ so the 
-significant factor of $\tau_{i+1}(h)$ must come from $\frac{(v_{i+1}-w_{i+1})}{h}$.  This gives us an easily computed approximation of $O(h^n)$ method.
+but $\tau_{i+1}(h)$ is $O(h^n)$ and $\Upsilon_{i+1}(h)$ is $O(h^{n+1})$ so the 
+significant factor of $\tau_{i+1}(h)$ must come from $\frac{(v_{i+1}-w_{i+1})}{h}$.  This gives us an easily computed approximation of $O(h^n)$ method,
 \[\tau_{i+1} \approx \frac{(v_{i+1}-w_{i+1})}{h}.  \]
 The object is not to estimate the local truncation error but to adjust step size to 
-keep it within a specified bound.  To do this we assume that since $\tau_{i+1}(h)$ is $O(h^n)$ a number $K$ independent of $h$ exists with \[\tau_{i+1}(h) \approx Kh^n. \]
+keep it within a specified bound.  To do this we assume that since $\tau_{i+1}(h)$ is $O(h^n)$ a number $K$ independent of $h$ exists with, \[\tau_{i+1}(h) \approx Kh^n. \]
 Then the local truncation error produced by applying the nth order method with a
 new step size $qh$ can be estimated using the original approximations $w_{i+1}$ 
 and $v_{i+1}$
@@ -389,58 +393,58 @@ which can be used to control the error.
 
 
 \newpage
-\section{Problem Sheet 2}
+\section{Problem Sheet 3 - Runge-Kutta}
 \begin{enumerate}
-\item
-Apply the Taylor method to approximate the solution of initial value problem
-\[ y'=ty+ty^2, \ \ \ (0\leq t \leq 2), \ \ \ y(0)=\frac{1}{2} \]
-using $N=4$ steps
+
 
 \item
 Apply the Midpoint Method to approximate the solution of the given initial value problems using the indicated number of time steps. Compare the approximate solution with the given exact solution
 \begin{enumerate}
 \item
-$y'=t-y, \ \ (0\leq t \leq 4)$\\
+$y'=t-y, \ \ (0\leq t \leq 4),$\\
 with the initial condition $y(0)=1,$\\
 $N=4$, 
-$y(t)=2e^{-t}+t-1$\\
+with the exact solution
+$y(t)=2e^{-t}+t-1.$\\
 
 \item 
-$y'=y-t, \ \ (0\leq t \leq 2)$\\
+$y'=y-t, \ \ (0\leq t \leq 2),$\\
 with the initial condition $y(0)=2,$\\
 $N=4$, 
-$y(t)=e^{t}+t+1$\\
+with the exact solution
+$y(t)=e^{t}+t+1.$\\
 
 \end{enumerate}
 \item
-Apply the 4th Order Runge Kutta Method to approximate the solution of the given initial value problems using the indicated number of time steps. Compare the approximate solution with the given exact solution
+Apply the 4th Order Runge-Kutta Method to approximate the solution of the given initial value problems using the indicated number of time steps. Compare the approximate solution with the given exact solution
 \begin{enumerate}
 \item
-$y'=t-y, \ \ (0\leq t \leq 4)$\\
+$y'=t-y, \ \ (0\leq t \leq 4),$\\
 with the initial condition $y(0)=1,$\\
 $N=4$, 
-$y(t)=2e^{-t}+t-1$\\
+with the exact solution
+$y(t)=2e^{-t}+t-1.$\\
 
 \item 
 $y'=y-t, \ \ (0\leq t \leq 2)$\\
 with the initial condition $y(0)=2,$\\
-$N=4$, 
-$y(t)=e^{t}+t+1$\\
+$N=4$, with the exact solution
+$y(t)=e^{t}+t+1.$\\
 
 \end{enumerate}
 \item
-Derive the difference equation for the Midpoint Runge Kutta method\\
-\[ w_{n+1}=w_n+k_2\]
-\[k_1=hf(t_n,w_n)\]
+Derive the difference equation for the Midpoint Runge-Kutta method\\
+\[ w_{n+1}=w_n+k_2,\]
+\[k_1=hf(t_n,w_n),\]
 \[k_2=hf(t_n+\frac{1}{2}h,w_n+\frac{1}{2}k_1)\]
-for dolving the ordinary differential equation
-\[ \frac{dy}{dt}=f(t,y) \]
-\[y(t_0)=y_0 \]
+for solving the ordinary differential equation
+\[ \frac{dy}{dt}=f(t,y), \]
+\[y(t_0)=y_0, \]
 by using a formula of the form
-\[w_{n+1}=w_n+ak_1+bk_2 \]
+\[w_{n+1}=w_n+ak_1+bk_2, \]
 where $k_1$ is defined as above,
-\[k_2=hf(t_n+\alpha h,w_n+\beta k_1)\]
-and $a$, $b$, $\alpha$ and $\beta$ are constants are deteremined. Prove that $a+b=1$ and $b\alpha=b\beta=\frac{1}{2}$ and choose appropriate values to give the Midpoint Runge Kutta method.
+\[k_2=hf(t_n+\alpha h,w_n+\beta k_1),\]
+and $a$, $b$, $\alpha$ and $\beta$ are constants are determined. Prove that $a+b=1$ and $b\alpha=b\beta=\frac{1}{2}$ and choose appropriate values to give the Midpoint Runge-Kutta method.
 
 
 \end{enumerate}
